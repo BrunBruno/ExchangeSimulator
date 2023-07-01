@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Api", "ExchangeSimulator.Api\ExchangeSimulator.Api.csproj", "{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A17E704-B94B-4576-B423-9DD866B56074}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{520B3364-4116-421E-87E3-E007762B57C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Domain", "ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj", "{875DD839-1AA9-41D9-8BAC-D1932E2596BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Application", "ExchangeSimulator.Application\ExchangeSimulator.Application.csproj", "{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Infrastructure", "ExchangeSimulator.Infrastructure\ExchangeSimulator.Infrastructure.csproj", "{44104461-A8A8-44BA-B4B3-CDBC65269E37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Shared", "ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj", "{6B38EDDD-9376-477E-A1FC-B00B369496F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{875DD839-1AA9-41D9-8BAC-D1932E2596BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{875DD839-1AA9-41D9-8BAC-D1932E2596BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{875DD839-1AA9-41D9-8BAC-D1932E2596BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{875DD839-1AA9-41D9-8BAC-D1932E2596BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44104461-A8A8-44BA-B4B3-CDBC65269E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44104461-A8A8-44BA-B4B3-CDBC65269E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44104461-A8A8-44BA-B4B3-CDBC65269E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44104461-A8A8-44BA-B4B3-CDBC65269E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE} = {5A17E704-B94B-4576-B423-9DD866B56074}
+		{875DD839-1AA9-41D9-8BAC-D1932E2596BE} = {5A17E704-B94B-4576-B423-9DD866B56074}
+		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD} = {5A17E704-B94B-4576-B423-9DD866B56074}
+		{44104461-A8A8-44BA-B4B3-CDBC65269E37} = {5A17E704-B94B-4576-B423-9DD866B56074}
+		{6B38EDDD-9376-477E-A1FC-B00B369496F3} = {5A17E704-B94B-4576-B423-9DD866B56074}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DFFF1F1B-6C72-45DE-B1A7-530B5470352A}
+	EndGlobalSection
+EndGlobal

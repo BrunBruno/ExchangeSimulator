@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExchangeSimulator.Application\ExchangeSimulator.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EF\Configuration\" />
+    <Folder Include="EF\Contexts\" />
+    <Folder Include="EF\Repositories\" />
+    <Folder Include="EF\Options\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
