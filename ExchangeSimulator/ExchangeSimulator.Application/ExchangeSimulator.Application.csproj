@@ -8,15 +8,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj" />
+    <ProjectReference Include="..\ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DTO\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Repositories\" />
-    <Folder Include="RequestHandlers\" />
-    <Folder Include="Requests\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.1" />
   </ItemGroup>
 
 </Project>
