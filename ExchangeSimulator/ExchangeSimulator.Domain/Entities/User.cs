@@ -8,35 +8,35 @@ public class User
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; private set; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Email address.
     /// </summary>
-    public string Email { get; private set; }
+    public string Email { get; set; }
 
     /// <summary>
     /// Username.
     /// </summary>
-    public string Username { get; private set; }
+    public string Username { get; set; }
 
     /// <summary>
     /// Hashed password.
     /// </summary>
-    public string PasswordHash { get; private set; }
+    public string PasswordHash { get; set; }
 
     /// <summary>
     /// Url with user image.
     /// </summary>
-    public string? ImageUrl { get; private set; }
+    public string? ImageUrl { get; set; }
 
     /// <summary>
     /// User role.
     /// </summary>
-    public Role Role { get; private set; }
+    public Role Role { get; set; }
 
     /// <summary>
     /// Role id.
     /// </summary>
-    public int RoleId { get; private set; }
+    public int RoleId { get; set; } = (int)Roles.User;
 }

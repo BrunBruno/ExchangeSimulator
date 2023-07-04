@@ -1,5 +1,9 @@
-﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
+﻿using ExchangeSimulator.Application.Repositories;
+using ExchangeSimulator.Application.Services;
+using ExchangeSimulator.Infrastructure.EF.Contexts;
 using ExchangeSimulator.Infrastructure.EF.Options;
+using ExchangeSimulator.Infrastructure.EF.Repositories;
+using ExchangeSimulator.Infrastructure.Services;
 using ExchangeSimulator.Shared.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +20,9 @@ public static class Extensions
 
         services.AddDbContext<ExchangeSimulatorDbContext>(ctx
             => ctx.UseNpgsql(options.ConnectionString));
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IJwtService, JwtService>();
 
         return services;
     }

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="EF\Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

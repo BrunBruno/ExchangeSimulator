@@ -13,7 +13,6 @@ public static class Extensions
     {
         var options = configuration.GetOptions<AuthenticationSettings>("Authentication");
 
-
         services.AddSingleton(options);
         services.AddAuthentication(option =>
         {

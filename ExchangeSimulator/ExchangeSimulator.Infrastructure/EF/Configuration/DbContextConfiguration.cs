@@ -1,4 +1,5 @@
-﻿using ExchangeSimulator.Domain.Entities;
+﻿using ExchangeSimulator.Domain;
+using ExchangeSimulator.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -34,13 +35,13 @@ public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTyp
         {
             new Role()
             {
-                Id = 1,
+                Id = (int)Roles.User,
                 Name = "User"
 
             },
             new Role()
             {
-                Id = 2,
+                Id = (int)Roles.Admin,
                 Name = "Admin"
             }
         };
