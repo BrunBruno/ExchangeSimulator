@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj" />
     <ProjectReference Include="..\ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj" />

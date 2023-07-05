@@ -1,4 +1,7 @@
-﻿using ExchangeSimulator.Application.Repositories;
+﻿using System.Net;
+using System.Net.Mail;
+using ExchangeSimulator.Application.Repositories;
+using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -13,11 +16,13 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly ISmtpService _smtpService;
 
-    public RegisterUserRequestHandler(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+    public RegisterUserRequestHandler(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ISmtpService smtpService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
+        _smtpService = smtpService;
     }
 
     public async Task Handle(RegisterUserRequest request, CancellationToken cancellationToken)
@@ -46,5 +51,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
         user.PasswordHash = hashedPassword;
 
         await _userRepository.AddUser(user);
+
+        await _smtpService.SendMessage(request.Email, request.Username, "test");
     }
 }
