@@ -11,6 +11,13 @@ public static class Extensions
     {
         services.AddPostgres(configuration);
         services.AddJwt(configuration);
+        services.AddCors(options => {
+            options.AddPolicy("FrontEndClient", builder => {
+                builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            });
+        });
         return services;
     }
 }

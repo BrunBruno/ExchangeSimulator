@@ -11,6 +11,7 @@ public static class Extensions
     {
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
         return services;
     }
 }
