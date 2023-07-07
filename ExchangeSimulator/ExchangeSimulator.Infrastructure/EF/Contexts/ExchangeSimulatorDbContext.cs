@@ -19,6 +19,11 @@ public class ExchangeSimulatorDbContext : DbContext
     /// </summary>
     public DbSet<Role> Roles { get; set; }
 
+    /// <summary>
+    /// Email Verificatio Codes
+    /// </summary>
+    public DbSet<EmailVerificationCode> EmailVerificationCodes { get; set; }
+
     public ExchangeSimulatorDbContext (DbContextOptions<ExchangeSimulatorDbContext> options) : base(options){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,5 +32,6 @@ public class ExchangeSimulatorDbContext : DbContext
 
         modelBuilder.ApplyConfiguration<User>(configuration);
         modelBuilder.ApplyConfiguration<Role>(configuration);
+        modelBuilder.ApplyConfiguration<EmailVerificationCode>(configuration);
     }
 }

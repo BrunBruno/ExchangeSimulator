@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
@@ -17,12 +18,14 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly ISmtpService _smtpService;
+    private readonly IEmailVerificationCodeRepository _codeRepository;
 
-    public RegisterUserRequestHandler(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ISmtpService smtpService)
+    public RegisterUserRequestHandler(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, ISmtpService smtpService, IEmailVerificationCodeRepository codeRepository)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _smtpService = smtpService;
+        _codeRepository = codeRepository;
     }
 
     public async Task Handle(RegisterUserRequest request, CancellationToken cancellationToken)
@@ -52,6 +55,15 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 
         await _userRepository.AddUser(user);
 
-        await _smtpService.SendMessage(request.Email, request.Username, "test");
+        var code = new EmailVerificationCode() {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            Code = new Random().Next(10000, 99999).ToString(),
+            ExpirationDate = DateTime.UtcNow.AddMinutes(15),
+        };
+
+        await _codeRepository.AddCode(code);
+
+        await _smtpService.SendMessage(request.Email, "Hello " + request.Username, code.Code);
     }
 }

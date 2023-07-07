@@ -20,6 +20,7 @@ public static class Extensions
             => ctx.UseNpgsql(options.ConnectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IEmailVerificationCodeRepository, EmailVerificationCodeRepository>();
 
         return services;
     }

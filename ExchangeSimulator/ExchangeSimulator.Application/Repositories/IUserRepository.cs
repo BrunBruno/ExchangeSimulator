@@ -20,4 +20,19 @@ public interface IUserRepository
     /// <param name="user">User.</param>
     /// <returns></returns>
     Task AddUser(User user);
+
+    /// <summary>
+    /// Get user by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<User?> GetUserById(Guid id);
+
+    /// <summary>
+    /// Update user
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    Task Update(User user);
+
 }

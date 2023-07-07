@@ -8,8 +8,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Repositories;
 /// <summary>
 /// Implementation for user repository.
 /// </summary>
-public class UserRepository : IUserRepository
-{
+public class UserRepository : IUserRepository {
     private readonly ExchangeSimulatorDbContext _dbContext;
 
     public UserRepository(ExchangeSimulatorDbContext dbContext)
@@ -27,6 +26,16 @@ public class UserRepository : IUserRepository
     public async Task AddUser(User user)
     {
         await _dbContext.Users.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<User?> GetUserById(Guid id)
+        => await _dbContext.Users
+            .Include(x => x.Role)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+    public async Task Update(User user) {
+        _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
     }
 }

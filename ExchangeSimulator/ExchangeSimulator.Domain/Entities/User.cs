@@ -39,4 +39,9 @@ public class User
     /// Role id.
     /// </summary>
     public int RoleId { get; set; } = (int)Roles.User;
+
+    /// <summary>
+    /// Is user email verified
+    /// </summary>
+    public bool IsVerified { get; set; } = false;
 }

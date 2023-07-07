@@ -16,10 +16,19 @@ public static class Extensions
         var options = configuration.GetOptions<SmtpOptions>("Smtp");
         services.AddSingleton(options);
 
+        services.AddHttpContextAccessor();
         services.AddPostgres(configuration);
         services.AddJwt(configuration);
+        services.AddCors(options => {
+            options.AddPolicy("FrontEndClient", builder => {
+                builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            });
+        });
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmtpService, SmtpService>();
+        services.AddScoped<IUserContextService, UserContextService>();
         return services;
     }
 }
