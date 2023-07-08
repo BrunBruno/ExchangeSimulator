@@ -1,5 +1,5 @@
-﻿using ExchangeSimulator.Domain;
-using ExchangeSimulator.Domain.Entities;
+﻿using ExchangeSimulator.Domain.Entities;
+using ExchangeSimulator.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +8,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Configuration;
 /// <summary>
 /// Configurations for DbContext.
 /// </summary>
-public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Role>
+public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Role>, IEntityTypeConfiguration<EmailVerificationCode>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
@@ -26,6 +26,15 @@ public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTyp
             .HasKey(x => x.Id);
         builder
             .HasData(GetRoles());
+    }
+
+    public void Configure(EntityTypeBuilder<EmailVerificationCode> builder) {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.User)
+            .WithOne()
+            .HasForeignKey<EmailVerificationCode>(x => x.UserId);
     }
 
     private IEnumerable<Role> GetRoles()
