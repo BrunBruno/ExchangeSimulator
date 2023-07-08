@@ -1,5 +1,5 @@
-﻿using ExchangeSimulator.Domain;
-using ExchangeSimulator.Domain.Entities;
+﻿using ExchangeSimulator.Domain.Entities;
+using ExchangeSimulator.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -10,7 +10,7 @@ namespace ExchangeSimulator.Application.Requests.SignIn;
 /// <summary>
 /// Request handler for signing in.
 /// </summary>
-public class SignInRequestHandler : IRequestHandler<SignInRequest,string>
+public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
@@ -23,7 +23,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest,string>
         _jwtService = jwtService;
     }
 
-    public async Task<string> Handle(SignInRequest request, CancellationToken cancellationToken)
+    public async Task<SignInDto> Handle(SignInRequest request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetUserByEmail(request.Email);
 
@@ -39,6 +39,11 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest,string>
             throw new BadRequestException("Invalid email or password");
         }
 
-        return _jwtService.GetJwtToken(user);
+        var token = _jwtService.GetJwtToken(user);
+
+        return new SignInDto()
+        {
+            Token = token
+        };
     }
 }

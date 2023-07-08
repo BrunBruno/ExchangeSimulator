@@ -1,11 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 
-namespace ExchangeSimulator.Application.Services {
-    public interface IUserContextService {
-        Guid? GetUserId();
-    }
+namespace ExchangeSimulator.Application.Services;
+
+/// <summary>
+/// Service used for getting informations from user context.
+/// </summary>
+public interface IUserContextService
+{
+    /// <summary>
+    /// Gets user id from user context.
+    /// </summary>
+    /// <returns>User id.</returns>
+    Guid? GetUserId();
+
+    /// <summary>
+    /// Gets user context.
+    /// </summary>
+    ClaimsPrincipal User { get; }
 }

@@ -1,23 +1,25 @@
 ﻿using ExchangeSimulator.Application.Services;
-using ExchangeSimulator.Domain.Entities;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ExchangeSimulator.Infrastructure.Services {
-    public class UserContextService : IUserContextService {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+namespace ExchangeSimulator.Infrastructure.Services;
 
-        public UserContextService(IHttpContextAccessor httpContextAccessor) {
-            _httpContextAccessor = httpContextAccessor;
-        }
+/// <summary>
+/// Implementation for service used for getting information from user context.
+/// </summary>
+public class UserContextService : IUserContextService
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
-        public Guid? GetUserId() =>
-            User is null ? null : (Guid?)Guid.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+    public UserContextService(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContextAccessor = httpContextAccessor;
     }
+
+    ///<inheritdoc/>
+    public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
+
+    ///<inheritdoc/>
+    public Guid? GetUserId() =>
+        User is null ? null : (Guid?)Guid.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
 }

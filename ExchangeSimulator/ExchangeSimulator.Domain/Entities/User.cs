@@ -1,4 +1,6 @@
-﻿namespace ExchangeSimulator.Domain.Entities;
+﻿using ExchangeSimulator.Domain.Enums;
+
+namespace ExchangeSimulator.Domain.Entities;
 
 /// <summary>
 /// User entity.

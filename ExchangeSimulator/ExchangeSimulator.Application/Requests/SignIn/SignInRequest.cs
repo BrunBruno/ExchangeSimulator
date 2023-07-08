@@ -5,7 +5,7 @@ namespace ExchangeSimulator.Application.Requests.SignIn;
 /// <summary>
 /// Request for signing in.
 /// </summary>
-public class SignInRequest : IRequest<string>
+public class SignInRequest : IRequest<SignInDto>
 {
     /// <summary>
     /// Email address.

@@ -21,9 +21,9 @@ public class EmailVerificationCode
     public User User { get; set; }
 
     /// <summary>
-    /// Code used for verifying user email.
+    /// Hashed code used for verifying user email.
     /// </summary>
-    public string Code { get; set; }
+    public string CodeHash { get; set; }
 
     /// <summary>
     /// Date when code expires.
