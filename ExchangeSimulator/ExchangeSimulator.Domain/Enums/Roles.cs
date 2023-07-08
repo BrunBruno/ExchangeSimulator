@@ -1,4 +1,4 @@
-﻿namespace ExchangeSimulator.Domain;
+﻿namespace ExchangeSimulator.Domain.Enums;
 
 /// <summary>
 /// Enum with role ids.

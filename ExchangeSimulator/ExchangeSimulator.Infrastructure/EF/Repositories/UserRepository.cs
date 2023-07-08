@@ -29,11 +29,13 @@ public class UserRepository : IUserRepository {
         await _dbContext.SaveChangesAsync();
     }
 
+    ///<inheritdoc/>
     public async Task<User?> GetUserById(Guid id)
         => await _dbContext.Users
             .Include(x => x.Role)
             .FirstOrDefaultAsync(x => x.Id == id);
 
+    ///<inheritdoc/>
     public async Task Update(User user) {
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();

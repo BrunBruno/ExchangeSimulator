@@ -1,27 +1,41 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
+using ExchangeSimulator.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ExchangeSimulator.Infrastructure.EF.Repositories {
-    public class EmailVerificationCodeRepository : IEmailVerificationCodeRepository {
-        private readonly ExchangeSimulatorDbContext _dbContext;
+namespace ExchangeSimulator.Infrastructure.EF.Repositories;
 
-        public EmailVerificationCodeRepository(ExchangeSimulatorDbContext dbContext) { 
-            _dbContext = dbContext;
-        }
+/// <summary>
+/// Implementation for email verification code repository.
+/// </summary>
+public class EmailVerificationCodeRepository : IEmailVerificationCodeRepository
+{
+    private readonly ExchangeSimulatorDbContext _dbContext;
 
-        public async Task AddCode(EmailVerificationCode code) {
-            await _dbContext.EmailVerificationCodes.AddAsync(code);
-            await _dbContext.SaveChangesAsync();
-        }
+    public EmailVerificationCodeRepository(ExchangeSimulatorDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
-        public async Task<EmailVerificationCode?> GetCodeByUserId(Guid userId)
-            => await _dbContext.EmailVerificationCodes.FirstOrDefaultAsync(x => x.UserId == userId);
+    ///<inheritdoc/>
+    public async Task AddCode(EmailVerificationCode code)
+    {
+        await _dbContext.EmailVerificationCodes.AddAsync(code);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    ///<inheritdoc/>
+    public async Task<EmailVerificationCode?> GetCodeByUserId(Guid userId)
+        => await _dbContext.EmailVerificationCodes.FirstOrDefaultAsync(x => x.UserId == userId);
+
+    ///<inheritdoc/>
+    public async Task RemoveCodeByUserId(Guid userId)
+    {
+        var code = await GetCodeByUserId(userId)
+            ?? throw new NotFoundException("Code was not found.");
+
+        _dbContext.EmailVerificationCodes.Remove(code);
+        await _dbContext.SaveChangesAsync();
     }
 }

@@ -7,7 +7,7 @@ using System.Net.Mime;
 namespace ExchangeSimulator.Infrastructure.Services;
 
 /// <summary>
-/// 
+/// Implementation for service used for email communication.
 /// </summary>
 public class SmtpService : ISmtpService {
     private readonly SmtpOptions _smtpOptions;
