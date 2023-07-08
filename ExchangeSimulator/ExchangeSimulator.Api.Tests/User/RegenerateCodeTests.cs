@@ -5,7 +5,6 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using System.Text;
 using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Application.Requests.SignIn;
 
 namespace ExchangeSimulator.Api.Tests.User;
 
@@ -33,11 +32,9 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
     {
         await _dbContext.Init();
         await _dbContext.AddUser();
+        await _dbContext.AddCodeForUser();
 
-        var request = new SignInRequest()
-        {
-
-        };
+        var request = new RegenerateEmailVerificationCodeRequest();
 
         var json = JsonConvert.SerializeObject(request);
 
