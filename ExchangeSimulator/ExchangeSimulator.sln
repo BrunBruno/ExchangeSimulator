@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Api", "ExchangeSimulator.Api\ExchangeSimulator.Api.csproj", "{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Api", "ExchangeSimulator.Api\ExchangeSimulator.Api.csproj", "{C53F4CC1-82A5-48E8-962B-A8AB84A04CCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A17E704-B94B-4576-B423-9DD866B56074}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{520B3364-4116-421E-87E3-E007762B57C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Domain", "ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj", "{875DD839-1AA9-41D9-8BAC-D1932E2596BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Domain", "ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj", "{875DD839-1AA9-41D9-8BAC-D1932E2596BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Application", "ExchangeSimulator.Application\ExchangeSimulator.Application.csproj", "{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Application", "ExchangeSimulator.Application\ExchangeSimulator.Application.csproj", "{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Infrastructure", "ExchangeSimulator.Infrastructure\ExchangeSimulator.Infrastructure.csproj", "{44104461-A8A8-44BA-B4B3-CDBC65269E37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Infrastructure", "ExchangeSimulator.Infrastructure\ExchangeSimulator.Infrastructure.csproj", "{44104461-A8A8-44BA-B4B3-CDBC65269E37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Shared", "ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj", "{6B38EDDD-9376-477E-A1FC-B00B369496F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Shared", "ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj", "{6B38EDDD-9376-477E-A1FC-B00B369496F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Api.Tests", "ExchangeSimulator.Api.Tests\ExchangeSimulator.Api.Tests.csproj", "{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Core.Tests", "ExchangeSimulator.Core.Tests\ExchangeSimulator.Core.Tests.csproj", "{89B808F8-5AFD-48B3-9450-11D26F0D20A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,14 @@ Global
 		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B38EDDD-9376-477E-A1FC-B00B369496F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B808F8-5AFD-48B3-9450-11D26F0D20A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B808F8-5AFD-48B3-9450-11D26F0D20A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B808F8-5AFD-48B3-9450-11D26F0D20A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B808F8-5AFD-48B3-9450-11D26F0D20A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +65,8 @@ Global
 		{4C3493F1-3832-4AB3-98FD-B9D1A1B7A3DD} = {5A17E704-B94B-4576-B423-9DD866B56074}
 		{44104461-A8A8-44BA-B4B3-CDBC65269E37} = {5A17E704-B94B-4576-B423-9DD866B56074}
 		{6B38EDDD-9376-477E-A1FC-B00B369496F3} = {5A17E704-B94B-4576-B423-9DD866B56074}
+		{F8DE4EBD-6A47-4E76-B64E-969BE4198B27} = {520B3364-4116-421E-87E3-E007762B57C3}
+		{89B808F8-5AFD-48B3-9450-11D26F0D20A9} = {520B3364-4116-421E-87E3-E007762B57C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFFF1F1B-6C72-45DE-B1A7-530B5470352A}
