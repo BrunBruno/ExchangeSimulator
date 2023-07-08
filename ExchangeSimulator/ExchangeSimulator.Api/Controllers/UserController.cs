@@ -1,6 +1,7 @@
 ﻿using ExchangeSimulator.Application.Requests.RegisterUser;
 using ExchangeSimulator.Application.Requests.SignIn;
 using ExchangeSimulator.Application.Requests.VerifyEmail;
+using ExchangeSimulator.Application.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace ExchangeSimulator.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ISmtpService _smtpService;
 
-    public UserController(IMediator mediator)
+    public UserController(IMediator mediator, ISmtpService smtpService)
     {
         _mediator = mediator;
+        _smtpService = smtpService;
     }
 
     [HttpPost("register")]
@@ -36,4 +39,5 @@ public class UserController : ControllerBase
         await _mediator.Send(request);
         return Ok();
     }
+
 }

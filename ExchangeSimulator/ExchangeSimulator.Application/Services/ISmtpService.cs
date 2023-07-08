@@ -1,4 +1,7 @@
-﻿namespace ExchangeSimulator.Application.Services;
+﻿using System.Net.Mail;
+using System.Net.Mime;
+
+namespace ExchangeSimulator.Application.Services;
 
 /// <summary>
 /// 
@@ -12,4 +15,6 @@ public interface ISmtpService {
    /// <param name="message"></param>
    /// <returns></returns>
     Task SendMessage(string email, string subject, string message);
+
+    
 }
