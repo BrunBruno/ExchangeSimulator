@@ -61,8 +61,5 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         var result = JsonConvert.DeserializeObject<SignInDto>(await response1.Content.ReadAsStringAsync());
         result.Token.Should().NotBeEmpty();
-
-        _dbContext.Database.EnsureDeleted();
-        _dbContext.Dispose();
     }
 }
