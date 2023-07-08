@@ -7,21 +7,19 @@ public static partial class DbFiller
 {
     public static async Task Init(this ExchangeSimulatorDbContext dbContext)
     {
-        await dbContext.Database.EnsureDeletedAsync();
-
         var roles = new List<Role>
-        {
-            new Role
             {
-                Id = 1,
-                Name = "User"
-            },
-            new Role
-            {
-                Id = 2,
-                Name = "Admin"
-            },
-        };
+                new Role
+                {
+                    Id = 1,
+                    Name = "User"
+                },
+                new Role
+                {
+                    Id = 2,
+                    Name = "Admin"
+                },
+            };
         await dbContext.Roles.AddRangeAsync(roles);
         await dbContext.SaveChangesAsync();
     }

@@ -3,7 +3,6 @@ using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +25,10 @@ public class TestWebApplicationFactory<TStartup> : WebApplicationFactory<TStartu
             services.AddScoped<ISmtpService, TestSmtpService>();
 
             services.Remove(dbContextOptions);
-            services.AddDbContext<ExchangeSimulatorDbContext>(options => options.UseInMemoryDatabase("ExchangeSimulatorDb"));
+
+            var dbName = $"ExchangeSimulator{Guid.NewGuid()}";
+
+            services.AddDbContext<ExchangeSimulatorDbContext>(options => options.UseInMemoryDatabase(dbName));
         });
     }
 }

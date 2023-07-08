@@ -1,5 +1,4 @@
-﻿using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Infrastructure.EF.Contexts;
+﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -29,48 +28,41 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task SignIn_Returns_Ok_With_Token_On_Success()
+    public async Task SignIn_Tests()
     {
         await _dbContext.Init();
         var userEmail = "user@gmail.com";
 
         await _dbContext.AddUserWithEmail(userEmail);
 
-        var request = new SignInRequest()
+        var request1 = new SignInRequest()
         {
             Email = userEmail,
             Password = Constants.UserPassword
         };
 
-        var json = JsonConvert.SerializeObject(request);
-
-        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
-
-        var response = await _client.PostAsync("api/user/sign-in", httpContent);
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var result = JsonConvert.DeserializeObject<SignInDto>(await response.Content.ReadAsStringAsync());
-        result.Token.Should().NotBeEmpty();
-    }
-
-    [Fact]
-    public async Task SignIn_Returns_BadRequest_When_User_Or_Password_Is_Incorrect()
-    {
-        await _dbContext.Init();
-        var userEmail = "user@gmail.com";
-
-        await _dbContext.AddUserWithEmail(userEmail);
-
-        var request = new SignInRequest()
+        var request2 = new SignInRequest()
         {
             Email = userEmail,
-            Password = "Incorrect Password."
+            Password = "IncorrectPassword"
         };
 
-        var json = JsonConvert.SerializeObject(request);
+        var json1 = JsonConvert.SerializeObject(request1);
+        var json2 = JsonConvert.SerializeObject(request2);
 
-        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+        var httpContent1 = new StringContent(json1, UnicodeEncoding.UTF8, "application/json");
+        var httpContent2 = new StringContent(json2, UnicodeEncoding.UTF8, "application/json");
 
-        var response = await _client.PostAsync("api/user/sign-in", httpContent);
-        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError); // TODO : Change to BadRequest after error handling middleware implementation.
+        var response1 = await _client.PostAsync("api/user/sign-in", httpContent1);
+        var response2 = await _client.PostAsync("api/user/sign-in", httpContent2);
+
+        response1.StatusCode.Should().Be(HttpStatusCode.OK);
+        response2.StatusCode.Should().Be(HttpStatusCode.InternalServerError); // TODO : Change to BadRequest after error handling middleware implementation.
+
+        var result = JsonConvert.DeserializeObject<SignInDto>(await response1.Content.ReadAsStringAsync());
+        result.Token.Should().NotBeEmpty();
+
+        _dbContext.Database.EnsureDeleted();
+        _dbContext.Dispose();
     }
 }
