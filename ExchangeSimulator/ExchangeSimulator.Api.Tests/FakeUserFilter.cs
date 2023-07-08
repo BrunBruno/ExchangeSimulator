@@ -5,12 +5,6 @@ namespace ExchangeSimulator.Api.Tests;
 
 public class FakeUserFilter : IAsyncActionFilter
 {
-    private readonly bool _isVerified;
-
-    public FakeUserFilter(bool isVerified)
-    {
-        _isVerified = isVerified;
-    }
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var claimsPrincipal = new ClaimsPrincipal();
@@ -21,7 +15,7 @@ public class FakeUserFilter : IAsyncActionFilter
             {
                     new Claim(ClaimTypes.NameIdentifier,Constants.UserId),
                     new Claim(ClaimTypes.Role,"User"),
-                    new Claim("IsVerified", _isVerified.ToString())
+                    new Claim("IsVerified", true.ToString())
             }));
         context.HttpContext.User = claimsPrincipal;
 

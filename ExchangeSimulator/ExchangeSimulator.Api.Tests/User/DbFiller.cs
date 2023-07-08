@@ -40,6 +40,20 @@ public static partial class DbFiller
         await dbContext.SaveChangesAsync();
     }
 
+    public static async Task AddUserWithEmail(this ExchangeSimulatorDbContext dbContext, string email)
+    {
+        var user = new Domain.Entities.User
+        {
+            Id = Guid.NewGuid(),
+            Email = email,
+            Username = "TestUserName",
+            ImageUrl = "http://test.com",
+            PasswordHash = "AQAAAAIAAYagAAAAEA5h41NvfPFBWbMJg+2IxbvZkzKdrJJEWujujwUWUWUcNN96a/tF/olbiRuTZuJbyA==" // "string"
+        };
+        await dbContext.Users.AddAsync(user);
+        await dbContext.SaveChangesAsync();
+    }
+
     public static async Task AddCodeForUser(this ExchangeSimulatorDbContext dbContext)
     {
         var code = new Domain.Entities.EmailVerificationCode()
