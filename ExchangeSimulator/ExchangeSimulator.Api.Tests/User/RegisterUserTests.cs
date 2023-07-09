@@ -31,6 +31,7 @@ public class RegisterUserTests : IClassFixture<TestWebApplicationFactory<Program
     [Fact]
     public async Task RegisterUser_Should_Create_User_On_Success()
     {
+        //given
         await _dbContext.Init();
 
         var request = new RegisterUserRequest
@@ -46,8 +47,10 @@ public class RegisterUserTests : IClassFixture<TestWebApplicationFactory<Program
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PostAsync("api/user/register", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var user = await _dbContext.Users.FirstOrDefaultAsync();
         user.Username.Should().Be("Test");
@@ -61,6 +64,7 @@ public class RegisterUserTests : IClassFixture<TestWebApplicationFactory<Program
     [Fact]
     public async Task RegisterUser_Should_Return_BadRequest_On_Fail()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUserWithEmail("test@gmail.com");
 
@@ -77,8 +81,10 @@ public class RegisterUserTests : IClassFixture<TestWebApplicationFactory<Program
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PostAsync("api/user/register", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

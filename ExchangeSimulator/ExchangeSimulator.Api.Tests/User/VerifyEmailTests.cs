@@ -1,5 +1,4 @@
-﻿using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Infrastructure.EF.Contexts;
+﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -32,6 +31,7 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
     [Fact]
     public async Task VerifyEmail_Should_Set_IsVerified_To_True_On_Success()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUser();
         await _dbContext.AddCodeForUser();
@@ -45,8 +45,10 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PutAsync("api/user/verify-email", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var user = await _dbContext.Users.FirstOrDefaultAsync();
@@ -60,6 +62,7 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
     [Fact]
     public async Task VerifyEmail_Should_Return_NotFound_On_Fail()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUser();
 
@@ -72,8 +75,10 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PutAsync("api/user/verify-email", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
@@ -84,6 +89,7 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
     [Fact]
     public async Task VerifyEmail_Should_Return_BadRequest_On_Fail()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUser();
         await _dbContext.AddCodeForUser();
@@ -97,8 +103,10 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PutAsync("api/user/verify-email", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

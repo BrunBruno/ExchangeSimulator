@@ -27,12 +27,15 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
     [Fact]
     public async Task RegenerateCode_Should_Return_Ok_On_Success()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUser();
         await _dbContext.AddCodeForUser();
 
+        //when
         var response = await _client.PostAsync("api/user/regenerate-code", null);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
@@ -43,10 +46,13 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
     [Fact]
     public async Task RegenerateCode_Should_Returns_NotFound_On_Fail()
     {
+        //given
         await _dbContext.Init();
 
+        //when
         var response = await _client.PostAsync("api/user/regenerate-code", null);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }

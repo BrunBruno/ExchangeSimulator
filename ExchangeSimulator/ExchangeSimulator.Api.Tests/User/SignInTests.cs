@@ -30,6 +30,7 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
     [Fact]
     public async Task SignIn_Should_Return_Ok_On_Success()
     {
+        //given
         await _dbContext.Init();
         var userEmail = "user@gmail.com";
 
@@ -45,8 +46,10 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
+        //when
         var response = await _client.PostAsync("api/user/sign-in", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var result = JsonConvert.DeserializeObject<SignInDto>(await response.Content.ReadAsStringAsync());
@@ -60,6 +63,7 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
     [Fact]
     public async Task SignIn_Should_Return_BadRequest_On_Fail()
     {
+        //given
         await _dbContext.Init();
         var userEmail = "user@gmail.com";
 
@@ -73,10 +77,12 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         var json = JsonConvert.SerializeObject(request);
 
-        var httpContent2 = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
-        var response = await _client.PostAsync("api/user/sign-in", httpContent2);
+        //when
+        var response = await _client.PostAsync("api/user/sign-in", httpContent);
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

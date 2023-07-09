@@ -29,11 +29,14 @@ public class IsEmailVerifiedTests : IClassFixture<TestWebApplicationFactory<Prog
     [Fact]
     public async Task IsEmailVerified_Should_Return_IsVerified_Property_On_Success()
     {
+        //given
         await _dbContext.Init();
         await _dbContext.AddUser();
 
+        //when
         var response = await _client.GetAsync("api/user/is-verified");
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var result = JsonConvert.DeserializeObject<IsEmailVerifiedDto>(await response.Content.ReadAsStringAsync());
@@ -47,9 +50,13 @@ public class IsEmailVerifiedTests : IClassFixture<TestWebApplicationFactory<Prog
     [Fact]
     public async Task IsEmailVerified_Should_Return_NotFound_On_Fail()
     {
+        //given
         await _dbContext.Init();
+
+        //when
         var response = await _client.GetAsync("api/user/is-verified");
 
+        //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
