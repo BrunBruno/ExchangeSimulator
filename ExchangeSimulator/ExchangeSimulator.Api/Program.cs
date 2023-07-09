@@ -1,10 +1,12 @@
 using ExchangeSimulator.Api.Authorization;
 using ExchangeSimulator.Application;
 using ExchangeSimulator.Infrastructure;
+using ExchangeSimulator.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddShared();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
@@ -25,7 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("FrontEndClient");
 
 app.UseHttpsRedirection();
-
+app.UseShared();
 app.UseAuthorization();
 
 app.MapControllers();
