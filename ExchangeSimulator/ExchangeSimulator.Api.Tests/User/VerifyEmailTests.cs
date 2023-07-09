@@ -30,7 +30,7 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task VerifyEmail_Tests()
+    public async Task VerifyEmail_Should_Set_IsVerified_To_True_On_Success()
     {
         await _dbContext.Init();
         await _dbContext.AddUser();
@@ -51,5 +51,54 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
 
         var user = await _dbContext.Users.FirstOrDefaultAsync();
         user.IsVerified.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// Verifying user without existing code.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task VerifyEmail_Should_Return_NotFound_On_Fail()
+    {
+        await _dbContext.Init();
+        await _dbContext.AddUser();
+
+        var request = new VerifyEmailRequest
+        {
+            Code = Constants.CodeValue
+        };
+
+        var json = JsonConvert.SerializeObject(request);
+
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        var response = await _client.PutAsync("api/user/verify-email", httpContent);
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    /// <summary>
+    /// Verifying user with incorrect code.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task VerifyEmail_Should_Return_BadRequest_On_Fail()
+    {
+        await _dbContext.Init();
+        await _dbContext.AddUser();
+        await _dbContext.AddCodeForUser();
+
+        var request = new VerifyEmailRequest
+        {
+            Code = "Incorrect code"
+        };
+
+        var json = JsonConvert.SerializeObject(request);
+
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        var response = await _client.PutAsync("api/user/verify-email", httpContent);
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

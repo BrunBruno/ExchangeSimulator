@@ -64,8 +64,9 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpPost("regenerate-code")]
     [Authorize(Policy = "IsNotVerified")]
-    public async Task<IActionResult> RegenerateCode(RegenerateEmailVerificationCodeRequest request)
+    public async Task<IActionResult> RegenerateCode()
     {
+        var request = new RegenerateEmailVerificationCodeRequest();
         await _mediator.Send(request);
         return Ok();
     }
@@ -77,8 +78,9 @@ public class UserController : ControllerBase
     /// <returns>Bool.</returns>
     [HttpGet("is-verified")]
     [Authorize]
-    public async Task<IActionResult> IsEmailVerified(IsEmailVerifiedRequest request)
+    public async Task<IActionResult> IsEmailVerified()
     {
+        var request = new IsEmailVerifiedRequest();
         var result = await _mediator.Send(request);
         return Ok(result);
     }

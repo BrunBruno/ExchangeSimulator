@@ -1,17 +1,19 @@
 ﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System.Net;
+using ExchangeSimulator.Application.Requests.IsEmailVerified;
 using FluentAssertions;
 
 namespace ExchangeSimulator.Api.Tests.User;
 
-public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Program>>
+public class IsEmailVerifiedTests : IClassFixture<TestWebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory<Program> _factory;
     private readonly ExchangeSimulatorDbContext _dbContext;
 
-    public RegenerateCodeTests()
+    public IsEmailVerifiedTests()
     {
         _factory = new TestWebApplicationFactory<Program>();
 
@@ -25,27 +27,28 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
     }
 
     [Fact]
-    public async Task RegenerateCode_Should_Return_Ok_On_Success()
+    public async Task IsEmailVerified_Should_Return_IsVerified_Property_On_Success()
     {
         await _dbContext.Init();
         await _dbContext.AddUser();
-        await _dbContext.AddCodeForUser();
 
-        var response = await _client.PostAsync("api/user/regenerate-code", null);
+        var response = await _client.GetAsync("api/user/is-verified");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = JsonConvert.DeserializeObject<IsEmailVerifiedDto>(await response.Content.ReadAsStringAsync());
+        result.IsEmailVerified.Should().Be(false);
     }
 
     /// <summary>
-    /// Regenerating code, when user does not exist.
+    /// Checking if email is verified for not existing user.
     /// </summary>
     /// <returns></returns>
     [Fact]
-    public async Task RegenerateCode_Should_Returns_NotFound_On_Fail()
+    public async Task IsEmailVerified_Should_Return_NotFound_On_Fail()
     {
         await _dbContext.Init();
-
-        var response = await _client.PostAsync("api/user/regenerate-code", null);
+        var response = await _client.GetAsync("api/user/is-verified");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
