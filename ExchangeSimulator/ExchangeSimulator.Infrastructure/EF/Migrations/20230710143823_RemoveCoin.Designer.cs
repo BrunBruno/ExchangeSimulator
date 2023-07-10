@@ -3,6 +3,7 @@ using System;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExchangeSimulator.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(ExchangeSimulatorDbContext))]
-    partial class ExchangeSimulatorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710143823_RemoveCoin")]
+    partial class RemoveCoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,6 +97,9 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("GameId1")
+                        .HasColumnType("uuid");
+
                     b.Property<double>("Money")
                         .HasColumnType("double precision");
 
@@ -114,6 +120,8 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("GameId");
 
+                    b.HasIndex("GameId1");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Players");
@@ -132,12 +140,17 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("PlayerId1")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
+
+                    b.HasIndex("PlayerId1");
 
                     b.ToTable("PlayerCoins");
                 });
@@ -180,6 +193,9 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("GameId1")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -190,6 +206,8 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("GameId1");
 
                     b.ToTable("StartingCoins");
                 });
@@ -253,10 +271,14 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>
                 {
                     b.HasOne("ExchangeSimulator.Domain.Entities.Game", "Game")
-                        .WithMany("Players")
+                        .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ExchangeSimulator.Domain.Entities.Game", null)
+                        .WithMany("Players")
+                        .HasForeignKey("GameId1");
 
                     b.HasOne("ExchangeSimulator.Domain.Entities.User", "User")
                         .WithMany()
@@ -272,10 +294,14 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.PlayerCoin", b =>
                 {
                     b.HasOne("ExchangeSimulator.Domain.Entities.Player", "Player")
-                        .WithMany("PlayerCoins")
+                        .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ExchangeSimulator.Domain.Entities.Player", null)
+                        .WithMany("PlayerCoins")
+                        .HasForeignKey("PlayerId1");
 
                     b.Navigation("Player");
                 });
@@ -283,10 +309,14 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.StartingCoin", b =>
                 {
                     b.HasOne("ExchangeSimulator.Domain.Entities.Game", "Game")
-                        .WithMany("StartingCoins")
+                        .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ExchangeSimulator.Domain.Entities.Game", null)
+                        .WithMany("StartingCoins")
+                        .HasForeignKey("GameId1");
 
                     b.Navigation("Game");
                 });
