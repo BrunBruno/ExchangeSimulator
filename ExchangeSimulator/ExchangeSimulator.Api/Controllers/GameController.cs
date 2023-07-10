@@ -14,7 +14,11 @@ public class GameController : ControllerBase {
         _mediator = mediator;
     }
 
-
+    /// <summary>
+    /// Creaes nw game and list of starting coins
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost("create")]
     public async Task<IActionResult> CreateGame(CreateGameRequest request) {
         await _mediator.Send(request);

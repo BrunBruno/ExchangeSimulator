@@ -2,7 +2,15 @@
 
 namespace ExchangeSimulator.Application.Repositories;
 
+/// <summary>
+/// Interface for starting coin repository
+/// </summary>
 public interface IStartingCoinRepository {
-    Task CreateCoin(StartingCoin coin);
+    /// <summary>
+    /// Adds starting coins
+    /// </summary>
+    /// <param name="coins"></param>
+    /// <returns></returns>
+    Task CreateCoins(IEnumerable<StartingCoin> coins);
 }
 

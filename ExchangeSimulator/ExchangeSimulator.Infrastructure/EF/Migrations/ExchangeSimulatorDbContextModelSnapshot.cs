@@ -59,8 +59,8 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("interval");
+                    b.Property<DateTime>("EndGame")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("Money")
                         .HasColumnType("numeric");
@@ -74,6 +74,10 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
