@@ -1,5 +1,6 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Domain.Entities;
+using ExchangeSimulator.Infrastructure.EF.Contexts;
 
 namespace ExchangeSimulator.Infrastructure.EF.Repositories;
 
@@ -7,10 +8,16 @@ namespace ExchangeSimulator.Infrastructure.EF.Repositories;
 /// implementation of player repository
 /// </summary>
 public class PlayerRepository : IPlayerRepository {
+    private readonly ExchangeSimulatorDbContext _dbContext;
+
+    public PlayerRepository(ExchangeSimulatorDbContext dbContext) {
+        _dbContext = dbContext;
+    }
 
     ///<inheritdoc/>
-    public Task CreatePlayer(Player layer) {
-        throw new NotImplementedException();
+    public async Task CreatePlayer(Player player) {
+        await _dbContext.Players.AddAsync(player);
+        await _dbContext.SaveChangesAsync();
     }
 }
 

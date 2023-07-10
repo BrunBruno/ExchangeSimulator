@@ -13,5 +13,12 @@ public interface IGameRepository {
     /// <param name="game"></param>
     /// <returns></returns>
     Task CreateGame(Game game);
+
+    /// <summary>
+    /// Gets game by name
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    Task<Game?> GetGameByName(string name);
 }
 

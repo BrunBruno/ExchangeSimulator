@@ -1,11 +1,12 @@
 ﻿using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.CreateGame;
+namespace ExchangeSimulator.Application.Requests.GameRequestes.CreateGame;
 
 /// <summary>
 /// Request for game creation
 /// </summary>
-public class CreateGameRequest : IRequest {
+public class CreateGameRequest : IRequest
+{
 
     /// <summary>
     /// game name
@@ -41,6 +42,6 @@ public class CreateGameRequest : IRequest {
     /// Amount of players that can join the game
     /// </summary>
     public int NumberOfPlayers { get; set; }
-    
+
 }
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
+namespace ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerificationCode;
 
 /// <summary>
 /// Request for regenerating email verification code.

@@ -5,7 +5,7 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
+namespace ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerificationCode;
 
 /// <summary>
 /// Handler for regenerating email verification code.

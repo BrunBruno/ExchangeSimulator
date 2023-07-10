@@ -5,7 +5,7 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExchangeSimulator.Application.Requests.VerifyEmail;
+namespace ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail;
 public class VerifyEmailRequestHandler : IRequestHandler<VerifyEmailRequest>
 {
     private readonly IEmailVerificationCodeRepository _codeRepository;

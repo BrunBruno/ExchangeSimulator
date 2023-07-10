@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using ExchangeSimulator.Application.Requests.SignIn;
+using ExchangeSimulator.Application.Requests.UserRequests.SignIn;
 
 namespace ExchangeSimulator.Api.Tests.User;
 

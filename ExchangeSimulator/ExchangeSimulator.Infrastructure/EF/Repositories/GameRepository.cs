@@ -1,6 +1,7 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeSimulator.Infrastructure.EF.Repositories;
 
@@ -19,5 +20,11 @@ public class GameRepository : IGameRepository {
         await _dbContext.Games.AddAsync(game);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<Game?> GetGameByName(string name) => 
+        await _dbContext.Games
+            .Include(x => x.StartingCoins)
+            .FirstOrDefaultAsync(x => x.Name == name);
+    
 }
 

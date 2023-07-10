@@ -1,8 +1,8 @@
-﻿using ExchangeSimulator.Application.Requests.IsEmailVerified;
-using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Application.Requests.RegisterUser;
-using ExchangeSimulator.Application.Requests.SignIn;
-using ExchangeSimulator.Application.Requests.VerifyEmail;
+﻿using ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
+using ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerificationCode;
+using ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
+using ExchangeSimulator.Application.Requests.UserRequests.SignIn;
+using ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

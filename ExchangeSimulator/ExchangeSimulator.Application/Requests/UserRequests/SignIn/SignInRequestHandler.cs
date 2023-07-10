@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ExchangeSimulator.Application.Services;
 
-namespace ExchangeSimulator.Application.Requests.SignIn;
+namespace ExchangeSimulator.Application.Requests.UserRequests.SignIn;
 
 /// <summary>
 /// Request handler for signing in.

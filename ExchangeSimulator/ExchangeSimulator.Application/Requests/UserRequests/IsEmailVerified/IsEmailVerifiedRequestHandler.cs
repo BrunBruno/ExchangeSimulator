@@ -3,7 +3,7 @@ using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.IsEmailVerified;
+namespace ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
 
 /// <summary>
 /// Handler for checking if email is verified.

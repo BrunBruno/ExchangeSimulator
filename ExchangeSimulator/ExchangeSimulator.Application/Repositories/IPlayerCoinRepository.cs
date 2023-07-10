@@ -11,6 +11,6 @@ public interface IPlayerCoinRepository {
     /// </summary>
     /// <param name="coin"></param>
     /// <returns></returns>
-    Task CraeteCoin(PlayerCoin coin);
+    Task CraeteCoins(IEnumerable<PlayerCoin> coins);
 }
 

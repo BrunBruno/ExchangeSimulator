@@ -4,28 +4,32 @@ using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.CreateGame;
+namespace ExchangeSimulator.Application.Requests.GameRequestes.CreateGame;
 
 /// <summary>
 /// Handler for creating new game
 /// Creates starting coins
 /// </summary>
-public class CreateGameRequestHander : IRequestHandler<CreateGameRequest> {
+public class CreateGameRequestHander : IRequestHandler<CreateGameRequest>
+{
     private readonly IUserContextService _userContextService;
     private readonly IGameRepository _gameRepository;
     private readonly IStartingCoinRepository _startingCoinRepository;
 
-    public CreateGameRequestHander(IUserContextService userContextService, IGameRepository gameRepository, IStartingCoinRepository startingCoinRepository) {
+    public CreateGameRequestHander(IUserContextService userContextService, IGameRepository gameRepository, IStartingCoinRepository startingCoinRepository)
+    {
         _userContextService = userContextService;
         _gameRepository = gameRepository;
         _startingCoinRepository = startingCoinRepository;
     }
-    public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken) {
+    public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken)
+    {
         var userId = _userContextService.GetUserId()!.Value;
 
 
 
-        var game = new Game() {
+        var game = new Game()
+        {
             Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description,
@@ -38,7 +42,8 @@ public class CreateGameRequestHander : IRequestHandler<CreateGameRequest> {
 
         await _gameRepository.CreateGame(game);
 
-        var coins = request.Coins.Select(coin => new StartingCoin() {
+        var coins = request.Coins.Select(coin => new StartingCoin()
+        {
             Id = Guid.NewGuid(),
             Name = coin.Name,
             Quantity = coin.Quantity,
@@ -48,7 +53,7 @@ public class CreateGameRequestHander : IRequestHandler<CreateGameRequest> {
         await _startingCoinRepository.CreateCoins(coins);
 
 
-        
+
     }
 }
 

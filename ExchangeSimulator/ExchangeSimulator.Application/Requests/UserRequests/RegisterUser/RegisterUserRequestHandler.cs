@@ -5,7 +5,7 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExchangeSimulator.Application.Requests.RegisterUser;
+namespace ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
 
 /// <summary>
 /// Request handler for user registration.
@@ -56,7 +56,8 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 
         var codeValue = new Random().Next(10000, 99999).ToString();
 
-        var code = new EmailVerificationCode() {
+        var code = new EmailVerificationCode()
+        {
             Id = Guid.NewGuid(),
             UserId = user.Id,
             ExpirationDate = DateTime.UtcNow.AddMinutes(15),

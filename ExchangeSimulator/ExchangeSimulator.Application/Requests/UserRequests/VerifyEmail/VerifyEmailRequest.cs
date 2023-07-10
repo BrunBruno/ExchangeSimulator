@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeSimulator.Application.Requests.VerifyEmail {
-    public class VerifyEmailRequest : IRequest {
+namespace ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail
+{
+    public class VerifyEmailRequest : IRequest
+    {
         public string Code { get; set; }
     }
 }

@@ -17,9 +17,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Shared", "ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj", "{6B38EDDD-9376-477E-A1FC-B00B369496F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Api.Tests", "ExchangeSimulator.Api.Tests\ExchangeSimulator.Api.Tests.csproj", "{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Api.Tests", "ExchangeSimulator.Api.Tests\ExchangeSimulator.Api.Tests.csproj", "{F8DE4EBD-6A47-4E76-B64E-969BE4198B27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSimulator.Core.Tests", "ExchangeSimulator.Core.Tests\ExchangeSimulator.Core.Tests.csproj", "{89B808F8-5AFD-48B3-9450-11D26F0D20A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeSimulator.Core.Tests", "ExchangeSimulator.Core.Tests\ExchangeSimulator.Core.Tests.csproj", "{89B808F8-5AFD-48B3-9450-11D26F0D20A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED44C62F-F84D-4D08-840E-223AFA9DFF31}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

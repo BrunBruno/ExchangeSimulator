@@ -98,8 +98,8 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Money")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("Money")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -11,6 +11,6 @@ public interface IPlayerRepository {
     /// </summary>
     /// <param name="layer"></param>
     /// <returns></returns>
-    Task CreatePlayer(Player layer);
+    Task CreatePlayer(Player player);
 }
 

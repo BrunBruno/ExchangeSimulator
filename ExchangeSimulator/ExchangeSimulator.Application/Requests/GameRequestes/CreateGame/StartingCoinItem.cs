@@ -1,10 +1,10 @@
-﻿
-namespace ExchangeSimulator.Application.Requests.CreateGame;
+﻿namespace ExchangeSimulator.Application.Requests.GameRequestes.CreateGame;
 
 /// <summary>
 /// Item that represends coin
 /// </summary>
-public class StartingCoinItem {
+public class StartingCoinItem
+{
 
     /// <summary>
     /// Coin name

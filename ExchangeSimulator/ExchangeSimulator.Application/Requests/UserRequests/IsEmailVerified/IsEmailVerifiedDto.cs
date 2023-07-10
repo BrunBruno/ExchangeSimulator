@@ -1,4 +1,4 @@
-﻿namespace ExchangeSimulator.Application.Requests.IsEmailVerified;
+﻿namespace ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
 
 /// <summary>
 /// Dto that return information if user's email is verified.

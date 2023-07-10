@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using ExchangeSimulator.Application.Requests.VerifyEmail;
 using Microsoft.EntityFrameworkCore;
+using ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail;
 
 namespace ExchangeSimulator.Api.Tests.User;
 

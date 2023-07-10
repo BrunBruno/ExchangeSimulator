@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.SignIn;
+namespace ExchangeSimulator.Application.Requests.UserRequests.SignIn;
 
 /// <summary>
 /// Request for signing in.

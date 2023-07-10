@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.RegisterUser;
+namespace ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
 
 /// <summary>
 /// Request for user register.

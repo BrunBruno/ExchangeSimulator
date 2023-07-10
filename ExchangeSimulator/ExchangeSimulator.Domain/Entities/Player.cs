@@ -18,7 +18,7 @@ public class Player {
     /// <summary>
     /// Amount of money that player has in game
     /// </summary>
-    public double Money { get; set; }
+    public decimal Money { get; set; }
 
     /// <summary>
     /// Amount of trades that player made
