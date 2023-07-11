@@ -4,7 +4,7 @@ using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.GameRequestes.JoinGame;
+namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 
 /// <summary>
 /// handler for joining to game
@@ -23,31 +23,29 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
         _playerRepository = playerRepository;
         _playerCoinRepository = playerCoinRepository;
     }
-    public async Task Handle(JoinGameRequest request, CancellationToken cancellationToken) {
+    public async Task Handle(JoinGameRequest request, CancellationToken cancellationToken) 
+    {
         var userId = _userContext.GetUserId()!.Value;
-        var user = await _userRepository.GetUserById(userId);
 
-        if(user is null) {
-            throw new NotFoundException("User not found");
-        }
+        var user = await _userRepository.GetUserById(userId) 
+            ?? throw new NotFoundException("User not found");
 
-        var game = await _gameRepository.GetGameByName(request.GameName);
+        var game = await _gameRepository.GetGameByName(request.GameName) //TODO : pobieranie po id
+            ?? throw new NotFoundException("Game not found");
 
-        if(game is null) {
-            throw new NotFoundException("Game not found");
-        }
-
-        var player = new Player() {
+        var player = new Player 
+        {
             Id = Guid.NewGuid(),
             Name = user.Username,
             Money = game.Money,
             GameId = game.Id,
-            UserId = userId,
+            UserId = userId
         };
 
         await _playerRepository.CreatePlayer(player);
 
-        var coins = game.StartingCoins.Select(coin => new PlayerCoin() { 
+        var coins = game.StartingCoins.Select(coin => new PlayerCoin 
+        { 
             Id = Guid.NewGuid(),
             Name = coin.Name,
             Quantity = coin.Quantity,
@@ -56,4 +54,3 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
         await _playerCoinRepository.CraeteCoins(coins);
     }
 }
-

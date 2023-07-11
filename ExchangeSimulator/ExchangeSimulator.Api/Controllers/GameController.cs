@@ -1,6 +1,7 @@
-﻿using ExchangeSimulator.Application.Requests.GameRequestes.CreateGame;
-using ExchangeSimulator.Application.Requests.GameRequestes.JoinGame;
+﻿using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
+using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeSimulator.Api.Controllers;
@@ -16,11 +17,12 @@ public class GameController : ControllerBase {
     }
 
     /// <summary>
-    /// Creaes nw game and list of starting coins
+    /// Creates nw game and list of starting coins
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    [HttpPost("create")]
+    [HttpPost]
+    [Authorize(Policy = "IsNotVerified")]
     public async Task<IActionResult> CreateGame(CreateGameRequest request) {
         await _mediator.Send(request);
         return Ok();
@@ -34,9 +36,9 @@ public class GameController : ControllerBase {
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost("join-game")]
+    [Authorize(Policy = "IsNotVerified")]
     public async Task<IActionResult> JoinGame(JoinGameRequest request) {
         await _mediator.Send(request);
         return Ok();
     }
 }
-

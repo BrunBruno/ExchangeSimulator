@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.GameRequestes.JoinGame;
+namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 
 /// <summary>
 /// Request for join players to game

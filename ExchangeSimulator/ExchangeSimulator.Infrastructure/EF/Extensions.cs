@@ -23,7 +23,6 @@ public static class Extensions
         services.AddScoped<IEmailVerificationCodeRepository, EmailVerificationCodeRepository>();
         services.AddScoped<IGameRepository, GameRepository>();
         services.AddScoped<IPlayerRepository, PlayerRepository>();
-        services.AddScoped<IStartingCoinRepository, StartingCoinRepository>();
         services.AddScoped<IPlayerCoinRepository, PlayerCoinRepository>();
 
         return services;

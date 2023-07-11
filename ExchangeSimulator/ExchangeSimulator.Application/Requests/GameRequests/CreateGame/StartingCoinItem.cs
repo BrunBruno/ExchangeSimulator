@@ -1,11 +1,10 @@
-﻿namespace ExchangeSimulator.Application.Requests.GameRequestes.CreateGame;
+﻿namespace ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
 
 /// <summary>
-/// Item that represends coin
+/// Item that represents coin
 /// </summary>
 public class StartingCoinItem
 {
-
     /// <summary>
     /// Coin name
     /// </summary>
@@ -16,4 +15,3 @@ public class StartingCoinItem
     /// </summary>
     public decimal Quantity { get; set; }
 }
-

@@ -78,7 +78,7 @@ public class VerifyEmailRequestHandlerTests
     }
 
     [Fact]
-    public async Task Handle_Throws_NotFoundException_When_User_Was_Not_Found()
+    public async Task Handle_Throws_NotFoundException_When_Code_Was_Not_Found()
     {
         //given
         var request = new VerifyEmailRequest()
