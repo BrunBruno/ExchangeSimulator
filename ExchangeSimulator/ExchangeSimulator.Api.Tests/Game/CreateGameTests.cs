@@ -98,6 +98,44 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         });
     }
 
+    public async Task CreateGame_Should_Return_BadRequest_On_Fail() {
+        //given
+        await _dbContext.Init();
+
+        var request = new CreateGameRequest {
+            Name = "Name",
+            Description = "Description",
+            Password = "Password",
+            Money = 1000,
+            EndGame = DateTime.UtcNow.AddDays(-10),
+            NumberOfPlayers = 10,
+            Coins = new List<StartingCoinItem>()
+            {
+                new StartingCoinItem()
+                {
+                    Name = "Coin1",
+                    Quantity = 10
+                },
+                new StartingCoinItem()
+                {
+                    Name = "Coin2",
+                    Quantity = 25
+                }
+            }
+        };
+
+
+        var json = JsonConvert.SerializeObject(request);
+
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        //when
+        var response = await _client.PostAsync("api/game", httpContent);
+
+        //then
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
     private Domain.Entities.Game ReturnExampleGame(CreateGameRequest request)
         => new()
         {

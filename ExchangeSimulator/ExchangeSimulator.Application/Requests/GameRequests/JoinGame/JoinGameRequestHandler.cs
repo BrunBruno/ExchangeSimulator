@@ -3,6 +3,7 @@ using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 
@@ -15,13 +16,21 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
     private readonly IGameRepository _gameRepository;
     private readonly IPlayerRepository _playerRepository;
     private readonly IPlayerCoinRepository _playerCoinRepository;
+    private readonly IPasswordHasher<Game> _passwordHasher;
 
-    public JoinGameRequestHandler(IUserContextService userContext, IUserRepository userRepository, IGameRepository gameRepository, IPlayerRepository playerRepository, IPlayerCoinRepository playerCoinRepository) {
+    public JoinGameRequestHandler(IUserContextService userContext,
+        IUserRepository userRepository, 
+        IGameRepository gameRepository,
+        IPlayerRepository playerRepository,
+        IPlayerCoinRepository playerCoinRepository,
+        IPasswordHasher<Game> passwordHasher) {
+
         _userContext = userContext;
         _userRepository = userRepository;
         _gameRepository = gameRepository;
         _playerRepository = playerRepository;
         _playerCoinRepository = playerCoinRepository;
+        _passwordHasher = passwordHasher;
     }
     public async Task Handle(JoinGameRequest request, CancellationToken cancellationToken) 
     {
@@ -30,8 +39,20 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
         var user = await _userRepository.GetUserById(userId) 
             ?? throw new NotFoundException("User not found");
 
-        var game = await _gameRepository.GetGameByName(request.GameName) //TODO : pobieranie po id
+        var game = await _gameRepository.GetGameById(request.GameId)
             ?? throw new NotFoundException("Game not found");
+
+        var result = _passwordHasher.VerifyHashedPassword(game, game.PasswordHash, request.Password);
+
+        if (result == PasswordVerificationResult.Failed) {
+            throw new BadRequestException("Invalid password");
+        }
+
+        bool isPlayerInList = game.Players.Any(x => x.UserId == userId);
+
+        if (isPlayerInList) {
+            throw new BadRequestException("Player already in game.");
+        }
 
         var player = new Player 
         {
@@ -51,6 +72,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
             Quantity = coin.Quantity,
             PlayerId = player.Id
         });
+
         await _playerCoinRepository.CraeteCoins(coins);
     }
 }

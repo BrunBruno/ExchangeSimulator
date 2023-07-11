@@ -8,6 +8,7 @@ namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 /// Create player coin list
 /// </summary>
 public class JoinGameRequest : IRequest {
-    public string GameName { get; set; }
+    public Guid GameId { get; set; }
+    public string Password { get; set; }
 }
 

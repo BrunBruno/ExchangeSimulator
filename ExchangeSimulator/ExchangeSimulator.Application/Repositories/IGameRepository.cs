@@ -15,6 +15,13 @@ public interface IGameRepository {
     Task CreateGame(Game game);
 
     /// <summary>
+    /// Gets game by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<Game?> GetGameById(Guid id);
+
+    /// <summary>
     /// Gets game by name
     /// </summary>
     /// <param name="name"></param>
