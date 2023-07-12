@@ -27,6 +27,12 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
     {
         var userId = _userContextService.GetUserId()!.Value;
 
+        var existingGame = await _gameRepository.GetGameByName(request.Name);
+
+        if (existingGame is not null) {
+            throw new BadRequestException("Game already exists.");
+        }
+
         var game = new Game
         {
             Id = Guid.NewGuid(),
@@ -49,7 +55,8 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
         {
             Id = Guid.NewGuid(),
             Name = coin.Name,
-            Quantity = coin.Quantity
+            Quantity = coin.Quantity,
+            GameId = game.Id
         }).ToList();
 
         await _gameRepository.CreateGame(game);

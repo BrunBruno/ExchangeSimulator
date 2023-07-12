@@ -39,7 +39,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
         var user = await _userRepository.GetUserById(userId) 
             ?? throw new NotFoundException("User not found");
 
-        var game = await _gameRepository.GetGameById(request.GameId)
+        var game = await _gameRepository.GetGameByName(request.GameName)
             ?? throw new NotFoundException("Game not found");
 
         var result = _passwordHasher.VerifyHashedPassword(game, game.PasswordHash, request.Password);
@@ -48,7 +48,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
             throw new BadRequestException("Invalid password");
         }
 
-        bool isPlayerInList = game.Players.Any(x => x.UserId == userId);
+        var isPlayerInList = game.Players.Any(x => x.UserId == userId);
 
         if (isPlayerInList) {
             throw new BadRequestException("Player already in game.");

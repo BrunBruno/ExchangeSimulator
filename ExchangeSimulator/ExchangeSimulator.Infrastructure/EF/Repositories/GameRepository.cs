@@ -32,5 +32,6 @@ public class GameRepository : IGameRepository
     public async Task<Game?> GetGameByName(string name) 
         => await _dbContext.Games
             .Include(x => x.StartingCoins)
+            .Include(x => x.Players)
             .FirstOrDefaultAsync(x => x.Name == name);
 }

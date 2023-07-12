@@ -22,7 +22,7 @@ public class GameController : ControllerBase {
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost]
-    [Authorize(Policy = "IsNotVerified")]
+    [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> CreateGame(CreateGameRequest request) {
         await _mediator.Send(request);
         return Ok();
@@ -36,7 +36,7 @@ public class GameController : ControllerBase {
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost("join-game")]
-    [Authorize(Policy = "IsNotVerified")]
+    [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> JoinGame(JoinGameRequest request) {
         await _mediator.Send(request);
         return Ok();
