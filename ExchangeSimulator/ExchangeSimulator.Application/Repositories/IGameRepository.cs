@@ -1,5 +1,6 @@
 ﻿
 using ExchangeSimulator.Domain.Entities;
+using ExchangeSimulator.Domain.Enums;
 
 namespace ExchangeSimulator.Application.Repositories;
 
@@ -27,5 +28,7 @@ public interface IGameRepository {
     /// <param name="name"></param>
     /// <returns></returns>
     Task<Game?> GetGameByName(string name);
+
+    Task<IEnumerable<Game>> GetAllGamesByStatus(GameStatus status);
 }
 

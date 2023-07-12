@@ -1,5 +1,7 @@
 ﻿using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
+using ExchangeSimulator.Application.Requests.GameRequests.GetAllGames;
 using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
+using ExchangeSimulator.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,4 +43,15 @@ public class GameController : ControllerBase {
         await _mediator.Send(request);
         return Ok();
     }
+
+    [HttpGet("available-games")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllGames() {
+        var request = new GetAllGamesRequest() {
+            GameStatus = GameStatus.Available
+        };
+        var games = await _mediator.Send(request);
+        return Ok(games);
+    }
+
 }
