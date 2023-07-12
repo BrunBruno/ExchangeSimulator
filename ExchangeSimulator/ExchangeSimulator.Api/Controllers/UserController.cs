@@ -3,6 +3,7 @@ using ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerific
 using ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
 using ExchangeSimulator.Application.Requests.UserRequests.SignIn;
 using ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail;
+using ExchangeSimulator.Application.Requests.UserRequests.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,18 @@ public class UserController : ControllerBase
     {
         await _mediator.Send(request);
         return Ok();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetUser() {
+        var request = new GetUserRequest();
+        var user = await _mediator.Send(request);
+        return Ok(user);
     }
 
     /// <summary>
