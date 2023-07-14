@@ -1,12 +1,10 @@
-﻿
+﻿namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
 
-namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllGames;
-public class GameDto {
+public class GetAllAvailableGamesDto {
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime EndGame { get; set; }
-    public int AvilableSpots { get; set; }
+    public int AvailableSpots { get; set; }
     public string OwnerName { get; set; }
 }
-

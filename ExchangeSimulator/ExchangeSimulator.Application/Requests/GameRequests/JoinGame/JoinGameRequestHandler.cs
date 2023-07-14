@@ -10,7 +10,8 @@ namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 /// <summary>
 /// handler for joining to game
 /// </summary>
-public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> {
+public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> 
+{
     private readonly IUserContextService _userContext;
     private readonly IUserRepository _userRepository;
     private readonly IGameRepository _gameRepository;
