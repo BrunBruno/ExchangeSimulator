@@ -18,12 +18,15 @@ public class DbContextConfiguration :
     IEntityTypeConfiguration<PlayerCoin>{
     public void Configure(EntityTypeBuilder<User> builder)
     {
-       builder
-           .HasKey(x => x.Id);
-       builder
-           .HasOne(x => x.Role)
-           .WithMany()
-           .HasForeignKey(x => x.RoleId);
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Role)
+            .WithMany()
+            .HasForeignKey(x => x.RoleId);
+        builder
+            .HasMany(x => x.Games)
+            .WithMany();
     }
 
     public void Configure(EntityTypeBuilder<Role> builder)

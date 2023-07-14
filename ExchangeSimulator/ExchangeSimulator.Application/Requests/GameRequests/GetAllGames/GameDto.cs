@@ -7,6 +7,6 @@ public class GameDto {
     public DateTime CreatedAt { get; set; }
     public DateTime EndGame { get; set; }
     public int AvilableSpots { get; set; }
-    public string ownerName { get; set; }
+    public string OwnerName { get; set; }
 }
 

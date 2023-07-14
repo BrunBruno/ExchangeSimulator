@@ -20,7 +20,7 @@ public class GetAllGamesRequestHandler : IRequestHandler<GetAllGamesRequest, IEn
             CreatedAt = game.CreatedAt,
             EndGame = game.EndGame,
             AvilableSpots = game.NumberOfPlayers - game.Players.Count,
-            ownerName = game.Owner.Username
+            OwnerName = game.Owner.Username
         });
 
         return gameDtos;
