@@ -77,9 +77,9 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpPost("regenerate-code")]
     [Authorize(Policy = "IsNotVerified")]
-    public async Task<IActionResult> RegenerateCode()
+    public async Task<IActionResult> RegenerateCode(RegenerateEmailVerificationCodeRequest request)
     {
-        var request = new RegenerateEmailVerificationCodeRequest();
+        //var request = new RegenerateEmailVerificationCodeRequest();
         await _mediator.Send(request);
         return Ok();
     }
