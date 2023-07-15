@@ -20,6 +20,7 @@ public class UserRepository : IUserRepository {
     public async Task<User?> GetUserByEmail(string email)
         => await _dbContext.Users
             .Include(x => x.Role)
+            .Include(x => x.Games)
             .FirstOrDefaultAsync(x => x.Email == email);
 
     ///<inheritdoc/>
@@ -33,6 +34,7 @@ public class UserRepository : IUserRepository {
     public async Task<User?> GetUserById(Guid id)
         => await _dbContext.Users
             .Include(x => x.Role)
+            .Include(x => x.Games)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     ///<inheritdoc/>

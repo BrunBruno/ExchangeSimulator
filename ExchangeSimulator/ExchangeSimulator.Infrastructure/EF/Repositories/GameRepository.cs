@@ -3,6 +3,7 @@ using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace ExchangeSimulator.Infrastructure.EF.Repositories;

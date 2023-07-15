@@ -16,16 +16,25 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
     private readonly IUserContextService _userContextService;
     private readonly IGameRepository _gameRepository;
     private readonly IPasswordHasher<Game> _passwordHasher;
+    private readonly IUserRepository _userRepository;
 
-    public CreateGameRequestHandler(IUserContextService userContextService, IGameRepository gameRepository, IPasswordHasher<Game> passwordHasher)
+    public CreateGameRequestHandler(IUserContextService userContextService,
+        IGameRepository gameRepository,
+        IPasswordHasher<Game> passwordHasher,
+        IUserRepository userRepository)
     {
         _userContextService = userContextService;
         _gameRepository = gameRepository;
         _passwordHasher = passwordHasher;
+        _userRepository = userRepository;
     }
     public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken)
     {
         var userId = _userContextService.GetUserId()!.Value;
+
+        var user = await _userRepository.GetUserById(userId)
+            ?? throw new NotFoundException("User not found.");
+
 
         var existingGame = await _gameRepository.GetGameByName(request.Name);
 
@@ -60,5 +69,8 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
         }).ToList();
 
         await _gameRepository.CreateGame(game);
+
+        user.Games.Add(game);
+        await _userRepository.Update(user);
     }
 }
