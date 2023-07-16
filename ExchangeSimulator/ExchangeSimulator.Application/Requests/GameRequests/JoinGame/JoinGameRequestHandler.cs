@@ -56,7 +56,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
             throw new BadRequestException("Player already in game.");
         }
 
-        var availableSpots = game.NumberOfPlayers - game.Players.Count + 1;
+        var availableSpots = game.NumberOfPlayers - (game.Players.Count + 1);
 
         if (availableSpots == 0) {
             game.Status = GameStatus.Active;
