@@ -29,6 +29,18 @@ public interface IGameRepository {
     /// <returns></returns>
     Task<Game?> GetGameByName(string name);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="status"></param>
+    /// <returns></returns>
     Task<IEnumerable<Game>> GetAllGamesByStatus(GameStatus status);
+
+    /// <summary>
+    /// Updates games
+    /// </summary>
+    /// <param name="game"></param>
+    /// <returns></returns>
+    Task Update(Game game);
 }
 

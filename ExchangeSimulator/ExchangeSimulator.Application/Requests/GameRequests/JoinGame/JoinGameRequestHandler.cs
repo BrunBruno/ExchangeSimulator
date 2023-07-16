@@ -1,6 +1,7 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Entities;
+using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -55,6 +56,17 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
             throw new BadRequestException("Player already in game.");
         }
 
+        var availableSpots = game.NumberOfPlayers - game.Players.Count + 1;
+
+        if (availableSpots == 0) {
+            game.Status = GameStatus.Active;
+            await _gameRepository.Update(game);
+        }
+
+        if (availableSpots < 0) {
+            throw new BadRequestException("Game is full.");
+        }
+
         var player = new Player 
         {
             Id = Guid.NewGuid(),
@@ -77,6 +89,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
         await _playerCoinRepository.CraeteCoins(coins);
 
         user.Games.Add(game);
+
         await _userRepository.Update(user);
     }
 }

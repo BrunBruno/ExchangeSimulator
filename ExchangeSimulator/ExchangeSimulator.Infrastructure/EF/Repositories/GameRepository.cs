@@ -30,6 +30,7 @@ public class GameRepository : IGameRepository
     public async Task<Game?> GetGameById(Guid id) 
         => await _dbContext.Games
             .Include(x => x.StartingCoins)
+            .Include(x => x.Players)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<Game?> GetGameByName(string name) 
@@ -44,4 +45,9 @@ public class GameRepository : IGameRepository
             .Include(x => x.Players)
             .Where(x => x.Status == status)
             .ToListAsync();
+
+    public async Task Update(Game game) {
+        _dbContext.Games.Update(game);
+        await _dbContext.SaveChangesAsync();
+    }
 }
