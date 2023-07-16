@@ -75,5 +75,8 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
         });
 
         await _playerCoinRepository.CraeteCoins(coins);
+
+        user.Games.Add(game);
+        await _userRepository.Update(user);
     }
 }

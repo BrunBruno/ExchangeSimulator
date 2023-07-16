@@ -32,10 +32,6 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
     {
         var userId = _userContextService.GetUserId()!.Value;
 
-        var user = await _userRepository.GetUserById(userId)
-            ?? throw new NotFoundException("User not found.");
-
-
         var existingGame = await _gameRepository.GetGameByName(request.Name);
 
         if (existingGame is not null) {
@@ -69,8 +65,5 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
         }).ToList();
 
         await _gameRepository.CreateGame(game);
-
-        user.Games.Add(game);
-        await _userRepository.Update(user);
     }
 }
