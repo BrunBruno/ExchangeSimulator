@@ -22,6 +22,7 @@ public class GetUserRequestHandler : IRequestHandler<GetUserRequest, UserDto> {
             Email = user.Email,
             UserName = user.Username,
             ImageUrl = user.ImageUrl,
+            Review = user.Review,
         };
 
         return userDto;

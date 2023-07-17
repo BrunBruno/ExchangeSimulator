@@ -7,6 +7,7 @@ using ExchangeSimulator.Application.Requests.UserRequests.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ExchangeSimulator.Application.Requests.UserRequests.SetUserReview;
 
 namespace ExchangeSimulator.Api.Controllers;
 
@@ -96,4 +97,12 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(request);
         return Ok(result);
     }
+
+    [HttpPut("user-review")]
+    [Authorize]
+    public async Task<IActionResult> SetUserReview(SetUserReviewRequest request) { 
+        await _mediator.Send(request);
+        return Ok();
+    }
+
 }

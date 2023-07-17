@@ -51,4 +51,9 @@ public class User
     /// 
     /// </summary>
     public List<Game> Games { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int Review { get; set; } = 0;
 }
