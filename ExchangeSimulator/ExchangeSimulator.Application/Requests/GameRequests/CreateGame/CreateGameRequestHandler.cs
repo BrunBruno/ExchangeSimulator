@@ -28,7 +28,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
     public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken)
     {
-        if (request.NumberOfPlayers < 2)
+        if (request.NumberOfPlayers < 1)
         {
             throw new BadRequestException("Number of players must be greater or equal to 1.");
         }
