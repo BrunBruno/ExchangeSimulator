@@ -1,32 +1,31 @@
-﻿using ExchangeSimulator.Application.Pagination;
-using ExchangeSimulator.Application.Pagination.Enums;
+﻿using ExchangeSimulator.Application.Pagination.Enums;
+using ExchangeSimulator.Application.Pagination;
 using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
-public class GetAllAvailableGamesRequestHandler : IRequestHandler<GetAllAvailableGamesRequest, PagedResult<GetAllAvailableGamesDto>>
+namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllPreviousGames;
+
+public class GetAllPreviousGamesRequestHandler : IRequestHandler<GetAllPreviousGamesRequest, PagedResult<GetAllPreviousGamesDto>>
 {
     private readonly IGameRepository _gameRepository;
     private readonly IUserContextService _userContext;
 
-    public GetAllAvailableGamesRequestHandler(IGameRepository gameRepository, IUserContextService userContext)
+    public GetAllPreviousGamesRequestHandler(IGameRepository gameRepository, IUserContextService userContext)
     {
         _gameRepository = gameRepository;
         _userContext = userContext;
     }
-    public async Task<PagedResult<GetAllAvailableGamesDto>> Handle(GetAllAvailableGamesRequest request, CancellationToken cancellationToken)
+    public async Task<PagedResult<GetAllPreviousGamesDto>> Handle(GetAllPreviousGamesRequest request, CancellationToken cancellationToken)
     {
+
         var userId = _userContext.GetUserId()!.Value;
+        var games = await _gameRepository.GetGamesByUserId(userId)
+            ?? throw new NotFoundException("User not found.");
 
-        var userGames = await _gameRepository.GetGamesByUserId(userId)
-                        ?? throw new NotFoundException("User not found.");
-
-        var availableGames = await _gameRepository.GetAllGamesByStatus(GameStatus.Available);
-
-        var games = availableGames.Except(userGames);
+        games = games.Where(x => x.Status == GameStatus.Finished);
 
         switch (request.SortOption)
         {
@@ -51,7 +50,7 @@ public class GetAllAvailableGamesRequestHandler : IRequestHandler<GetAllAvailabl
             games = games.Where(x => x.Owner.Username.Contains(request.OwnerName, StringComparison.OrdinalIgnoreCase));
         }
 
-        var gameDtos = games.Select(game => new GetAllAvailableGamesDto
+        var gameDtos = games.Select(game => new GetAllPreviousGamesDto
         {
             Name = game.Name,
             Description = game.Description,
@@ -61,7 +60,7 @@ public class GetAllAvailableGamesRequestHandler : IRequestHandler<GetAllAvailabl
             OwnerName = game.Owner.Username
         });
 
-        var pagedResult = new PagedResult<GetAllAvailableGamesDto>(gameDtos.ToList(), gameDtos.Count(), 6, request.PageNumber);
+        var pagedResult = new PagedResult<GetAllPreviousGamesDto>(gameDtos.ToList(), gameDtos.Count(), 6, request.PageNumber);
 
         return pagedResult;
     }

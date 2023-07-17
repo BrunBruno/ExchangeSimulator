@@ -35,9 +35,6 @@ public class UserRepository : IUserRepository {
         => await _dbContext.Users
             .Include(x => x.Role)
             .Include(x => x.Games)
-            .ThenInclude(g => g.Players)
-            .Include(x => x.Games)
-            .ThenInclude(g => g.Owner)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     ///<inheritdoc/>

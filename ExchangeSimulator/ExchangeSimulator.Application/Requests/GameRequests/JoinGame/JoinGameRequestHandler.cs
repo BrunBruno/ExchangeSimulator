@@ -17,21 +17,18 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
     private readonly IUserRepository _userRepository;
     private readonly IGameRepository _gameRepository;
     private readonly IPlayerRepository _playerRepository;
-    private readonly IPlayerCoinRepository _playerCoinRepository;
     private readonly IPasswordHasher<Game> _passwordHasher;
 
     public JoinGameRequestHandler(IUserContextService userContext,
         IUserRepository userRepository, 
         IGameRepository gameRepository,
         IPlayerRepository playerRepository,
-        IPlayerCoinRepository playerCoinRepository,
         IPasswordHasher<Game> passwordHasher) {
 
         _userContext = userContext;
         _userRepository = userRepository;
         _gameRepository = gameRepository;
         _playerRepository = playerRepository;
-        _playerCoinRepository = playerCoinRepository;
         _passwordHasher = passwordHasher;
     }
     public async Task Handle(JoinGameRequest request, CancellationToken cancellationToken) 
@@ -43,6 +40,11 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
 
         var game = await _gameRepository.GetGameByName(request.GameName)
             ?? throw new NotFoundException("Game not found");
+
+        if (game.Status != GameStatus.Available)
+        {
+            throw new BadRequestException("Game is not available");
+        }
 
         var result = _passwordHasher.VerifyHashedPassword(game, game.PasswordHash, request.Password);
 
@@ -58,11 +60,6 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
 
         var availableSpots = game.NumberOfPlayers - (game.Players.Count + 1);
 
-        if (availableSpots == 0) {
-            game.Status = GameStatus.Active;
-            await _gameRepository.Update(game);
-        }
-
         if (availableSpots < 0) {
             throw new BadRequestException("Game is full.");
         }
@@ -76,17 +73,15 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
             UserId = userId
         };
 
-        await _playerRepository.CreatePlayer(player);
-
-        var coins = game.StartingCoins.Select(coin => new PlayerCoin 
-        { 
+        player.PlayerCoins = game.StartingCoins.Select(coin => new PlayerCoin
+        {
             Id = Guid.NewGuid(),
             Name = coin.Name,
             Quantity = coin.Quantity,
             PlayerId = player.Id
-        });
+        }).ToList();
 
-        await _playerCoinRepository.CraeteCoins(coins);
+        await _playerRepository.CreatePlayer(player);
 
         user.Games.Add(game);
 

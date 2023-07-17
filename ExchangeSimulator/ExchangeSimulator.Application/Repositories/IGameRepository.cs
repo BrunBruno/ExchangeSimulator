@@ -37,10 +37,16 @@ public interface IGameRepository {
     Task<IEnumerable<Game>> GetAllGamesByStatus(GameStatus status);
 
     /// <summary>
+    /// Gets all games that user has joined.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Game>> GetGamesByUserId(Guid userId);
+
+    /// <summary>
     /// Updates games
     /// </summary>
     /// <param name="game"></param>
     /// <returns></returns>
     Task Update(Game game);
 }
-

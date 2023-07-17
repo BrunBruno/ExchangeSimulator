@@ -1,6 +1,7 @@
 ﻿using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
+using ExchangeSimulator.Application.Requests.GameRequests.GetAllPreviousGames;
 using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -64,6 +65,18 @@ public class GameController : ControllerBase {
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetAllCurrentGames([FromQuery] GetAllCurrentGamesRequest request) {
 
+        var games = await _mediator.Send(request);
+        return Ok(games);
+    }
+
+    /// <summary>
+    /// Gets all finished games that user joined.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("previous-games")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllPreviousGames([FromQuery] GetAllPreviousGamesRequest request)
+    {
         var games = await _mediator.Send(request);
         return Ok(games);
     }

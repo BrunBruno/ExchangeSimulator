@@ -46,6 +46,13 @@ public class GameRepository : IGameRepository
             .Where(x => x.Status == status)
             .ToListAsync();
 
+    public async Task<IEnumerable<Game>> GetGamesByUserId(Guid userId)
+        => await _dbContext.Games
+            .Include(x => x.Owner)
+            .Include(x => x.Players)
+            .Where(x => x.Players.Any(p => p.UserId == userId))
+            .ToListAsync();
+
     public async Task Update(Game game) {
         _dbContext.Games.Update(game);
         await _dbContext.SaveChangesAsync();

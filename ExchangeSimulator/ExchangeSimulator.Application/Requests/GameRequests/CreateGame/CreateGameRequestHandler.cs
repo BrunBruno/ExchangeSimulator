@@ -16,20 +16,23 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
     private readonly IUserContextService _userContextService;
     private readonly IGameRepository _gameRepository;
     private readonly IPasswordHasher<Game> _passwordHasher;
-    private readonly IUserRepository _userRepository;
 
     public CreateGameRequestHandler(IUserContextService userContextService,
         IGameRepository gameRepository,
-        IPasswordHasher<Game> passwordHasher,
-        IUserRepository userRepository)
+        IPasswordHasher<Game> passwordHasher)
     {
         _userContextService = userContextService;
         _gameRepository = gameRepository;
         _passwordHasher = passwordHasher;
-        _userRepository = userRepository;
     }
+
     public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken)
     {
+        if (request.NumberOfPlayers < 2)
+        {
+            throw new BadRequestException("Number of players must be greater or equal to 1.");
+        }
+
         var userId = _userContextService.GetUserId()!.Value;
 
         var existingGame = await _gameRepository.GetGameByName(request.Name);
