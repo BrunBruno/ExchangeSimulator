@@ -44,6 +44,13 @@ public interface IGameRepository {
     Task<IEnumerable<Game>> GetGamesByUserId(Guid userId);
 
     /// <summary>
+    /// Gets all games that user has created.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Game>> GetOwnedGamesByUserId(Guid userId);
+
+    /// <summary>
     /// Updates games
     /// </summary>
     /// <param name="game"></param>
