@@ -57,6 +57,7 @@ public class GameRepository : IGameRepository
         => await _dbContext.Games
             .Include(x => x.Owner)
             .Include(x => x.Players)
+            .Include(x => x.StartingCoins)
             .Where(x => x.OwnerId == userId)
             .ToListAsync();
 
