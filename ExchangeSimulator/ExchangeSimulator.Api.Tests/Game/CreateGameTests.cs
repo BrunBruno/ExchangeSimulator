@@ -44,7 +44,6 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Description = "Description",
             Password = "Password",
             Money = 1000,
-            EndGame = DateTime.UtcNow.AddDays(10),
             NumberOfPlayers = 10,
             Coins = new List<StartingCoinItem>()
             {
@@ -107,7 +106,6 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Description = "Description",
             Password = "Password",
             Money = 1000,
-            EndGame = DateTime.UtcNow.AddDays(-10),
             NumberOfPlayers = 10,
             Coins = new List<StartingCoinItem>()
             {
@@ -144,7 +142,6 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Description = request.Description,
             PasswordHash = "PasswordHash",
             Money = request.Money,
-            EndGame = request.EndGame,
             NumberOfPlayers = request.NumberOfPlayers,
             OwnerId = Guid.Parse(Constants.UserId)
         };

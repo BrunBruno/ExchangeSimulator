@@ -52,21 +52,10 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
         var gameDtos = games.Select(game => new GetAllOwnerGamesDto
         {
             Name = game.Name,
-            Description = game.Description,
             CreatedAt = game.CreatedAt,
-            EndGame = game.EndGame,
             PlayerCount = game.Players.Count,
             AvailableSpots = game.NumberOfPlayers - game.Players.Count,
-            Money = game.Money,
-            OwnerName = game.Owner.Username,
             Status = game.Status,
-            Players = game.Players.Select(player => new PlayerDto { 
-                Name = player.Name
-            }).ToList(),
-            Coins = game.StartingCoins.Select(coin => new CoinDto {
-                Name = coin.Name,
-                Quantity = coin.Quantity,
-            }).ToList(),
         });
 
         var pagedResult = new PagedResult<GetAllOwnerGamesDto>(gameDtos.ToList(), gameDtos.Count(), 20, request.PageNumber);

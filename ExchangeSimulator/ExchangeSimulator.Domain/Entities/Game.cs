@@ -33,14 +33,24 @@ public class Game {
     public decimal Money { get; set; }
 
     /// <summary>
+    /// Duration of game
+    /// </summary>
+    public TimeSpan Duration { get; set; }
+
+    /// <summary>
     /// Date of creation
     /// </summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
+    /// Start date of the game
+    /// </summary>
+    public DateTime? StartsAt { get; set; }
+
+    /// <summary>
     /// End date of game
     /// </summary>
-    public DateTime EndGame { get; set; }
+    public DateTime? EndsAt { get; set; }
 
     /// <summary>
     /// Current status of game (active, available, finished)

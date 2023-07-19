@@ -47,15 +47,10 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
             Name = request.Name,
             Description = request.Description,
             Money = request.Money,
-            EndGame = request.EndGame,
+            Duration = new TimeSpan(request.Duration.Days, request.Duration.Hours, request.Duration.Minutes, 0),
             NumberOfPlayers = request.NumberOfPlayers,
             OwnerId = userId
         };
-
-        if (game.EndGame < game.CreatedAt)
-        {
-            throw new BadRequestException("End date is before created date.");
-        }
 
         game.PasswordHash = _passwordHasher.HashPassword(game, request.Password);
 

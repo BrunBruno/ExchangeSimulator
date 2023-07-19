@@ -31,7 +31,6 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            EndGame = DateTime.UtcNow.AddDays(1),
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 1,
@@ -63,7 +62,6 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            EndGame = DateTime.UtcNow.AddDays(1),
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 0,
@@ -91,7 +89,6 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            EndGame = DateTime.UtcNow.AddDays(1),
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 1,
@@ -122,7 +119,6 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            EndGame = DateTime.UtcNow.AddDays(-1),
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 1,
