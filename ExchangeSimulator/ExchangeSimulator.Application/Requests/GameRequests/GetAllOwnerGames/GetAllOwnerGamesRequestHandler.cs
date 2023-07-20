@@ -23,8 +23,7 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
     {
 
         var userId = _userContext.GetUserId()!.Value;
-        var games = await _gameRepository.GetOwnedGamesByUserId(userId)
-                    ?? throw new NotFoundException("User not found.");
+        var games = await _gameRepository.GetOwnedGamesByUserId(userId);
 
         switch (request.SortOption)
         {
@@ -58,7 +57,7 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
             Status = game.Status,
         });
 
-        var pagedResult = new PagedResult<GetAllOwnerGamesDto>(gameDtos.ToList(), gameDtos.Count(), 20, request.PageNumber);
+        var pagedResult = new PagedResult<GetAllOwnerGamesDto>(gameDtos.ToList(), gameDtos.Count(), 6, request.PageNumber);
 
         return pagedResult;
     }

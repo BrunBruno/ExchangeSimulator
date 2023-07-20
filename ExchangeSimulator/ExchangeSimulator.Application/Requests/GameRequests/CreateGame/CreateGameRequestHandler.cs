@@ -47,7 +47,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
             Name = request.Name,
             Description = request.Description,
             Money = request.Money,
-            Duration = new TimeSpan(request.Duration.Days, request.Duration.Hours, request.Duration.Minutes, 0),
+            Duration = new TimeSpan(0, request.Duration, 0),
             NumberOfPlayers = request.NumberOfPlayers,
             OwnerId = userId
         };

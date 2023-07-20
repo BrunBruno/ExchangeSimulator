@@ -21,8 +21,7 @@ public class GetAllAvailableGamesRequestHandler : IRequestHandler<GetAllAvailabl
     {
         var userId = _userContext.GetUserId()!.Value;
 
-        var userGames = await _gameRepository.GetGamesByUserId(userId)
-                        ?? throw new NotFoundException("User not found.");
+        var userGames = await _gameRepository.GetGamesByUserId(userId);
 
         var availableGames = await _gameRepository.GetAllGamesByStatus(GameStatus.Available);
 

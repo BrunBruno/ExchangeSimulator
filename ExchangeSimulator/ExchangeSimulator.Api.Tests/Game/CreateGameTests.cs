@@ -45,6 +45,7 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Password = "Password",
             Money = 1000,
             NumberOfPlayers = 10,
+            Duration = 120,
             Coins = new List<StartingCoinItem>()
             {
                 new StartingCoinItem()
@@ -97,7 +98,13 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         });
     }
 
-    public async Task CreateGame_Should_Return_BadRequest_On_Fail() {
+    /// <summary>
+    /// Number of players lower than 1.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task CreateGame_Should_Return_BadRequest_On_Fail() 
+    {
         //given
         await _dbContext.Init();
 
@@ -106,7 +113,7 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Description = "Description",
             Password = "Password",
             Money = 1000,
-            NumberOfPlayers = 10,
+            NumberOfPlayers = 0,
             Coins = new List<StartingCoinItem>()
             {
                 new StartingCoinItem()
@@ -143,7 +150,8 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             PasswordHash = "PasswordHash",
             Money = request.Money,
             NumberOfPlayers = request.NumberOfPlayers,
-            OwnerId = Guid.Parse(Constants.UserId)
+            OwnerId = Guid.Parse(Constants.UserId),
+            Duration = new TimeSpan(0,120,0)
         };
 
     private List<StartingCoin> ReturnExampleStartingCoinList(Guid gameId, CreateGameRequest request)

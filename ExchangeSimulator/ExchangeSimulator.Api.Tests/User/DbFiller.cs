@@ -1,7 +1,7 @@
 ﻿using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 
-namespace ExchangeSimulator.Api.Tests.User;
+namespace ExchangeSimulator.Api.Tests;
 
 public static partial class DbFiller
 {

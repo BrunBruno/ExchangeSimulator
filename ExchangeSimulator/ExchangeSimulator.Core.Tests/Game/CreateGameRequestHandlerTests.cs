@@ -1,8 +1,6 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
-using ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
 using ExchangeSimulator.Application.Services;
-using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
@@ -34,7 +32,8 @@ public class CreateGameRequestHandlerTests
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 1,
-            Password = "Password"
+            Password = "Password",
+            Duration = 120
         };
 
         _mockUserContextService.Setup(x => x.GetUserId()).Returns(Guid.NewGuid());
@@ -65,7 +64,8 @@ public class CreateGameRequestHandlerTests
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 0,
-            Password = "Password"
+            Password = "Password",
+            Duration = 120
         };
 
         //when
@@ -92,42 +92,12 @@ public class CreateGameRequestHandlerTests
             Money = 1000,
             Name = "Name",
             NumberOfPlayers = 1,
-            Password = "Password"
+            Password = "Password",
+            Duration = 120
         };
 
         _mockUserContextService.Setup(x => x.GetUserId()).Returns(Guid.NewGuid());
         _mockGameRepository.Setup(x => x.GetGameByName(request.Name)).ReturnsAsync(new Domain.Entities.Game());
-
-        //when
-        var handler = new CreateGameRequestHandler(_mockUserContextService.Object, _mockGameRepository.Object, _mockPasswordHasher.Object);
-        var act = () => handler.Handle(request, CancellationToken.None);
-
-        //then
-        await act.Should().ThrowAsync<BadRequestException>();
-
-        _mockUserContextService.Verify(x => x.GetUserId(), Times.Once);
-        _mockGameRepository.Verify(x => x.GetGameByName(request.Name), Times.Once);
-        _mockPasswordHasher.Verify(x => x.HashPassword(It.IsAny<Domain.Entities.Game>(), request.Password), Times.Never);
-        _mockGameRepository.Verify(x => x.CreateGame(It.IsAny<Domain.Entities.Game>()), Times.Never);
-    }
-
-    [Fact]
-    public async Task Handle_Throws_BadRequestException_When_EndDate_Is_Before_CreatedDate()
-    {
-        //given
-        var request = new CreateGameRequest
-        {
-            Coins = new List<StartingCoinItem>(),
-            Description = "Description",
-            Money = 1000,
-            Name = "Name",
-            NumberOfPlayers = 1,
-            Password = "Password"
-        };
-
-        _mockUserContextService.Setup(x => x.GetUserId()).Returns(Guid.NewGuid());
-        _mockGameRepository.Setup(x => x.GetGameByName(request.Name)).ReturnsAsync(default(Domain.Entities.Game));
-        _mockPasswordHasher.Setup(x => x.HashPassword(It.IsAny<Domain.Entities.Game>(), request.Password)).Returns("PasswordHash");
 
         //when
         var handler = new CreateGameRequestHandler(_mockUserContextService.Object, _mockGameRepository.Object, _mockPasswordHasher.Object);

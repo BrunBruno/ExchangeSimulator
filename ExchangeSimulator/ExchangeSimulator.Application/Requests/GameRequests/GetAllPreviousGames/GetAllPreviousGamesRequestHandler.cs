@@ -22,8 +22,7 @@ public class GetAllPreviousGamesRequestHandler : IRequestHandler<GetAllPreviousG
     {
 
         var userId = _userContext.GetUserId()!.Value;
-        var games = await _gameRepository.GetGamesByUserId(userId)
-            ?? throw new NotFoundException("User not found.");
+        var games = await _gameRepository.GetGamesByUserId(userId);
 
         games = games.Where(x => x.Status == GameStatus.Finished);
 

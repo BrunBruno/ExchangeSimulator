@@ -33,9 +33,9 @@ public class CreateGameRequest : IRequest
     public List<StartingCoinItem> Coins { get; set; }
 
     /// <summary>
-    /// Duration of them game
+    /// Duration of the game in minutes.
     /// </summary>
-    public DurationItem Duration { get; set; }
+    public int Duration { get; set; }
 
     /// <summary>
     /// Amount of players that can join the game

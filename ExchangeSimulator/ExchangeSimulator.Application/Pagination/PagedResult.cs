@@ -8,6 +8,13 @@ public class PagedResult<T> where T : class
     public int ItemsTo { get; set; }
     public int TotalItemsCount { get; set; }
 
+    /// <summary>
+    /// Needed for deserialization in tests.
+    /// </summary>
+    public PagedResult()
+    {
+    }
+
     public PagedResult(List<T> items, int totalCount, int pageSize, int pageNumber)
     {
         Items = items
