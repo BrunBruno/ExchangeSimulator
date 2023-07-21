@@ -1,12 +1,10 @@
-﻿
-
-using ExchangeSimulator.Application.Repositories;
-using ExchangeSimulator.Application.Services;
+﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.GameRequests.GetGameDetails;
-public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsRequest, GameDto> {
+public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsRequest, GameDto> 
+{
     private readonly IGameRepository _gameRepository;
 
     public GetGameDetailsRequestHandler(IGameRepository gameRepository) {
@@ -17,7 +15,8 @@ public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsReques
         var game = await _gameRepository.GetGameByName(request.GameName) 
             ?? throw new NotFoundException("Game not found");
 
-        var gameDto = new GameDto() {
+        var gameDto = new GameDto
+        {
             Name = game.Name,
             Description = game.Description,
             Money = game.Money,
@@ -29,17 +28,18 @@ public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsReques
             NumberOfPlayers = game.NumberOfPlayers,
             AvailableSpots = game.NumberOfPlayers - game.Players.Count,
             PlayerCount = game.Players.Count,
-            Players = game.Players.Select(player => new PlayerDto() {
-                Name = player.Name,
+            Players = game.Players.Select(player => new PlayerDto
+            {
+                Name = player.Name
             }).ToList(),
-            Coins = game.StartingCoins.Select(coin => new CoinDto() { 
+            Coins = game.StartingCoins.Select(coin => new CoinDto
+            { 
                 Name = coin.Name,
                 Quantity = coin.Quantity,
-                ImageUrl = coin.ImageUrl,
+                ImageUrl = coin.ImageUrl
             }).ToList(),
         };
 
         return gameDto;
     }
 }
-

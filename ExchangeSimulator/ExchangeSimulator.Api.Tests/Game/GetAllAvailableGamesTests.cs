@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using ExchangeSimulator.Application.Pagination;
+using ExchangeSimulator.Application.Pagination.Enums;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
 
 namespace ExchangeSimulator.Api.Tests.Game;
@@ -36,10 +37,10 @@ public class GetAllAvailableGamesTests : IClassFixture<TestWebApplicationFactory
         await _dbContext.AddGamesForPagination(); //adds 20 games
 
         //when
-        var response1 = await _client.GetAsync("api/game/available-games?gameName=&ownerName=&pageNumber=1&sortOption=0"); //sort by date
-        var response2 = await _client.GetAsync("api/game/available-games?gameName=&ownerName=&pageNumber=2&sortOption=0"); //sort by date
-        var response3 = await _client.GetAsync("api/game/available-games?gameName=&ownerName=&pageNumber=2&sortOption=1"); //sort by game name
-        var response4 = await _client.GetAsync("api/game/available-games?gameName=Game12&ownerName=&pageNumber=1&sortOption=1"); //sort by game name
+        var response1 = await _client.GetAsync($"api/game/available-games?gameName=&ownerName=&pageNumber=1&sortOption={GameSortOption.Date}");
+        var response2 = await _client.GetAsync($"api/game/available-games?gameName=&ownerName=&pageNumber=2&sortOption={GameSortOption.Date}");
+        var response3 = await _client.GetAsync($"api/game/available-games?gameName=&ownerName=&pageNumber=2&sortOption={GameSortOption.Name}");
+        var response4 = await _client.GetAsync($"api/game/available-games?gameName=Game12&ownerName=&pageNumber=1&sortOption={GameSortOption.Name}");
 
         //then
         response1.StatusCode.Should().Be(HttpStatusCode.OK);

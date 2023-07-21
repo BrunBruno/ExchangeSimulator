@@ -3,7 +3,6 @@ using ExchangeSimulator.Application.Pagination.Enums;
 using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Enums;
-using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;

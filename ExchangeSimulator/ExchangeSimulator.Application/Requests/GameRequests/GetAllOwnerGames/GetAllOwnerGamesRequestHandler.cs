@@ -1,10 +1,7 @@
 ﻿using ExchangeSimulator.Application.Pagination.Enums;
 using ExchangeSimulator.Application.Pagination;
 using ExchangeSimulator.Application.Repositories;
-using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
 using ExchangeSimulator.Application.Services;
-using ExchangeSimulator.Domain.Enums;
-using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.GameRequests.GetAllOwnerGames;

@@ -14,11 +14,12 @@ namespace ExchangeSimulator.Api.Controllers;
 
 [ApiController]
 [Route("api/game")]
-public class GameController : ControllerBase {
-
+public class GameController : ControllerBase 
+{
     private readonly IMediator _mediator;
 
-    public GameController(IMediator mediator) {
+    public GameController(IMediator mediator) 
+    {
         _mediator = mediator;
     }
 
@@ -29,7 +30,8 @@ public class GameController : ControllerBase {
     /// <returns></returns>
     [HttpPost]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> CreateGame(CreateGameRequest request) {
+    public async Task<IActionResult> CreateGame(CreateGameRequest request) 
+    {
         await _mediator.Send(request);
         return Ok();
     }
@@ -43,7 +45,8 @@ public class GameController : ControllerBase {
     /// <returns></returns>
     [HttpPost("join-game")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> JoinGame(JoinGameRequest request) {
+    public async Task<IActionResult> JoinGame(JoinGameRequest request) 
+    {
         await _mediator.Send(request);
         return Ok();
     }
@@ -54,7 +57,8 @@ public class GameController : ControllerBase {
     /// <returns></returns>
     [HttpGet("available-games")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllAvailableGames([FromQuery] GetAllAvailableGamesRequest request) {
+    public async Task<IActionResult> GetAllAvailableGames([FromQuery] GetAllAvailableGamesRequest request) 
+    {
 
         var games = await _mediator.Send(request);
         return Ok(games);
@@ -66,7 +70,8 @@ public class GameController : ControllerBase {
     /// <returns></returns>
     [HttpGet("current-games")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllCurrentGames([FromQuery] GetAllCurrentGamesRequest request) {
+    public async Task<IActionResult> GetAllCurrentGames([FromQuery] GetAllCurrentGamesRequest request) 
+    {
 
         var games = await _mediator.Send(request);
         return Ok(games);
@@ -97,25 +102,26 @@ public class GameController : ControllerBase {
     }
 
     /// <summary>
-    /// Starts the game - chnage status to active.
+    /// Starts the game - changes status to active.
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPut("start-game")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> StartGame(StartGameRequest request) { 
+    public async Task<IActionResult> StartGame(StartGameRequest request) 
+    { 
         await _mediator.Send(request);
         return Ok();
     }
 
-
     /// <summary>
-    /// Gets game details
+    /// Gets game details.
     /// </summary>
     /// <returns></returns>
     [HttpGet("game-details")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllOwnerGames([FromQuery] GetGameDetailsRequest request) {
+    public async Task<IActionResult> GetAllOwnerGames([FromQuery] GetGameDetailsRequest request) 
+    {
         var game = await _mediator.Send(request);
         return Ok(game);
     }

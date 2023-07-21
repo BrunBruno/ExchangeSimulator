@@ -39,7 +39,7 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
         var request = new SignInRequest()
         {
             Email = userEmail,
-            Password = Constants.UserPassword
+            Password = Constants.Password
         };
 
         var json = JsonConvert.SerializeObject(request);

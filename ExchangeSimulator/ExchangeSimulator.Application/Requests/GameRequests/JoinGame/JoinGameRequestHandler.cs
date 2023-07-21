@@ -78,6 +78,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
             Id = Guid.NewGuid(),
             Name = coin.Name,
             Quantity = coin.Quantity,
+            ImageUrl = coin.ImageUrl,
             PlayerId = player.Id
         }).ToList();
 

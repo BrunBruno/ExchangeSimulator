@@ -37,6 +37,8 @@ public class StartGameRequestHandler : IRequestHandler<StartGameRequest>
         }
 
         game.Status = GameStatus.Active;
+        game.StartsAt = DateTime.UtcNow;
+        game.EndsAt = DateTime.UtcNow.Add(game.Duration);
 
         await _gameRepository.Update(game);
     }
