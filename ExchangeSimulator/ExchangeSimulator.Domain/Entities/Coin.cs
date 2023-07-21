@@ -20,5 +20,10 @@ public abstract class Coin {
     /// Amount of coins
     /// </summary>
     public decimal Quantity { get; set; }
+
+    /// <summary>
+    /// Image of coin
+    /// </summary>
+    public string? ImageUrl { get; set; }
 }
 

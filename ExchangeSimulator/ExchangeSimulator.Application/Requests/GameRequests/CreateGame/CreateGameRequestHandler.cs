@@ -59,6 +59,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
             Id = Guid.NewGuid(),
             Name = coin.Name,
             Quantity = coin.Quantity,
+            ImageUrl = coin.ImageUrl,
             GameId = game.Id
         }).ToList();
 

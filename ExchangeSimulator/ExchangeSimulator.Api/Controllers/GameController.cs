@@ -4,6 +4,7 @@ using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllOwnerGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllPreviousGames;
 using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
+using ExchangeSimulator.Application.Requests.GameRequests.StartGame;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -94,4 +95,16 @@ public class GameController : ControllerBase {
         return Ok(games);
     }
 
+    /// <summary>
+    /// Starts the game - chnage status to active.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut("start-game")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> StartGame(StartGameRequest request) { 
+        await _mediator.Send(request);
+        return Ok();
+    }
+        
 }
