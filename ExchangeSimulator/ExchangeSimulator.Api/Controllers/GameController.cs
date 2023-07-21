@@ -3,6 +3,7 @@ using ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllOwnerGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllPreviousGames;
+using ExchangeSimulator.Application.Requests.GameRequests.GetGameDetails;
 using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 using ExchangeSimulator.Application.Requests.GameRequests.StartGame;
 using MediatR;
@@ -106,5 +107,16 @@ public class GameController : ControllerBase {
         await _mediator.Send(request);
         return Ok();
     }
-        
+
+
+    /// <summary>
+    /// Gets game details
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("game-details")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllOwnerGames([FromQuery] GetGameDetailsRequest request) {
+        var game = await _mediator.Send(request);
+        return Ok(game);
+    }
 }
