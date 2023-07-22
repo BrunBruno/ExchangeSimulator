@@ -1,5 +1,4 @@
-﻿using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
-using ExchangeSimulator.Domain.Enums;
+﻿using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,5 +55,57 @@ public class StartGameTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         var startedGame = await _dbContext.Games.FirstOrDefaultAsync(x => x.Id == gameId);
         startedGame.Status.Should().Be(GameStatus.Active);
+    }
+
+    /// <summary>
+    /// Start game that not exists
+    /// </summary>
+    /// <returns></returns>
+
+    [Fact]
+    public async Task StartGame_Returns_NotFound_On_Fail() {
+        await _dbContext.Init();
+        await _dbContext.AddUser();
+
+        var request = new StartGameRequest {
+            GameName = "Game-That-Not-Exists"
+        };
+
+        var json = JsonConvert.SerializeObject(request);
+
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        //when
+        var response = await _client.PutAsync("api/game/start-game", httpContent);
+
+        //then
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    /// <summary>
+    /// Start game width active status (only available should be startable)
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task StartGame_Returns_BadRequest_On_Fail() {
+        await _dbContext.Init();
+        await _dbContext.AddUser();
+        var gameId = Guid.NewGuid();
+        await _dbContext.AddGame(gameId, "Game1", GameStatus.Active);
+
+
+        var request = new StartGameRequest {
+            GameName = "Game1"
+        };
+
+        var json = JsonConvert.SerializeObject(request);
+
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+        //when
+        var response = await _client.PutAsync("api/game/start-game", httpContent);
+
+        //then
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

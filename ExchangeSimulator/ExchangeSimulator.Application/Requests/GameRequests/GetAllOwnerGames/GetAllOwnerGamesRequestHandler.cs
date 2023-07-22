@@ -54,7 +54,7 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
             Status = game.Status,
         });
 
-        var pagedResult = new PagedResult<GetAllOwnerGamesDto>(gameDtos.ToList(), gameDtos.Count(), 6, request.PageNumber);
+        var pagedResult = new PagedResult<GetAllOwnerGamesDto>(gameDtos.ToList(), gameDtos.Count(), 18, request.PageNumber);
 
         return pagedResult;
     }

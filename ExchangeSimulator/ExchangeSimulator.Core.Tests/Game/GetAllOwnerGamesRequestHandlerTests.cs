@@ -30,7 +30,7 @@ public class GetAllOwnerGamesRequestHandlerTests
         var userId = Guid.NewGuid();
 
         _mockUserContextService.Setup(x => x.GetUserId()).Returns(userId);
-        _mockGameRepository.Setup(x => x.GetOwnedGamesByUserId(userId)).ReturnsAsync(games.Take(10));
+        _mockGameRepository.Setup(x => x.GetOwnedGamesByUserId(userId)).ReturnsAsync(games.Take(22));
 
         //when
         var handler = new GetAllOwnerGamesRequestHandler(_mockGameRepository.Object, _mockUserContextService.Object);
@@ -38,10 +38,10 @@ public class GetAllOwnerGamesRequestHandlerTests
 
         //then
         result.Items.Count.Should().Be(4);
-        result.TotalItemsCount.Should().Be(10);
-        result.ItemsFrom = 7;
-        result.ItemsTo = 12;
-        result.Items.First().Name.Should().Be("Game6");
+        result.TotalItemsCount.Should().Be(22);
+        result.ItemsFrom = 19;
+        result.ItemsTo = 22;
+        result.Items.First().Name.Should().Be("Game18");
 
         _mockUserContextService.Verify(x => x.GetUserId(), Times.Once);
         _mockGameRepository.Verify(x => x.GetOwnedGamesByUserId(It.IsAny<Guid>()), Times.Once);
@@ -51,7 +51,7 @@ public class GetAllOwnerGamesRequestHandlerTests
     {
         var gamesList = new List<Domain.Entities.Game>();
 
-        for (var i = 0; i < 12; i++)
+        for (var i = 0; i < 36; i++)
         {
             gamesList.Add(new Domain.Entities.Game()
             {

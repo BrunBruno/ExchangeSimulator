@@ -1,6 +1,7 @@
 using ExchangeSimulator.Api.Authorization;
 using ExchangeSimulator.Application;
 using ExchangeSimulator.Infrastructure;
+using ExchangeSimulator.Infrastructure.Seeders;
 using ExchangeSimulator.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// var scope = app.Services.CreateScope();
+// var seeder = scope.ServiceProvider.GetRequiredService<GameSeeder>();
+// await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

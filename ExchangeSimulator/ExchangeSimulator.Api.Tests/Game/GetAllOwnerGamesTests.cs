@@ -38,28 +38,28 @@ public class GetAllOwnerGamesTests : IClassFixture<TestWebApplicationFactory<Pro
 
         //when
         var response1 = await _client.GetAsync($"api/game/owner-games?gameName=&ownerName=TestUserName&pageNumber=1&sortOption={GameSortOption.Date}");
-        var response2 = await _client.GetAsync($"api/game/owner-games?gameName=&ownerName=TestUserName&pageNumber=3&sortOption={GameSortOption.Date}");
-        var response3 = await _client.GetAsync($"api/game/owner-games?gameName=&ownerName=TestUserName&pageNumber=2&sortOption={GameSortOption.Name}");
+        var response2 = await _client.GetAsync($"api/game/owner-games?gameName=&ownerName=TestUserName&pageNumber=2&sortOption={GameSortOption.Date}");
+        var response3 = await _client.GetAsync($"api/game/owner-games?gameName=&ownerName=TestUserName&pageNumber=1&sortOption={GameSortOption.Name}");
         var response4 = await _client.GetAsync($"api/game/owner-games?gameName=Game13&ownerName=TestUserName&pageNumber=1&sortOption={GameSortOption.Name}");
 
         //then
         response1.StatusCode.Should().Be(HttpStatusCode.OK);
         var result1 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response1.Content.ReadAsStringAsync());
         result1.TotalItemsCount.Should().Be(20);
-        result1.Items.Should().HaveCount(6);
+        result1.Items.Should().HaveCount(18);
         result1.Items.First().Name.Should().Be("Game0");
 
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
         var result2 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response2.Content.ReadAsStringAsync());
         result2.TotalItemsCount.Should().Be(20);
-        result2.Items.Should().HaveCount(6);
-        result2.Items.First().Name.Should().Be("Game12");
+        result2.Items.Should().HaveCount(2);
+        result2.Items.First().Name.Should().Be("Game18");
 
         response3.StatusCode.Should().Be(HttpStatusCode.OK);
         var result3 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response3.Content.ReadAsStringAsync());
         result3.TotalItemsCount.Should().Be(20);
-        result3.Items.Should().HaveCount(6);
-        result3.Items.First().Name.Should().Be("Game14");
+        result3.Items.Should().HaveCount(18);
+        result3.Items.First().Name.Should().Be("Game0");
 
         response4.StatusCode.Should().Be(HttpStatusCode.OK);
         var result4 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response4.Content.ReadAsStringAsync());
