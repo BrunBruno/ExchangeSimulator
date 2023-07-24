@@ -45,12 +45,13 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
             games = games.Where(x => x.Owner.Username.Contains(request.OwnerName, StringComparison.OrdinalIgnoreCase));
         }
 
-        var gameDtos = games.Select(game => new GetAllOwnerGamesDto
-        {
+
+        var gameDtos = games.Select(game => new GetAllOwnerGamesDto {
             Name = game.Name,
             CreatedAt = game.CreatedAt,
-            PlayerCount = game.Players.Count,
-            AvailableSpots = game.NumberOfPlayers - game.Players.Count,
+            PlayersRatio = 100 * game.Players.Count / game.NumberOfPlayers,
+            TimeRatio = game.StartsAt.HasValue && game.Duration.TotalMinutes > 0 
+            ? Math.Max(0.00, Math.Min(100.00, 100 * (DateTime.UtcNow - game.StartsAt.Value).TotalMinutes / game.Duration.TotalMinutes)) : 0.00,
             Status = game.Status,
         });
 

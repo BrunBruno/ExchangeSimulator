@@ -6,8 +6,8 @@ public class GetAllOwnerGamesDto
 {
     public string Name { get; set; }
     public DateTime CreatedAt { get; set; }
-    public int PlayerCount { get; set; }
-    public int AvailableSpots { get; set; }
+    public double PlayersRatio { get; set; }
+    public double TimeRatio { get; set; }
     public GameStatus Status { get; set; }
 
 }
