@@ -28,7 +28,7 @@ public class GetAllCurrentGamesRequestHandler : IRequestHandler<GetAllCurrentGam
         switch (request.SortOption)
         {
             case GameSortOption.Date:
-                games = games.OrderBy(x => x.CreatedAt);
+                games = games.OrderByDescending(x => x.CreatedAt);
                 break;
             case GameSortOption.Name:
                 games = games.OrderBy(x => x.Name);
@@ -54,6 +54,9 @@ public class GetAllCurrentGamesRequestHandler : IRequestHandler<GetAllCurrentGam
             Description = game.Description,
             CreatedAt = game.CreatedAt,
             AvailableSpots = game.NumberOfPlayers - game.Players.Count,
+            PlayersRatio = 100 * game.Players.Count / game.NumberOfPlayers,
+            TimeRatio = game.StartsAt.HasValue && game.Duration.TotalMinutes > 0
+            ? Math.Max(0.00, Math.Min(100.00, 100 * (DateTime.UtcNow - game.StartsAt.Value).TotalMinutes / game.Duration.TotalMinutes)) : 0.00,
             OwnerName = game.Owner.Username,
             Status = game.Status
         });

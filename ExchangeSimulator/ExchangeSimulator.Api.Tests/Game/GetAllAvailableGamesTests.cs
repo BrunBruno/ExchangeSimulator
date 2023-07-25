@@ -47,13 +47,13 @@ public class GetAllAvailableGamesTests : IClassFixture<TestWebApplicationFactory
         var result1 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response1.Content.ReadAsStringAsync());
         result1.TotalItemsCount.Should().Be(7);
         result1.Items.Should().HaveCount(6);
-        result1.Items.First().Name.Should().Be("Game0");
+        result1.Items.First().Name.Should().Be("Game18");
 
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
         var result2 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response2.Content.ReadAsStringAsync());
         result2.TotalItemsCount.Should().Be(7);
         result2.Items.Should().HaveCount(1);
-        result2.Items.First().Name.Should().Be("Game18");
+        result2.Items.First().Name.Should().Be("Game0");
 
         response3.StatusCode.Should().Be(HttpStatusCode.OK);
         var result3 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response3.Content.ReadAsStringAsync());

@@ -29,7 +29,7 @@ public class GetAllPreviousGamesRequestHandler : IRequestHandler<GetAllPreviousG
         switch (request.SortOption)
         {
             case GameSortOption.Date:
-                games = games.OrderBy(x => x.CreatedAt);
+                games = games.OrderByDescending(x => x.CreatedAt);
                 break;
             case GameSortOption.Name:
                 games = games.OrderBy(x => x.Name);

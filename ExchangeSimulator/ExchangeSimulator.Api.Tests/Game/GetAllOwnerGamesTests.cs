@@ -47,13 +47,13 @@ public class GetAllOwnerGamesTests : IClassFixture<TestWebApplicationFactory<Pro
         var result1 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response1.Content.ReadAsStringAsync());
         result1.TotalItemsCount.Should().Be(20);
         result1.Items.Should().HaveCount(18);
-        result1.Items.First().Name.Should().Be("Game0");
+        result1.Items.First().Name.Should().Be("Game19");
 
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
         var result2 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response2.Content.ReadAsStringAsync());
         result2.TotalItemsCount.Should().Be(20);
         result2.Items.Should().HaveCount(2);
-        result2.Items.First().Name.Should().Be("Game18");
+        result2.Items.First().Name.Should().Be("Game1");
 
         response3.StatusCode.Should().Be(HttpStatusCode.OK);
         var result3 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response3.Content.ReadAsStringAsync());

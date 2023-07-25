@@ -25,24 +25,16 @@ public class GetAllOwnerGamesRequestHandler : IRequestHandler<GetAllOwnerGamesRe
         switch (request.SortOption)
         {
             case GameSortOption.Date:
-                games = games.OrderBy(x => x.CreatedAt);
+                games = games.OrderByDescending(x => x.CreatedAt);
                 break;
             case GameSortOption.Name:
                 games = games.OrderBy(x => x.Name);
-                break;
-            case GameSortOption.Owner:
-                games = games.OrderBy(x => x.Owner.Username);
                 break;
         }
 
         if (request.GameName is not null)
         {
             games = games.Where(x => x.Name.Contains(request.GameName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        if (request.OwnerName is not null)
-        {
-            games = games.Where(x => x.Owner.Username.Contains(request.OwnerName, StringComparison.OrdinalIgnoreCase));
         }
 
 

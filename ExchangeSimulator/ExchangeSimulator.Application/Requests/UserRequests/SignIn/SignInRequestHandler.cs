@@ -25,7 +25,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, SignInDto>
 
     public async Task<SignInDto> Handle(SignInRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetUserByEmail(request.Email);
+        var user = await _userRepository.GetUserByEmail(request.Email.ToLower());
 
         if (user is null)
         {

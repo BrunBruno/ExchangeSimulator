@@ -47,7 +47,7 @@ public class GetAllPreviousGamesTests : IClassFixture<TestWebApplicationFactory<
         var result1 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response1.Content.ReadAsStringAsync());
         result1.TotalItemsCount.Should().Be(6);
         result1.Items.Should().HaveCount(6);
-        result1.Items.First().Name.Should().Be("Game2");
+        result1.Items.First().Name.Should().Be("Game17");
 
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
         var result2 = JsonConvert.DeserializeObject<PagedResult<GetAllAvailableGamesDto>>(await response2.Content.ReadAsStringAsync());

@@ -41,7 +41,7 @@ public class GetAllOwnerGamesRequestHandlerTests
         result.TotalItemsCount.Should().Be(22);
         result.ItemsFrom = 19;
         result.ItemsTo = 22;
-        result.Items.First().Name.Should().Be("Game18");
+        result.Items.First().Name.Should().Be("Game3");
 
         _mockUserContextService.Verify(x => x.GetUserId(), Times.Once);
         _mockGameRepository.Verify(x => x.GetOwnedGamesByUserId(It.IsAny<Guid>()), Times.Once);

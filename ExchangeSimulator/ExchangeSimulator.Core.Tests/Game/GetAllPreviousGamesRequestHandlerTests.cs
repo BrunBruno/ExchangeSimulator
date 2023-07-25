@@ -38,7 +38,7 @@ public class GetAllPreviousGamesRequestHandlerTests
         result.TotalItemsCount.Should().Be(3);
         result.ItemsFrom = 1;
         result.ItemsTo = 6;
-        result.Items.First().Name.Should().Be("Game2");
+        result.Items.First().Name.Should().Be("Game8");
 
         _mockUserContextService.Verify(x => x.GetUserId(), Times.Once);
         _mockGameRepository.Verify(x => x.GetGamesByUserId(It.IsAny<Guid>()), Times.Once);

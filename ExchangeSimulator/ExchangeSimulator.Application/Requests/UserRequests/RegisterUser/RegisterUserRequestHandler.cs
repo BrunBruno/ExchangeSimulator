@@ -29,7 +29,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 
     public async Task Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
-        var emailAlreadyExists = await _userRepository.GetUserByEmail(request.Email);
+        var emailAlreadyExists = await _userRepository.GetUserByEmail(request.Email.ToLower());
 
         if (emailAlreadyExists is not null)
         {
@@ -44,7 +44,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
         var user = new User
         {
             Id = Guid.NewGuid(),
-            Email = request.Email,
+            Email = request.Email.ToLower(),
             Username = request.Username,
             ImageUrl = request.ImageUrl
         };
@@ -69,6 +69,6 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 
         await _codeRepository.AddCode(code);
 
-        await _smtpService.SendMessage(request.Email, "Hello " + request.Username, codeValue);
+        await _smtpService.SendMessage(request.Email.ToLower(), "Hello " + request.Username, codeValue);
     }
 }
