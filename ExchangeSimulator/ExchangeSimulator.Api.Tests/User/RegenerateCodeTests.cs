@@ -1,7 +1,10 @@
 ﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
+using ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerificationCode;
 using FluentAssertions;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace ExchangeSimulator.Api.Tests.User;
 
@@ -32,8 +35,12 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
         await _dbContext.AddUser();
         await _dbContext.AddCodeForUser();
 
+        var request = new RegenerateEmailVerificationCodeRequest();
+        var json = JsonConvert.SerializeObject(request);
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
         //when
-        var response = await _client.PostAsync("api/user/regenerate-code", null);
+        var response = await _client.PostAsync("api/user/regenerate-code", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -49,8 +56,12 @@ public class RegenerateCodeTests : IClassFixture<TestWebApplicationFactory<Progr
         //given
         await _dbContext.Init();
 
+        var request = new RegenerateEmailVerificationCodeRequest();
+        var json = JsonConvert.SerializeObject(request);
+        var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
         //when
-        var response = await _client.PostAsync("api/user/regenerate-code", null);
+        var response = await _client.PostAsync("api/user/regenerate-code", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);

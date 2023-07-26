@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using ExchangeSimulator.Application.Requests.RegisterUser;
 using Microsoft.EntityFrameworkCore;
+using ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
 
 namespace ExchangeSimulator.Api.Tests.User;
 

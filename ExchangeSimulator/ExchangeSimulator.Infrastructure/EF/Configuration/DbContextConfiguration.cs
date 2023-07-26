@@ -8,16 +8,25 @@ namespace ExchangeSimulator.Infrastructure.EF.Configuration;
 /// <summary>
 /// Configurations for DbContext.
 /// </summary>
-public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Role>, IEntityTypeConfiguration<EmailVerificationCode>
-{
+public class DbContextConfiguration : 
+    IEntityTypeConfiguration<User>, 
+    IEntityTypeConfiguration<Role>, 
+    IEntityTypeConfiguration<EmailVerificationCode>, 
+    IEntityTypeConfiguration<Game>, 
+    IEntityTypeConfiguration<Player>, 
+    IEntityTypeConfiguration<StartingCoin>, 
+    IEntityTypeConfiguration<PlayerCoin>{
     public void Configure(EntityTypeBuilder<User> builder)
     {
-       builder
-           .HasKey(x => x.Id);
-       builder
-           .HasOne(x => x.Role)
-           .WithMany()
-           .HasForeignKey(x => x.RoleId);
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Role)
+            .WithMany()
+            .HasForeignKey(x => x.RoleId);
+        builder
+            .HasMany(x => x.Games)
+            .WithMany();
     }
 
     public void Configure(EntityTypeBuilder<Role> builder)
@@ -35,6 +44,46 @@ public class DbContextConfiguration : IEntityTypeConfiguration<User>, IEntityTyp
             .HasOne(x => x.User)
             .WithOne()
             .HasForeignKey<EmailVerificationCode>(x => x.UserId);
+    }
+
+    public void Configure(EntityTypeBuilder<Game> builder) {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Owner)
+            .WithMany()
+            .HasForeignKey(x => x.OwnerId);
+    }
+
+    public void Configure(EntityTypeBuilder<Player> builder) {
+        builder
+          .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Game)
+            .WithMany(x => x.Players)
+            .HasForeignKey(x => x.GameId);
+        builder
+            .HasOne(x => x.User)
+            .WithMany()
+            .HasForeignKey(x => x.UserId);
+    }
+
+    public void Configure(EntityTypeBuilder<StartingCoin> builder) {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Game)
+            .WithMany(x => x.StartingCoins)
+            .HasForeignKey(x => x.GameId);
+    }
+
+    public void Configure(EntityTypeBuilder<PlayerCoin> builder) {
+        builder
+          .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Player)
+            .WithMany(x => x.PlayerCoins)
+            .HasForeignKey(x => x.PlayerId);
     }
 
     private IEnumerable<Role> GetRoles()

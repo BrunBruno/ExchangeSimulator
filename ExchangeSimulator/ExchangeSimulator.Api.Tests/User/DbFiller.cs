@@ -1,7 +1,7 @@
 ﻿using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 
-namespace ExchangeSimulator.Api.Tests.User;
+namespace ExchangeSimulator.Api.Tests;
 
 public static partial class DbFiller
 {
@@ -32,7 +32,7 @@ public static partial class DbFiller
             Email = "test@gmail.com",
             Username = "TestUserName",
             ImageUrl = "http://test.com",
-            PasswordHash = "AQAAAAIAAYagAAAAEA5h41NvfPFBWbMJg+2IxbvZkzKdrJJEWujujwUWUWUcNN96a/tF/olbiRuTZuJbyA==" // "string"
+            PasswordHash = Constants.PasswordHash
         };
         await dbContext.Users.AddAsync(user);
         await dbContext.SaveChangesAsync();
@@ -46,7 +46,7 @@ public static partial class DbFiller
             Email = email,
             Username = "TestUserName",
             ImageUrl = "http://test.com",
-            PasswordHash = "AQAAAAIAAYagAAAAEA5h41NvfPFBWbMJg+2IxbvZkzKdrJJEWujujwUWUWUcNN96a/tF/olbiRuTZuJbyA==" // "string"
+            PasswordHash = Constants.PasswordHash
         };
         await dbContext.Users.AddAsync(user);
         await dbContext.SaveChangesAsync();

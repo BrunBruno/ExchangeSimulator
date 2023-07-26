@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using ExchangeSimulator.Application.Requests.SignIn;
+using ExchangeSimulator.Application.Requests.UserRequests.SignIn;
 
 namespace ExchangeSimulator.Api.Tests.User;
 
@@ -39,7 +39,7 @@ public class SignInTests : IClassFixture<TestWebApplicationFactory<Program>>
         var request = new SignInRequest()
         {
             Email = userEmail,
-            Password = Constants.UserPassword
+            Password = Constants.Password
         };
 
         var json = JsonConvert.SerializeObject(request);

@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
-using ExchangeSimulator.Application.Requests.IsEmailVerified;
 using FluentAssertions;
+using ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
 
 namespace ExchangeSimulator.Api.Tests.User;
 

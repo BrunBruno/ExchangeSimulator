@@ -1,11 +1,13 @@
-﻿using ExchangeSimulator.Application.Requests.IsEmailVerified;
-using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Application.Requests.RegisterUser;
-using ExchangeSimulator.Application.Requests.SignIn;
-using ExchangeSimulator.Application.Requests.VerifyEmail;
+﻿using ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
+using ExchangeSimulator.Application.Requests.UserRequests.RegenerateEmailVerificationCode;
+using ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
+using ExchangeSimulator.Application.Requests.UserRequests.SignIn;
+using ExchangeSimulator.Application.Requests.UserRequests.VerifyEmail;
+using ExchangeSimulator.Application.Requests.UserRequests.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ExchangeSimulator.Application.Requests.UserRequests.SetUserReview;
 
 namespace ExchangeSimulator.Api.Controllers;
 
@@ -30,6 +32,18 @@ public class UserController : ControllerBase
     {
         await _mediator.Send(request);
         return Ok();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetUser() {
+        var request = new GetUserRequest();
+        var user = await _mediator.Send(request);
+        return Ok(user);
     }
 
     /// <summary>
@@ -64,9 +78,8 @@ public class UserController : ControllerBase
     /// <returns></returns>
     [HttpPost("regenerate-code")]
     [Authorize(Policy = "IsNotVerified")]
-    public async Task<IActionResult> RegenerateCode()
+    public async Task<IActionResult> RegenerateCode(RegenerateEmailVerificationCodeRequest request)
     {
-        var request = new RegenerateEmailVerificationCodeRequest();
         await _mediator.Send(request);
         return Ok();
     }
@@ -84,4 +97,12 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(request);
         return Ok(result);
     }
+
+    [HttpPut("user-review")]
+    [Authorize]
+    public async Task<IActionResult> SetUserReview(SetUserReviewRequest request) { 
+        await _mediator.Send(request);
+        return Ok();
+    }
+
 }

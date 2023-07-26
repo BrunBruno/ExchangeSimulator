@@ -46,4 +46,14 @@ public class User
     /// Is user email verified
     /// </summary>
     public bool IsVerified { get; set; } = false;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<Game> Games { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int Review { get; set; } = 0;
 }

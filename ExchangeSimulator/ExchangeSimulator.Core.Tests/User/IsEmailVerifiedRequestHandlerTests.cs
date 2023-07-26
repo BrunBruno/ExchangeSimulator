@@ -1,5 +1,5 @@
 ﻿using ExchangeSimulator.Application.Repositories;
-using ExchangeSimulator.Application.Requests.IsEmailVerified;
+using ExchangeSimulator.Application.Requests.UserRequests.IsEmailVerified;
 using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;

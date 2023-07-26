@@ -1,6 +1,5 @@
 ﻿using ExchangeSimulator.Application.Repositories;
-using ExchangeSimulator.Application.Requests.RegenerateEmailVerificationCode;
-using ExchangeSimulator.Application.Requests.RegisterUser;
+using ExchangeSimulator.Application.Requests.UserRequests.RegisterUser;
 using ExchangeSimulator.Application.Services;
 using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
