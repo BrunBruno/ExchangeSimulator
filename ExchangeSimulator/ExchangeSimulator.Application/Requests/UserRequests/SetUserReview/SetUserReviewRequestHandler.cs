@@ -5,15 +5,18 @@ using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.UserRequests.SetUserReview;
 
-public class SetUserReviewRequestHandler : IRequestHandler<SetUserReviewRequest> {
+public class SetUserReviewRequestHandler : IRequestHandler<SetUserReviewRequest> 
+{
     private readonly IUserContextService _userContext;
     private readonly IUserRepository _userRepository;
 
-    public SetUserReviewRequestHandler(IUserContextService userContext, IUserRepository userRepository) {
+    public SetUserReviewRequestHandler(IUserContextService userContext, IUserRepository userRepository) 
+    {
         _userContext = userContext;
         _userRepository = userRepository;
     }
-    public async Task Handle(SetUserReviewRequest request, CancellationToken cancellationToken) {
+    public async Task Handle(SetUserReviewRequest request, CancellationToken cancellationToken) 
+    {
         var userId = _userContext.GetUserId()!.Value;
 
         var user = await _userRepository.GetUserById(userId)
@@ -23,4 +26,3 @@ public class SetUserReviewRequestHandler : IRequestHandler<SetUserReviewRequest>
         await _userRepository.Update(user);
     }
 }
-

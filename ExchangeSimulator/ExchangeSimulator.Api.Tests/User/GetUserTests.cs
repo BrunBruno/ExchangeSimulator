@@ -35,13 +35,12 @@ public class GetUserTests : IClassFixture<TestWebApplicationFactory<Program>> {
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var result = JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync());
+        var result = JsonConvert.DeserializeObject<GetUserDto>(await response.Content.ReadAsStringAsync());
         result.Email.Should().Be("test@gmail.com");
         result.UserName.Should().NotBeEmpty();
 
 
     }
-
 
     /// <summary>
     /// Get not existing user.
@@ -58,4 +57,3 @@ public class GetUserTests : IClassFixture<TestWebApplicationFactory<Program>> {
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
-

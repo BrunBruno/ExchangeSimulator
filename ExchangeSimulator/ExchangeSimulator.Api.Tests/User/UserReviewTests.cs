@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeSimulator.Api.Tests.User;
 
@@ -44,6 +45,8 @@ public class UserReviewTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(Constants.UserId));
+        user.Review.Should().Be(3);
     }
 
 

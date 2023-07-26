@@ -3,19 +3,19 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.GameRequests.GetGameDetails;
-public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsRequest, GameDto> 
+public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsRequest, GetGameDetailsDto> 
 {
     private readonly IGameRepository _gameRepository;
 
     public GetGameDetailsRequestHandler(IGameRepository gameRepository) {
         _gameRepository = gameRepository;
     }
-    public async Task<GameDto> Handle(GetGameDetailsRequest request, CancellationToken cancellationToken) {
+    public async Task<GetGameDetailsDto> Handle(GetGameDetailsRequest request, CancellationToken cancellationToken) {
 
         var game = await _gameRepository.GetGameByName(request.GameName) 
             ?? throw new NotFoundException("Game not found");
 
-        var gameDto = new GameDto
+        var gameDto = new GetGameDetailsDto
         {
             Name = game.Name,
             Description = game.Description,

@@ -118,9 +118,9 @@ public class GameController : ControllerBase
     /// Gets game details.
     /// </summary>
     /// <returns></returns>
-    [HttpGet("game-details")]
+    [HttpGet("{gameName}")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllOwnerGames([FromQuery] GetGameDetailsRequest request) 
+    public async Task<IActionResult> GetAllOwnerGames([FromRoute] GetGameDetailsRequest request) 
     {
         var game = await _mediator.Send(request);
         return Ok(game);

@@ -101,4 +101,50 @@ public static partial class DbFiller
         await dbContext.Games.AddAsync(game);
         await dbContext.SaveChangesAsync();
     }
+
+    public static async Task AddGameWithPlayer(this ExchangeSimulatorDbContext dbContext, Guid id, string gameName, GameStatus status)
+    {
+        var game = new Domain.Entities.Game()
+        {
+            CreatedAt = DateTime.UtcNow.AddDays(1),
+            Description = "Description",
+            Duration = TimeSpan.FromHours(20),
+            Id = id,
+            Money = 1000,
+            Name = gameName,
+            NumberOfPlayers = 10,
+            OwnerId = Guid.Parse(Constants.UserId),
+            PasswordHash = Constants.PasswordHash,
+            Status = status,
+            StartingCoins = new List<StartingCoin>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Coin1",
+                    Quantity = 10,
+                    ImageUrl = "http://image1.com"
+                },
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Coin2",
+                    Quantity = 20
+                }
+            },
+            Players = new List<Player>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Money = 1000,
+                    Name = "TestPlayerName",
+                    UserId = Guid.NewGuid()
+                }
+            }
+        };
+
+        await dbContext.Games.AddAsync(game);
+        await dbContext.SaveChangesAsync();
+    }
 }
