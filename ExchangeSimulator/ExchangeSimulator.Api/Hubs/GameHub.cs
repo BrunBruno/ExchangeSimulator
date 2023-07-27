@@ -5,13 +5,8 @@ namespace ExchangeSimulator.Api.Hubs;
 
 public class GameHub : Hub<IGameHub>
 {
-    public async Task OrdersChanged(Guid gameId)
+    public async Task JoinGame(string gameName)
     {
-        await Clients.Groups($"game-{gameId}").OrdersChanged();
-    }
-
-    public async Task JoinGame(Guid gameId)
-    {
-        await Groups.AddToGroupAsync(Context.ConnectionId, $"game-{gameId}");
+        await Groups.AddToGroupAsync(Context.ConnectionId, $"{gameName}");
     }
 }

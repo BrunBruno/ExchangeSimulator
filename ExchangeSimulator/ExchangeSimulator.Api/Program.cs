@@ -30,12 +30,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapHub<GameHub>("/game");
 app.UseCors("FrontEndClient");
 
 // app.UseHttpsRedirection();
 
-app.MapHub<GameHub>("/game");
+
 
 app.UseShared();
 app.UseAuthorization();
