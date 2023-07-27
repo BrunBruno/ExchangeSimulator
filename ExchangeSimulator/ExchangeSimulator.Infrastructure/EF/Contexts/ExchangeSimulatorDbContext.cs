@@ -20,7 +20,7 @@ public class ExchangeSimulatorDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
 
     /// <summary>
-    /// Email Verificatio Codes
+    /// Email verification codes
     /// </summary>
     public DbSet<EmailVerificationCode> EmailVerificationCodes { get; set; }
 
@@ -28,6 +28,7 @@ public class ExchangeSimulatorDbContext : DbContext
     public DbSet<Player> Players { get; set; }
     public DbSet<StartingCoin> StartingCoins { get; set; }
     public DbSet<PlayerCoin> PlayerCoins { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
 
     public ExchangeSimulatorDbContext (DbContextOptions<ExchangeSimulatorDbContext> options) : base(options){}
@@ -43,5 +44,6 @@ public class ExchangeSimulatorDbContext : DbContext
         modelBuilder.ApplyConfiguration<Player>(configuration);
         modelBuilder.ApplyConfiguration<StartingCoin>(configuration);
         modelBuilder.ApplyConfiguration<PlayerCoin>(configuration);
+        modelBuilder.ApplyConfiguration<Order>(configuration);
     }
 }

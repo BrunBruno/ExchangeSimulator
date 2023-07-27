@@ -1,4 +1,5 @@
 using ExchangeSimulator.Api.Authorization;
+using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Application;
 using ExchangeSimulator.Infrastructure;
 using ExchangeSimulator.Infrastructure.Seeders;
@@ -15,6 +16,7 @@ builder.Services.AddCustomAuthorization();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -32,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("FrontEndClient");
 
 // app.UseHttpsRedirection();
+
+app.MapHub<GameHub>("/game");
 
 app.UseShared();
 app.UseAuthorization();

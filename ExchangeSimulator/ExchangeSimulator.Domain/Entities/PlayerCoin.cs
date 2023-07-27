@@ -1,6 +1,4 @@
-﻿
-
-namespace ExchangeSimulator.Domain.Entities;
+﻿namespace ExchangeSimulator.Domain.Entities;
 
 /// <summary>
 /// PlayerCoin entity
@@ -17,4 +15,3 @@ public class PlayerCoin : Coin {
     /// </summary>
     public Player Player { get; set; }
 }
-

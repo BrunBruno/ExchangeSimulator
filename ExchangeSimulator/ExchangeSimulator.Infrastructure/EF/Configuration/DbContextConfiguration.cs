@@ -15,7 +15,8 @@ public class DbContextConfiguration :
     IEntityTypeConfiguration<Game>, 
     IEntityTypeConfiguration<Player>, 
     IEntityTypeConfiguration<StartingCoin>, 
-    IEntityTypeConfiguration<PlayerCoin>{
+    IEntityTypeConfiguration<PlayerCoin>,
+    IEntityTypeConfiguration<Order>{
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
@@ -105,5 +106,19 @@ public class DbContextConfiguration :
         };
 
         return roles;
+    }
+
+    public void Configure(EntityTypeBuilder<Order> builder)
+    {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Game)
+            .WithMany(x => x.Orders)
+            .HasForeignKey(x => x.GameId);
+        builder
+            .HasOne(x => x.PlayerCoin)
+            .WithOne()
+            .HasForeignKey<Order>(x => x.PlayerCoinId);
     }
 }

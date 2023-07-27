@@ -125,4 +125,15 @@ public class GameController : ControllerBase
         var game = await _mediator.Send(request);
         return Ok(game);
     }
+
+    /// <summary>
+    /// Enters the game (connects to hub).
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("enter/{gameName}")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> EnterGame([FromRoute] Guid gameId)
+    {
+        return Ok();
+    }
 }
