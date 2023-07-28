@@ -51,7 +51,7 @@ public static partial class DbFiller
                 Status = (GameStatus)(i % 3),
                 Players = new()
                 {
-                    new Player
+                    new Domain.Entities.Player
                     {
                         Id = Guid.NewGuid(),
                         UserId = Guid.Parse(Constants.UserId),
@@ -132,7 +132,7 @@ public static partial class DbFiller
                     Quantity = 20
                 }
             },
-            Players = new List<Player>
+            Players = new List<Domain.Entities.Player>
             {
                 new()
                 {

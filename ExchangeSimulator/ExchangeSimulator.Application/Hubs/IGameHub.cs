@@ -2,6 +2,6 @@
 
 public interface IGameHub
 {
-    Task OrdersChanged(string gameName);
+    Task OrdersChanged();
     Task JoinGame(string gameName);
 }

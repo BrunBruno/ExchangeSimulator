@@ -31,12 +31,14 @@ public class GameRepository : IGameRepository
         => await _dbContext.Games
             .Include(x => x.StartingCoins)
             .Include(x => x.Players)
+            .Include(x => x.Orders)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<Game?> GetGameByName(string name) 
         => await _dbContext.Games
             .Include(x => x.StartingCoins)
             .Include(x => x.Players)
+            .Include(x => x.Orders)
             .FirstOrDefaultAsync(x => x.Name == name);
 
     public async Task<IEnumerable<Game>> GetAllGamesByStatus(GameStatus status) 

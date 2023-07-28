@@ -17,9 +17,16 @@ public class ExceptionMiddleware : IMiddleware
             context.Response.StatusCode = 400;
             await context.Response.WriteAsync(e.Message);
         }
+
         catch (NotFoundException e)
         {
             context.Response.StatusCode = 404;
+            await context.Response.WriteAsync(e.Message);
+        }
+
+        catch (UnauthorizedException e)
+        {
+            context.Response.StatusCode = 401;
             await context.Response.WriteAsync(e.Message);
         }
 

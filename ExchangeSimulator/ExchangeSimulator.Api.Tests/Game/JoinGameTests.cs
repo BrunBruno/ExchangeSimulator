@@ -124,7 +124,7 @@ public class JoinGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
-    public Player ReturnExamplePlayer(Guid gameId)
+    public Domain.Entities.Player ReturnExamplePlayer(Guid gameId)
         => new()
         {
             GameId = gameId,

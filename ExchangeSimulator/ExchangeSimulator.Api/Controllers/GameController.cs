@@ -1,6 +1,4 @@
-﻿using ExchangeSimulator.Api.Hubs;
-using ExchangeSimulator.Application.Hubs;
-using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
+﻿using ExchangeSimulator.Application.Requests.GameRequests.CreateGame;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllAvailableGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllOwnerGames;
@@ -11,7 +9,6 @@ using ExchangeSimulator.Application.Requests.GameRequests.StartGame;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace ExchangeSimulator.Api.Controllers;
 
@@ -20,12 +17,10 @@ namespace ExchangeSimulator.Api.Controllers;
 public class GameController : ControllerBase 
 {
     private readonly IMediator _mediator;
-    private readonly IHubContext<GameHub, IGameHub> _hub;
 
-    public GameController(IMediator mediator, IHubContext<GameHub,IGameHub> hub) 
+    public GameController(IMediator mediator) 
     {
         _mediator = mediator;
-        _hub = hub;
     }
 
     /// <summary>
@@ -129,17 +124,5 @@ public class GameController : ControllerBase
     {
         var game = await _mediator.Send(request);
         return Ok(game);
-    }
-
-    /// <summary>
-    /// Enters the game (connects to hub).
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("order/{gameName}")]
-    //[Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> OrdersChanged([FromRoute] string gameName)
-    {
-        await _hub.Clients.Groups(gameName).OrdersChanged(gameName);
-        return Ok();
     }
 }

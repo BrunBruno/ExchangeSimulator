@@ -1,4 +1,6 @@
-﻿namespace ExchangeSimulator.Domain.Entities;
+﻿using ExchangeSimulator.Domain.Enums;
+
+namespace ExchangeSimulator.Domain.Entities;
 
 /// <summary>
 /// Coin that other players can buy.
@@ -20,4 +22,9 @@ public class Order
     /// Max quantity that other players can buy.
     /// </summary>
     public decimal Quantity { get; set; }
+
+    /// <summary>
+    /// Determines if order is for buying or selling.
+    /// </summary>
+    public OrderType Type { get; set; }
 }
