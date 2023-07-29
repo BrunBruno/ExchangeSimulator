@@ -3,6 +3,7 @@ using System;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExchangeSimulator.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(ExchangeSimulatorDbContext))]
-    partial class ExchangeSimulatorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230729140241_FixOrders")]
+    partial class FixOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("EmailVerificationCodes", (string)null);
+                    b.ToTable("EmailVerificationCodes");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Game", b =>
@@ -92,7 +95,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Games", (string)null);
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Order", b =>
@@ -122,7 +125,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("PlayerCoinId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>
@@ -159,7 +162,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.PlayerCoin", b =>
@@ -188,7 +191,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerCoins", (string)null);
+                    b.ToTable("PlayerCoins");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Role", b =>
@@ -205,7 +208,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -246,7 +249,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("StartingCoins", (string)null);
+                    b.ToTable("StartingCoins");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.User", b =>
@@ -283,7 +286,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GameUser", b =>
@@ -298,7 +301,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GameUser", (string)null);
+                    b.ToTable("GameUser");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.EmailVerificationCode", b =>

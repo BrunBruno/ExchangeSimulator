@@ -29,9 +29,9 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            Money = 1000,
+            StartingBalance = 1000,
             Name = "Name",
-            NumberOfPlayers = 1,
+            TotalPlayers = 1,
             Password = "Password",
             Duration = 120
         };
@@ -61,9 +61,9 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            Money = 1000,
+            StartingBalance = 1000,
             Name = "Name",
-            NumberOfPlayers = 0,
+            TotalPlayers = 0,
             Password = "Password",
             Duration = 120
         };
@@ -89,9 +89,9 @@ public class CreateGameRequestHandlerTests
         {
             Coins = new List<StartingCoinItem>(),
             Description = "Description",
-            Money = 1000,
+            StartingBalance = 1000,
             Name = "Name",
-            NumberOfPlayers = 1,
+            TotalPlayers = 1,
             Password = "Password",
             Duration = 120
         };

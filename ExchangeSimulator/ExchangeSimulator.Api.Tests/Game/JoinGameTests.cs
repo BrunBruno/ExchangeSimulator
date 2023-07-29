@@ -129,7 +129,7 @@ public class JoinGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         {
             GameId = gameId,
             Id = Guid.NewGuid(),
-            Money = 1000,
+            TotalBalance = 1000,
             Name = "TestUserName",
             TradesQuantity = 0,
             TurnOver = 0,
@@ -143,7 +143,7 @@ public class JoinGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             {
                 Id = Guid.NewGuid(),
                 Name = "Coin1",
-                Quantity = 10,
+                TotalBalance = 10,
                 ImageUrl = "http://image1.com",
                 PlayerId = playerId
             },
@@ -151,7 +151,7 @@ public class JoinGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             {
                 Id = Guid.NewGuid(),
                 Name = "Coin2",
-                Quantity = 20,
+                TotalBalance = 20,
                 PlayerId = playerId
             }
         };

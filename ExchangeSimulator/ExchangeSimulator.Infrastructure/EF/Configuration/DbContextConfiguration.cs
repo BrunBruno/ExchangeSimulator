@@ -118,7 +118,7 @@ public class DbContextConfiguration :
             .HasForeignKey(x => x.GameId);
         builder
             .HasOne(x => x.PlayerCoin)
-            .WithOne()
-            .HasForeignKey<Order>(x => x.PlayerCoinId);
+            .WithMany()
+            .HasForeignKey(x => x.PlayerCoinId);
     }
 }

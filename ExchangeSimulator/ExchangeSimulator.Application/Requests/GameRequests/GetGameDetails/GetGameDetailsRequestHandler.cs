@@ -15,18 +15,20 @@ public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsReques
         var game = await _gameRepository.GetGameByName(request.GameName) 
             ?? throw new NotFoundException("Game not found");
 
+        Console.WriteLine(game);
+
         var gameDto = new GetGameDetailsDto
         {
             Name = game.Name,
             Description = game.Description,
-            Money = game.Money,
+            TotalBalance = game.StartingBalance,
             Duration = game.Duration,
             CreatedAt = game.CreatedAt,
             StartsAt = game.StartsAt,
             EndsAt = game.EndsAt,
             Status = game.Status,
-            NumberOfPlayers = game.NumberOfPlayers,
-            AvailableSpots = game.NumberOfPlayers - game.Players.Count,
+            TotalPlayers = game.TotalPlayers,
+            AvailableSpots = game.TotalPlayers - game.Players.Count,
             PlayerCount = game.Players.Count,
             Players = game.Players.Select(player => new PlayerDto
             {
@@ -35,7 +37,6 @@ public class GetGameDetailsRequestHandler : IRequestHandler<GetGameDetailsReques
             Coins = game.StartingCoins.Select(coin => new CoinDto
             { 
                 Name = coin.Name,
-                Quantity = coin.Quantity,
                 ImageUrl = coin.ImageUrl
             }).ToList(),
         };

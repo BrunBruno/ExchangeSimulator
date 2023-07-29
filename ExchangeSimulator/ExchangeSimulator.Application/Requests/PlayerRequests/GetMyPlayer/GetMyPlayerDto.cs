@@ -12,7 +12,12 @@ public class GetMyPlayerDto
     /// <summary>
     /// Amount of money that player has in game
     /// </summary>
-    public decimal Money { get; set; }
+    public decimal TotalBalance { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public decimal LockedBalance { get; set; }
 
     /// <summary>
     /// Amount of trades that player made
@@ -44,7 +49,12 @@ public class GetMyPlayerDto
         /// <summary>
         /// Amount of coins
         /// </summary>
-        public decimal Quantity { get; set; }
+        public decimal TotalBalance { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal LockedBalance { get; set; }
 
         /// <summary>
         /// Image of coin

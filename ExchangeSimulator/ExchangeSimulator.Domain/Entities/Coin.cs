@@ -19,7 +19,12 @@ public abstract class Coin {
     /// <summary>
     /// Amount of coins
     /// </summary>
-    public decimal Quantity { get; set; }
+    public decimal TotalBalance { get; set; }
+
+    /// <summary>
+    /// Coinis that are being used in orders
+    /// </summary>
+    public decimal LockedBalace { get; set; } = 0;
 
     /// <summary>
     /// Image of coin

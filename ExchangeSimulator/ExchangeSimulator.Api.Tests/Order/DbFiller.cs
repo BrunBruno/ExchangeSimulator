@@ -14,9 +14,9 @@ public static partial class DbFiller
             Description = "Description",
             Duration = TimeSpan.FromHours(20),
             Id = gameId,
-            Money = 1000,
+            StartingBalance = 1000,
             Name = gameName,
-            NumberOfPlayers = 10,
+            TotalPlayers = 10,
             OwnerId = Guid.NewGuid(),
             PasswordHash = "PasswordHash",
             Status = status,
@@ -26,14 +26,14 @@ public static partial class DbFiller
                 {
                     Id = Guid.NewGuid(),
                     Name = "Coin1",
-                    Quantity = 10,
+                    TotalBalance = 10,
                     ImageUrl = "http://image1.com"
                 },
                 new()
                 {
                     Id = Guid.NewGuid(),
                     Name = "Coin2",
-                    Quantity = 20
+                    TotalBalance = 20
                 }
             },
             Players = new List<Domain.Entities.Player>
@@ -41,7 +41,7 @@ public static partial class DbFiller
                 new()
                 {
                     Id = Guid.NewGuid(),
-                    Money = 1000,
+                    TotalBalance = 1000,
                     Name = "TestPlayerName",
                     UserId = Guid.Parse(Constants.UserId),
                     PlayerCoins = new()
@@ -50,21 +50,21 @@ public static partial class DbFiller
                         {
                             Id = myCoin,
                             Name = "Coin1",
-                            Quantity = 10,
+                            TotalBalance = 10,
                             ImageUrl = "http://image1.com"
                         },
                         new()
                         {
                             Id = Guid.NewGuid(),
                             Name = "Coin2",
-                            Quantity = 20
+                            TotalBalance = 20
                         }
                     }
                 },
                 new()
                 {
                     Id = Guid.NewGuid(),
-                    Money = 1000,
+                    TotalBalance = 1000,
                     Name = "TestPlayerName2",
                     UserId = Guid.NewGuid(),
                     PlayerCoins = new()
@@ -73,14 +73,14 @@ public static partial class DbFiller
                         {
                             Id = otherPlayerCoin,
                             Name = "Coin1",
-                            Quantity = 10,
+                            TotalBalance = 10,
                             ImageUrl = "http://image1.com"
                         },
                         new()
                         {
                             Id = Guid.NewGuid(),
                             Name = "Coin2",
-                            Quantity = 20
+                            TotalBalance = 20
                         }
                     }
                 }

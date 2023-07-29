@@ -1,6 +1,7 @@
 ﻿using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Application.Hubs;
 using ExchangeSimulator.Application.Requests.OrderRequests.CreateOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +28,17 @@ public class OrderController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+    public async Task<IActionResult> CreateOrder(CreateOrderRequest request)
     {
         await _mediator.Send(request);
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
         return Ok();
+    }
+
+    [HttpGet]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllOrders([FromQuery] GetAllOrdersRequest request) {
+        var orders = await _mediator.Send(request);
+        return Ok(orders);
     }
 }

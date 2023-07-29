@@ -12,12 +12,17 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
     private readonly IUserContextService _userContextService;
     private readonly ICoinRepository _coinRepository;
     private readonly IGameRepository _gameRepository;
+    private readonly IPlayerRepository _playerRepository;
 
-    public CreateOrderRequestHandler(ICoinRepository coinRepository, IUserContextService userContextService, IGameRepository gameRepository)
+    public CreateOrderRequestHandler(ICoinRepository coinRepository,
+        IUserContextService userContextService,
+        IGameRepository gameRepository,
+        IPlayerRepository playerRepository)
     {
         _coinRepository = coinRepository;
         _userContextService = userContextService;
         _gameRepository = gameRepository;
+        _playerRepository = playerRepository;
     }
 
     public async Task Handle(CreateOrderRequest request, CancellationToken cancellationToken)
@@ -29,6 +34,9 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
 
         var game = await _gameRepository.GetGameByName(request.GameName) 
             ?? throw new NotFoundException("Game was not found");
+
+        var player = await _playerRepository.GetPlayerByUserIdAndGameName(request.GameName, userId)
+            ?? throw new NotFoundException("Player not found.");
 
         if (playerCoin.Player.UserId != userId)
         {
@@ -45,6 +53,14 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             throw new BadRequestException("Game is not active.");
         }
 
+        if (request.Type == OrderType.Buy) {
+            player.LockedBalance += (request.Price * request.Quantity);
+            player.TotalBalance -= (request.Price * request.Quantity);
+        } else if (request.Type == OrderType.Sell) {
+            playerCoin.LockedBalace += request.Quantity;
+            playerCoin.TotalBalance -= request.Quantity;
+        }
+
         var newOrder = new Order
         {
             PlayerCoinId = playerCoin.Id,
@@ -52,6 +68,7 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             Quantity = request.Quantity,
             Type = request.Type
         };
+
         game.Orders.Add(newOrder);
         await _gameRepository.Update(game);
     }

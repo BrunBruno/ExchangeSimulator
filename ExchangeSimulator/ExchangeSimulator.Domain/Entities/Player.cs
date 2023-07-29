@@ -18,7 +18,12 @@ public class Player {
     /// <summary>
     /// Amount of money that player has in game
     /// </summary>
-    public decimal Money { get; set; }
+    public decimal TotalBalance { get; set; }
+
+    /// <summary>
+    /// Money that are being used for orders
+    /// </summary>
+    public decimal LockedBalance { get; set; } = 0;
 
     /// <summary>
     /// Amount of trades that player made

@@ -58,7 +58,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
             throw new BadRequestException("Player already in game.");
         }
 
-        var availableSpots = game.NumberOfPlayers - (game.Players.Count + 1);
+        var availableSpots = game.TotalPlayers - (game.Players.Count + 1);
 
         if (availableSpots < 0) {
             throw new BadRequestException("Game is full.");
@@ -68,7 +68,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
         {
             Id = Guid.NewGuid(),
             Name = user.Username,
-            Money = game.Money,
+            TotalBalance = game.StartingBalance,
             GameId = game.Id,
             UserId = userId
         };
@@ -77,7 +77,7 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
         {
             Id = Guid.NewGuid(),
             Name = coin.Name,
-            Quantity = coin.Quantity,
+            TotalBalance = coin.TotalBalance,
             ImageUrl = coin.ImageUrl,
             PlayerId = player.Id
         }).ToList();

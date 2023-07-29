@@ -25,15 +25,17 @@ public class GetMyPlayerRequestHandler : IRequestHandler<GetMyPlayerRequest,GetM
         return new GetMyPlayerDto
         {
             Name = player.Name,
-            Money = player.Money,
+            TotalBalance = player.TotalBalance,
+            LockedBalance = player.LockedBalance,
             TradesQuantity = player.TradesQuantity,
             TurnOver = player.TurnOver,
-            PlayerCoins = player.PlayerCoins.Select(x => new GetMyPlayerDto.PlayerCoinDto
+            PlayerCoins = player.PlayerCoins.Select(coin => new GetMyPlayerDto.PlayerCoinDto
             {
-                Id = x.Id,
-                ImageUrl = x.ImageUrl,
-                Name = x.Name,
-                Quantity = x.Quantity
+                Id = coin.Id,
+                ImageUrl = coin.ImageUrl,
+                Name = coin.Name,
+                TotalBalance = coin.TotalBalance,
+                LockedBalance = coin.LockedBalace
             }).ToList()
         };
     }

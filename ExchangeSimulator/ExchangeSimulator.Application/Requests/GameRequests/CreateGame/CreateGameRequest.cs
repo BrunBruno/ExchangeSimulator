@@ -25,7 +25,7 @@ public class CreateGameRequest : IRequest
     /// <summary>
     /// amount of starting money in game
     /// </summary>
-    public decimal Money { get; set; }
+    public decimal StartingBalance { get; set; }
 
     /// <summary>
     /// List of coins that will be used in game
@@ -40,5 +40,5 @@ public class CreateGameRequest : IRequest
     /// <summary>
     /// Amount of players that can join the game
     /// </summary>
-    public int NumberOfPlayers { get; set; }
+    public int TotalPlayers { get; set; }
 }

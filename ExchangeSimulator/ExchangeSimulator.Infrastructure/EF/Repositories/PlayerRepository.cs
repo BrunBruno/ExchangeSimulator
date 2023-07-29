@@ -30,4 +30,9 @@ public class PlayerRepository : IPlayerRepository
             .Include(x => x.Game)
             .Include(x => x.PlayerCoins)
             .FirstOrDefaultAsync(x => x.Game.Name == gameName && x.UserId == userId);
+
+    public async Task Update(Player player) {
+        _dbContext.Players.Update(player);
+        await _dbContext.SaveChangesAsync();
+    }
 }

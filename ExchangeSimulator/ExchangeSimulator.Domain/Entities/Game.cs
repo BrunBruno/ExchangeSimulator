@@ -30,7 +30,7 @@ public class Game {
     /// <summary>
     /// Amount of money that all players recived at the begining of game
     /// </summary>
-    public decimal Money { get; set; }
+    public decimal StartingBalance { get; set; }
 
     /// <summary>
     /// Duration of game
@@ -60,7 +60,7 @@ public class Game {
     /// <summary>
     /// Amount of players that can join the game
     /// </summary>
-    public int NumberOfPlayers { get; set; }
+    public int TotalPlayers { get; set; }
 
     /// <summary>
     /// Owenrs Id

@@ -76,7 +76,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
     public GetMyPlayerDto GetExampleResponse(Guid coinId1, Guid coinId2)
         => new()
         {
-            Money = 1000,
+            TotalBalance = 1000,
             Name = "TestPlayerName",
             TradesQuantity = 0,
             TurnOver = 0,
@@ -86,14 +86,14 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
                 {
                     Id = coinId1,
                     Name = "Coin1",
-                    Quantity = 10,
+                    TotalBalance = 10,
                     ImageUrl = "http://image1.com"
                 },
                 new()
                 {
                     Id = coinId2,
                     Name = "Coin2",
-                    Quantity = 20
+                    TotalBalance = 20
                 }
             }
         };

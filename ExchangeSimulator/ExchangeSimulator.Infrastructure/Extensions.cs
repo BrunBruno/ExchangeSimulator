@@ -2,7 +2,6 @@
 using ExchangeSimulator.Infrastructure.EF;
 using ExchangeSimulator.Infrastructure.EF.Options;
 using ExchangeSimulator.Infrastructure.Jwt;
-using ExchangeSimulator.Infrastructure.Seeders;
 using ExchangeSimulator.Infrastructure.Services;
 using ExchangeSimulator.Shared.Options;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +30,6 @@ public static class Extensions
         services.AddScoped<ISmtpService, SmtpService>();
         services.AddScoped<IUserContextService, UserContextService>();
 
-        services.AddScoped<GameSeeder>();
         return services;
     }
 }

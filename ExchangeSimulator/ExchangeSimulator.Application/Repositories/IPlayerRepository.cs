@@ -21,4 +21,6 @@ public interface IPlayerRepository
     /// <param name="userId"></param>
     /// <returns></returns>
     Task<Player?> GetPlayerByUserIdAndGameName(string gameName, Guid userId);
+
+    Task Update(Player player);
 }

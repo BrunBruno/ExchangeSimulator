@@ -14,9 +14,9 @@ public static partial class DbFiller
             Description = "Description",
             Duration = TimeSpan.FromHours(20),
             Id = Guid.NewGuid(),
-            Money = 1000,
+            StartingBalance = 1000,
             Name = gameName,
-            NumberOfPlayers = 10,
+            TotalPlayers = 10,
             OwnerId = Guid.NewGuid(),
             PasswordHash = "PasswordHash",
             Status = GameStatus.Active,
@@ -26,14 +26,14 @@ public static partial class DbFiller
                 {
                     Id = Guid.NewGuid(),
                     Name = "Coin1",
-                    Quantity = 10,
+                    TotalBalance = 10,
                     ImageUrl = "http://image1.com"
                 },
                 new()
                 {
                     Id = Guid.NewGuid(),
                     Name = "Coin2",
-                    Quantity = 20
+                    TotalBalance = 20
                 }
             },
             Players = new List<Domain.Entities.Player>
@@ -41,7 +41,7 @@ public static partial class DbFiller
                 new()
                 {
                     Id = Guid.NewGuid(),
-                    Money = 1000,
+                    TotalBalance = 1000,
                     Name = "TestPlayerName",
                     UserId = Guid.Parse(Constants.UserId),
                     PlayerCoins = new()
@@ -50,14 +50,14 @@ public static partial class DbFiller
                         {
                             Id = coinId1,
                             Name = "Coin1",
-                            Quantity = 10,
+                            TotalBalance = 10,
                             ImageUrl = "http://image1.com"
                         },
                         new()
                         {
                             Id = coinId2,
                             Name = "Coin2",
-                            Quantity = 20
+                            TotalBalance = 20
                         }
                     }
                 }
