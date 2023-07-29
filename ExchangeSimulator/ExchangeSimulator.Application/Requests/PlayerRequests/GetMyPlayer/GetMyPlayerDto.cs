@@ -5,6 +5,10 @@ namespace ExchangeSimulator.Application.Requests.PlayerRequests.GetMyPlayer;
 public class GetMyPlayerDto
 {
     /// <summary>
+    /// 
+    /// </summary>
+    public Guid Id { get; set; }
+    /// <summary>
     /// Player name (based on UserName)
     /// </summary>
     public string Name { get; set; }

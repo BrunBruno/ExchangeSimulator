@@ -24,6 +24,7 @@ public class GetMyPlayerRequestHandler : IRequestHandler<GetMyPlayerRequest,GetM
 
         return new GetMyPlayerDto
         {
+            Id = player.Id,
             Name = player.Name,
             TotalBalance = player.TotalBalance,
             LockedBalance = player.LockedBalance,

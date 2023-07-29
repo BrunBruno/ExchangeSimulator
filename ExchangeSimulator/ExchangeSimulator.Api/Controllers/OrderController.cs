@@ -2,6 +2,7 @@
 using ExchangeSimulator.Application.Hubs;
 using ExchangeSimulator.Application.Requests.OrderRequests.CreateOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
+using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOwnerOrders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,21 @@ public class OrderController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpGet]
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetAllOrders([FromQuery] GetAllOrdersRequest request) {
+        var orders = await _mediator.Send(request);
+        return Ok(orders);
+    }
+
+    [HttpGet("owner-orders")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllOwnerOrders([FromQuery] GetAllOwnerOrdersRequest request) {
         var orders = await _mediator.Send(request);
         return Ok(orders);
     }
