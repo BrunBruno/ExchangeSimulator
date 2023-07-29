@@ -1,17 +1,28 @@
 ﻿
 using ExchangeSimulator.Application.Pagination;
 using ExchangeSimulator.Application.Repositories;
+using ExchangeSimulator.Domain.Enums;
+using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 public class GetAllOrdersRequestHandler : IRequestHandler<GetAllOrdersRequest, PagedResult<GetAllOrdersDto>> {
-    private readonly IOrderRepository _orderRepository;
+    private readonly IGameRepository _gameRepository;
 
-    public GetAllOrdersRequestHandler(IOrderRepository orderRepository) {
-        _orderRepository = orderRepository;
+    public GetAllOrdersRequestHandler(IGameRepository gameRepository) {
+        _gameRepository = gameRepository;
     }
     public async Task<PagedResult<GetAllOrdersDto>> Handle(GetAllOrdersRequest request, CancellationToken cancellationToken) {
-        var orders = await _orderRepository.GetAllOrdersByType(request.OrderType);
+        var game = await _gameRepository.GetGameByName(request.GameName)
+            ?? throw new NotFoundException("Game not found.");
+
+        var orders = game.Orders.Where(x => x.Type == request.OrderType);
+
+        if (request.OrderType == OrderType.Buy) {
+            orders = orders.OrderByDescending(x => x.Price).ToList();
+        } else if (request.OrderType == OrderType.Sell) {
+            orders = orders.OrderBy(x => x.Price).ToList();
+        }
 
         var orderDtos = orders.Select(order => new GetAllOrdersDto() {
             Price = order.Price,
@@ -21,8 +32,8 @@ public class GetAllOrdersRequestHandler : IRequestHandler<GetAllOrdersRequest, P
             CoinImage = order.PlayerCoin.ImageUrl
         });
 
-        var pagedResult = new PagedResult<GetAllOrdersDto>(orderDtos.ToList(), orderDtos.Count(), 10, request.PageNumber);
-
+        var pagedResult = new PagedResult<GetAllOrdersDto>(orderDtos.ToList(), orderDtos.Count(), request.ElementsCount, 1);
+         
         return pagedResult;
     }
 }

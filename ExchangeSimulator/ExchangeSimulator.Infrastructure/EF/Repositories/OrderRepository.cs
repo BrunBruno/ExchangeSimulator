@@ -13,10 +13,5 @@ public class OrderRepository : IOrderRepository {
     public OrderRepository(ExchangeSimulatorDbContext dbContext) {
         _dbContext = dbContext;
     }
-    public async Task<IEnumerable<Order>> GetAllOrdersByType(OrderType type) 
-        => await _dbContext.Orders
-            .Include(x => x.PlayerCoin)
-            .Where(x => x.Type == type)
-            .ToListAsync();
 }
 

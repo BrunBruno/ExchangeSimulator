@@ -8,6 +8,6 @@ namespace ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 public class GetAllOrdersRequest : IRequest<PagedResult<GetAllOrdersDto>> {
     public string GameName { get; set; }
     public OrderType OrderType { get; set; }
-    public int PageNumber { get; set; } = 1;
+    public int ElementsCount { get; set; } = 10;
 }
 

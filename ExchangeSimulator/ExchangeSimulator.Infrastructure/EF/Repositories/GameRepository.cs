@@ -39,6 +39,7 @@ public class GameRepository : IGameRepository
             .Include(x => x.StartingCoins)
             .Include(x => x.Players)
             .Include(x => x.Orders)
+            .ThenInclude(order => order.PlayerCoin)
             .FirstOrDefaultAsync(x => x.Name == name);
 
     public async Task<IEnumerable<Game>> GetAllGamesByStatus(GameStatus status) 
