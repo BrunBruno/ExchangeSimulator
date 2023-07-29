@@ -59,5 +59,6 @@ public class Player {
     /// List of players coins
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
+
 }
 
