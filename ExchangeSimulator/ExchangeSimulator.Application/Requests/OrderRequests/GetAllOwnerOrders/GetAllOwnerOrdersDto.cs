@@ -4,6 +4,7 @@ using ExchangeSimulator.Domain.Enums;
 
 namespace ExchangeSimulator.Application.Requests.OrderRequests.GetAllOwnerOrders;
 public class GetAllOwnerOrdersDto {
+    public Guid Id { get; set; }
     public decimal Price { get; set; }
 
     public decimal Quantity { get; set; }

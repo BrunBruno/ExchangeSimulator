@@ -18,6 +18,7 @@ public class GetAllOwnerOrdersRequestHandler : IRequestHandler<GetAllOwnerOrders
         var orders = game.Orders.Where(x => x.PlayerCoin.PlayerId == request.PlayerId && x.Type == request.OrderType);
 
         var orderDtos = orders.Select(order => new GetAllOwnerOrdersDto() {
+            Id = order.Id,
             Price = order.Price,
             Quantity = order.Quantity,
             Type = order.Type,
