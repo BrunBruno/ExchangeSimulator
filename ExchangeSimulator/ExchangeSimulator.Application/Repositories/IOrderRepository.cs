@@ -1,10 +1,9 @@
-﻿
-
-using ExchangeSimulator.Domain.Entities;
-using ExchangeSimulator.Domain.Enums;
+﻿using ExchangeSimulator.Domain.Entities;
 
 namespace ExchangeSimulator.Application.Repositories;
-public interface IOrderRepository {
-    
-}
 
+public interface IOrderRepository 
+{
+    Task<Order?> GetOrderById(Guid orderId);
+    Task Update(Order order);
+}

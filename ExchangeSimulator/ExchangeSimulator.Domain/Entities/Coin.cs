@@ -22,11 +22,6 @@ public abstract class Coin {
     public decimal TotalBalance { get; set; }
 
     /// <summary>
-    /// Coinis that are being used in orders
-    /// </summary>
-    public decimal LockedBalace { get; set; } = 0;
-
-    /// <summary>
     /// Image of coin
     /// </summary>
     public string? ImageUrl { get; set; }

@@ -1,5 +1,4 @@
-﻿
-using ExchangeSimulator.Application.Pagination;
+﻿using ExchangeSimulator.Application.Pagination;
 using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -32,4 +31,3 @@ public class GetAllOwnerOrdersRequestHandler : IRequestHandler<GetAllOwnerOrders
 
     }
 }
-

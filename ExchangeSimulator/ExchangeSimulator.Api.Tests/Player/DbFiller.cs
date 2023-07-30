@@ -6,7 +6,7 @@ namespace ExchangeSimulator.Api.Tests;
 
 public static partial class DbFiller
 {
-    public static async Task AddPlayerAndGame(this ExchangeSimulatorDbContext dbContext, string gameName, Guid coinId1, Guid coinId2)
+    public static async Task AddPlayerAndGame(this ExchangeSimulatorDbContext dbContext, string gameName, Guid coinId1, Guid coinId2, Guid playerId)
     {
         var game = new Domain.Entities.Game
         {
@@ -40,7 +40,7 @@ public static partial class DbFiller
             {
                 new()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = playerId,
                     TotalBalance = 1000,
                     Name = "TestPlayerName",
                     UserId = Guid.Parse(Constants.UserId),

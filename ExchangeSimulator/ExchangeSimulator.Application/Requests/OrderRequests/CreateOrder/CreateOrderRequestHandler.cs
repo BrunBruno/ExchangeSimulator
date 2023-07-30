@@ -53,12 +53,16 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             throw new BadRequestException("Game is not active.");
         }
 
-        if (request.Type == OrderType.Buy) {
-            player.LockedBalance += (request.Price * request.Quantity);
-            player.TotalBalance -= (request.Price * request.Quantity);
-        } else if (request.Type == OrderType.Sell) {
-            playerCoin.LockedBalace += request.Quantity;
-            playerCoin.TotalBalance -= request.Quantity;
+        switch (request.Type)
+        {
+            case OrderType.Buy:
+                player.LockedBalance += (request.Price * request.Quantity);
+                player.TotalBalance -= (request.Price * request.Quantity);
+                break;
+            case OrderType.Sell:
+                playerCoin.LockedBalance += request.Quantity;
+                playerCoin.TotalBalance -= request.Quantity;
+                break;
         }
 
         var newOrder = new Order
@@ -68,6 +72,8 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             Quantity = request.Quantity,
             Type = request.Type
         };
+
+        await _playerRepository.Update(player);
 
         game.Orders.Add(newOrder);
         await _gameRepository.Update(game);

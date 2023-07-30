@@ -36,7 +36,7 @@ public class GetMyPlayerRequestHandler : IRequestHandler<GetMyPlayerRequest,GetM
                 ImageUrl = coin.ImageUrl,
                 Name = coin.Name,
                 TotalBalance = coin.TotalBalance,
-                LockedBalance = coin.LockedBalace
+                LockedBalance = coin.LockedBalance
             }).ToList()
         };
     }

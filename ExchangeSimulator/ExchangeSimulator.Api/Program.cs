@@ -3,6 +3,7 @@ using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Application;
 using ExchangeSimulator.Infrastructure;
 using ExchangeSimulator.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddCustomAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+
 
 var app = builder.Build();
 

@@ -35,7 +35,8 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         await _dbContext.AddUser();
         var coinId1 = Guid.NewGuid();
         var coinId2 = Guid.NewGuid();
-        await _dbContext.AddPlayerAndGame("GameName", coinId1, coinId2);
+        var playerId = Guid.NewGuid();
+        await _dbContext.AddPlayerAndGame("GameName", coinId1, coinId2, playerId);
 
         var request = new GetMyPlayerRequest
         {
@@ -48,7 +49,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var result1 = JsonConvert.DeserializeObject<GetMyPlayerDto>(await response.Content.ReadAsStringAsync());
-        result1.Should().BeEquivalentTo(GetExampleResponse(coinId1, coinId2));
+        result1.Should().BeEquivalentTo(GetExampleResponse(coinId1, coinId2, playerId));
     }
 
     [Fact]
@@ -59,7 +60,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         await _dbContext.AddUser();
         var coinId1 = Guid.NewGuid();
         var coinId2 = Guid.NewGuid();
-        await _dbContext.AddPlayerAndGame("GameName", coinId1, coinId2);
+        await _dbContext.AddPlayerAndGame("GameName", coinId1, coinId2, Guid.NewGuid());
 
         var request = new GetMyPlayerRequest
         {
@@ -73,9 +74,10 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
-    public GetMyPlayerDto GetExampleResponse(Guid coinId1, Guid coinId2)
+    public GetMyPlayerDto GetExampleResponse(Guid coinId1, Guid coinId2, Guid playerId)
         => new()
         {
+            Id = playerId,
             TotalBalance = 1000,
             Name = "TestPlayerName",
             TradesQuantity = 0,

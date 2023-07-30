@@ -11,6 +11,11 @@ public class PlayerCoin : Coin {
     public Guid PlayerId { get; set; }
 
     /// <summary>
+    /// Coins that are being used in orders
+    /// </summary>
+    public decimal LockedBalance { get; set; } = 0;
+
+    /// <summary>
     /// Player to whom the coin belongs
     /// </summary>
     public Player Player { get; set; }
