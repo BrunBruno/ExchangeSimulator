@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using ExchangeSimulator.Api.Models.Order;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeSimulator.Api.Tests.Order;
@@ -42,9 +43,8 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var gameId = Guid.NewGuid();
         await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
 
-        var request = new CreateOrderRequest
+        var request = new CreateOrderModel
         {
-            GameName = "GameName",
             PlayerCoinId = myCoin,
             Price = 10,
             Quantity = 20,
@@ -56,7 +56,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
         //when
-        var response = await _client.PostAsync($"api/order", httpContent);
+        var response = await _client.PostAsync("api/game/GameName/order", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -75,9 +75,8 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var gameId = Guid.NewGuid();
         await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
 
-        var request = new CreateOrderRequest
+        var request = new CreateOrderModel
         {
-            GameName = "GameName1",
             PlayerCoinId = myCoin,
             Price = 10,
             Quantity = 20,
@@ -89,7 +88,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
         //when
-        var response = await _client.PostAsync($"api/order", httpContent);
+        var response = await _client.PostAsync($"api/game/GameName1/order", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -106,9 +105,8 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var gameId = Guid.NewGuid();
         await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
 
-        var request = new CreateOrderRequest
+        var request = new CreateOrderModel
         {
-            GameName = "GameName",
             PlayerCoinId = otherPlayerCoin,
             Price = 10,
             Quantity = 20,
@@ -120,7 +118,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
         //when
-        var response = await _client.PostAsync($"api/order", httpContent);
+        var response = await _client.PostAsync($"api/game/GameName/order", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -137,9 +135,8 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var gameId = Guid.NewGuid();
         await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin, GameStatus.Available);
 
-        var request = new CreateOrderRequest
+        var request = new CreateOrderModel
         {
-            GameName = "GameName",
             PlayerCoinId = myCoin,
             Price = 10,
             Quantity = 20,
@@ -151,7 +148,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var httpContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
         //when
-        var response = await _client.PostAsync($"api/order", httpContent);
+        var response = await _client.PostAsync($"api/game/GameName/order", httpContent);
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

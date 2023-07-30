@@ -73,7 +73,7 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             Type = request.Type
         };
 
-        await _playerRepository.Update(player);
+        //await _playerRepository.Update(player);
 
         game.Orders.Add(newOrder);
         await _gameRepository.Update(game);
