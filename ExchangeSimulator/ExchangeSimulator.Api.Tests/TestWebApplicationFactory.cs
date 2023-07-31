@@ -29,8 +29,7 @@ public class TestWebApplicationFactory<TStartup> : WebApplicationFactory<TStartu
             var dbName = $"ExchangeSimulator{Guid.NewGuid()}";
 
             services.AddDbContext<ExchangeSimulatorDbContext>(
-                a => a.UseInMemoryDatabase(databaseName: dbName)
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                a => a.UseInMemoryDatabase(databaseName: dbName));
         });
     }
 }

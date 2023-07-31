@@ -26,4 +26,10 @@ public class OrderRepository : IOrderRepository
         _dbContext.Orders.Update(order);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task Delete(Order order)
+    {
+        _dbContext.Orders.Remove(order);
+        await _dbContext.SaveChangesAsync();
+    }
 }

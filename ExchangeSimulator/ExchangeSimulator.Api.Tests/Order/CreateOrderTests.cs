@@ -1,7 +1,4 @@
-﻿using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
-using ExchangeSimulator.Application.Requests.OrderRequests.CreateOrder;
-using ExchangeSimulator.Application.Requests.PlayerRequests.GetMyPlayer;
-using ExchangeSimulator.Domain.Enums;
+﻿using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +15,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory<Program> _factory;
     private readonly ExchangeSimulatorDbContext _dbContext;
+    private readonly IServiceScope _scope;
 
     public CreateOrderTests()
     {
@@ -27,9 +25,9 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
 
         var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
 
-        var scope = scopeFactory.CreateScope();
+        _scope = scopeFactory.CreateScope();
 
-        _dbContext = scope.ServiceProvider.GetService<ExchangeSimulatorDbContext>();
+        _dbContext = _scope.ServiceProvider.GetService<ExchangeSimulatorDbContext>();
     }
 
     [Fact]
@@ -41,7 +39,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var myCoin = Guid.NewGuid();
         var otherPlayerCoin = Guid.NewGuid();
         var gameId = Guid.NewGuid();
-        await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
+        await _dbContext.AddPlayersAndGameForOrders(gameId, "GameName", myCoin, otherPlayerCoin);
 
         var request = new CreateOrderModel
         {
@@ -60,7 +58,10 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var createdOrder = await _dbContext.Orders.FirstOrDefaultAsync(x => x.PlayerCoinId == myCoin);
+
+        var assertDbContext = _factory.GetDbContextForAsserts();
+
+        var createdOrder = await assertDbContext.Orders.FirstOrDefaultAsync(x => x.PlayerCoinId == myCoin);
         createdOrder.Should().BeEquivalentTo(GetExampleOrder(gameId, myCoin), opts => opts.Excluding(x => x.Id));
     }
 
@@ -73,7 +74,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var myCoin = Guid.NewGuid();
         var otherPlayerCoin = Guid.NewGuid();
         var gameId = Guid.NewGuid();
-        await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
+        await _dbContext.AddPlayersAndGameForOrders(gameId, "GameName", myCoin, otherPlayerCoin);
 
         var request = new CreateOrderModel
         {
@@ -103,7 +104,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var myCoin = Guid.NewGuid();
         var otherPlayerCoin = Guid.NewGuid();
         var gameId = Guid.NewGuid();
-        await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin);
+        await _dbContext.AddPlayersAndGameForOrders(gameId, "GameName", myCoin, otherPlayerCoin);
 
         var request = new CreateOrderModel
         {
@@ -133,7 +134,7 @@ public class CreateOrderTests : IClassFixture<TestWebApplicationFactory<Program>
         var myCoin = Guid.NewGuid();
         var otherPlayerCoin = Guid.NewGuid();
         var gameId = Guid.NewGuid();
-        await _dbContext.AddPlayersAndGameForCreateOrder(gameId, "GameName", myCoin, otherPlayerCoin, GameStatus.Available);
+        await _dbContext.AddPlayersAndGameForOrders(gameId, "GameName", myCoin, otherPlayerCoin, GameStatus.Available);
 
         var request = new CreateOrderModel
         {

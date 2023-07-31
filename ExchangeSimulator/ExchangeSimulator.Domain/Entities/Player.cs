@@ -33,7 +33,7 @@ public class Player {
     /// <summary>
     /// Total volumen
     /// </summary>
-    public int TurnOver { get; set; } = 0;
+    public decimal TurnOver { get; set; } = 0;
 
     /// <summary>
     /// Game Id
@@ -59,6 +59,4 @@ public class Player {
     /// List of players coins
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
-
 }
-

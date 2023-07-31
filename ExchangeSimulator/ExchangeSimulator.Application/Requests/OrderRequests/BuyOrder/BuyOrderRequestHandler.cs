@@ -1,5 +1,6 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
+using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -44,24 +45,34 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
             throw new BadRequestException("Order does not exist in this game.");
         }
 
-        order.PlayerCoin.LockedBalance -= request.Quantity;
+        if (order.Game.Status != GameStatus.Active)
+        {
+            throw new BadRequestException("Game is not active.");
+        }
+
+        order.PlayerCoin.Player.LockedBalance -= request.Quantity * order.Price;
         order.Quantity -= request.Quantity;
+        order.PlayerCoin.Player.TradesQuantity++;
+        order.PlayerCoin.Player.TurnOver += request.Quantity * order.Price;
 
         if (order.Quantity < 0 || order.PlayerCoin.LockedBalance < 0)
         {
-            throw new BadRequestException("You cannot buy that much.");
+            throw new BadRequestException("You cannot sell that much.");
         }
 
-        player.TotalBalance -= request.Quantity * order.Price;
-
-        if (player.TotalBalance < 0)
-        {
-            throw new BadRequestException("You don't have enough money.");
-        }
+        player.TotalBalance += request.Quantity * order.Price;
+        player.TradesQuantity++;
+        player.TurnOver += request.Quantity * order.Price;
 
         var coinToUpdate = player.PlayerCoins.First(x => x.Name == order.PlayerCoin.Name);
-        coinToUpdate.TotalBalance += request.Quantity;
-        order.PlayerCoin.Player.TotalBalance += request.Quantity * order.Price;
+        coinToUpdate.TotalBalance -= request.Quantity;
+
+        if (coinToUpdate.TotalBalance < 0)
+        {
+            throw new BadRequestException("You don't have enough coins.");
+        }
+
+        order.PlayerCoin.TotalBalance += request.Quantity;
 
         await _orderRepository.Update(order);
         await _playerRepository.Update(player);

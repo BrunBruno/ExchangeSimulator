@@ -6,4 +6,5 @@ public interface IOrderRepository
 {
     Task<Order?> GetOrderById(Guid orderId);
     Task Update(Order order);
+    Task Delete(Order order);
 }

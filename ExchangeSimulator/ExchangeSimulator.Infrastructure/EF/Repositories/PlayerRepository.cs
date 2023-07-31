@@ -31,6 +31,19 @@ public class PlayerRepository : IPlayerRepository
             .Include(x => x.PlayerCoins)
             .FirstOrDefaultAsync(x => x.Game.Name == gameName && x.UserId == userId);
 
+    public async Task<Player?> GetPlayerByOrderId(Guid orderId)
+    {
+        var playerId = await _dbContext.Orders
+            .Include(x => x.PlayerCoin)
+            .Where(x => x.Id == orderId)
+            .Select(x => x.PlayerCoin.PlayerId)
+            .FirstOrDefaultAsync();
+
+        return await _dbContext.Players
+            .Include(x => x.PlayerCoins)
+            .FirstOrDefaultAsync(x => x.Id == playerId);
+    }
+
     public async Task Update(Player player) {
         _dbContext.Players.Update(player);
         await _dbContext.SaveChangesAsync();

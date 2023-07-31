@@ -51,8 +51,9 @@ public class RegisterUserTests : IClassFixture<TestWebApplicationFactory<Program
         var response = await _client.PostAsync("api/user/register", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var user = await _dbContext.Users.FirstOrDefaultAsync();
+        var user = await assertDbContext.Users.FirstOrDefaultAsync();
         user.Username.Should().Be("Test");
         user.Email.Should().Be("test@gmail.com");
     }

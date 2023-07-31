@@ -26,9 +26,9 @@ public class SellOrderRequestHandler : IRequestHandler<SellOrderRequest>
         var order = await _orderRepository.GetOrderById(request.OrderId)
             ?? throw new NotFoundException("Order was not found.");
 
-        if (order.Type != OrderType.Buy)
+        if (order.Type != OrderType.Sell)
         {
-            throw new BadRequestException("Order is not for buying");
+            throw new BadRequestException("Order is not for selling");
         }
 
         if (order.PlayerCoin.Player.UserId == userId)
@@ -44,25 +44,33 @@ public class SellOrderRequestHandler : IRequestHandler<SellOrderRequest>
             throw new BadRequestException("Order does not exist in this game.");
         }
 
-        order.PlayerCoin.Player.LockedBalance -= request.Quantity * order.Price;
+        if (order.Game.Status != GameStatus.Active)
+        {
+            throw new BadRequestException("Game is not active.");
+        }
+
+        order.PlayerCoin.LockedBalance -= request.Quantity;
         order.Quantity -= request.Quantity;
+        order.PlayerCoin.Player.TradesQuantity++;
+        order.PlayerCoin.Player.TurnOver += request.Quantity * order.Price;
 
         if (order.Quantity < 0 || order.PlayerCoin.LockedBalance < 0)
         {
-            throw new BadRequestException("You cannot sell that much.");
+            throw new BadRequestException("You cannot buy that much.");
         }
 
-        player.TotalBalance += request.Quantity * order.Price;
+        player.TotalBalance -= request.Quantity * order.Price;
+        player.TradesQuantity++;
+        player.TurnOver += request.Quantity * order.Price;
+
+        if (player.TotalBalance < 0)
+        {
+            throw new BadRequestException("You don't have enough money.");
+        }
 
         var coinToUpdate = player.PlayerCoins.First(x => x.Name == order.PlayerCoin.Name);
-        coinToUpdate.TotalBalance -= request.Quantity;
-
-        if (coinToUpdate.TotalBalance < 0)
-        {
-            throw new BadRequestException("You don't have enough coins.");
-        }
-
-        order.PlayerCoin.TotalBalance += request.Quantity;
+        coinToUpdate.TotalBalance += request.Quantity;
+        order.PlayerCoin.Player.TotalBalance += request.Quantity * order.Price;
 
         await _orderRepository.Update(order);
         await _playerRepository.Update(player);

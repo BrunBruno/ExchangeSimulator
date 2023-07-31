@@ -55,13 +55,25 @@ public class JoinGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         var response = await _client.PostAsync("api/game/join-game", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
+
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var player = await _dbContext.Players.FirstOrDefaultAsync(x => x.GameId == gameId);
-        var playerCoins = await _dbContext.PlayerCoins.Where(x => x.PlayerId == player.Id).ToListAsync();
+        var player = await assertDbContext.Players.FirstOrDefaultAsync(x => x.GameId == gameId);
+        var playerCoins = await assertDbContext.PlayerCoins.Where(x => x.PlayerId == player.Id).ToListAsync();
 
-        player.Should().BeEquivalentTo(ReturnExamplePlayer(gameId), opts => opts.Excluding(x => x.Id));
-        playerCoins.Should().BeEquivalentTo(ReturnExamplePlayerCoins(player.Id), opts => opts.Excluding(x => x.Id));
+        player.Should().BeEquivalentTo(ReturnExamplePlayer(gameId), opts =>
+        {
+            opts.Excluding(x => x.Id);
+            opts.Excluding(x => x.PlayerCoins);
+            return opts;
+        });
+        playerCoins.Should().BeEquivalentTo(ReturnExamplePlayerCoins(player.Id), opts =>
+        {
+            opts.Excluding(x => x.Id);
+            opts.Excluding(x => x.Player);
+            return opts;
+        });
     }
 
     /// <summary>

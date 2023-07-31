@@ -6,7 +6,7 @@ namespace ExchangeSimulator.Api.Tests;
 
 public static partial class DbFiller
 {
-    public static async Task AddPlayersAndGameForCreateOrder(this ExchangeSimulatorDbContext dbContext, Guid gameId, string gameName, Guid myCoin, Guid otherPlayerCoin, GameStatus status = GameStatus.Active)
+    public static async Task AddPlayersAndGameForOrders(this ExchangeSimulatorDbContext dbContext, Guid gameId, string gameName, Guid myCoin, Guid otherPlayerCoin, GameStatus status = GameStatus.Active)
     {
         var game = new Domain.Entities.Game
         {

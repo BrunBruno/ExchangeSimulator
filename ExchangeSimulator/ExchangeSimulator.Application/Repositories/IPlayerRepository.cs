@@ -22,5 +22,7 @@ public interface IPlayerRepository
     /// <returns></returns>
     Task<Player?> GetPlayerByUserIdAndGameName(string gameName, Guid userId);
 
+    Task<Player?> GetPlayerByOrderId(Guid orderId);
+
     Task Update(Player player);
 }

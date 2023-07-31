@@ -68,13 +68,15 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         var response = await _client.PostAsync("api/game", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
+
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var createdGame = await _dbContext.Games
+        var createdGame = await assertDbContext.Games
             .Include(x => x.StartingCoins)
             .FirstOrDefaultAsync();
 
-        var createdCoins = await _dbContext.StartingCoins
+        var createdCoins = await assertDbContext.StartingCoins
             .ToListAsync();
 
         var exampleGameResponse = ReturnExampleGame(request);

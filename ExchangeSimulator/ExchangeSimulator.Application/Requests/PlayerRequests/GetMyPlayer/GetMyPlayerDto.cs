@@ -31,7 +31,7 @@ public class GetMyPlayerDto
     /// <summary>
     /// Total volume
     /// </summary>
-    public int TurnOver { get; set; }
+    public decimal TurnOver { get; set; }
 
     /// <summary>
     /// List of players coins
