@@ -26,7 +26,9 @@ public class GetAllOrdersRequestHandler : IRequestHandler<GetAllOrdersRequest, P
         var game = await _gameRepository.GetGameByName(request.GameName)
             ?? throw new NotFoundException("Game not found.");
 
-        var orders = game.Orders.Where(x => x.Type == request.OrderType && x.PlayerCoin.PlayerId != player.Id);
+        var orders = game.Orders.Where(x => x.Type == request.OrderType 
+            && x.PlayerCoin.PlayerId != player.Id 
+            && x.Status == OrderStatus.Active);
 
         if (request.CoinName is not null) 
         {
@@ -44,6 +46,7 @@ public class GetAllOrdersRequestHandler : IRequestHandler<GetAllOrdersRequest, P
         }
 
         var orderDtos = orders.Select(order => new GetAllOrdersDto() {
+            Id = order.Id,
             Price = order.Price,
             Quantity = order.Quantity,
             OrderType = order.Type,

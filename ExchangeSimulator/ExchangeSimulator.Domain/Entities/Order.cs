@@ -27,4 +27,9 @@ public class Order
     /// Determines if order is for buying or selling.
     /// </summary>
     public OrderType Type { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public OrderStatus Status { get; set; } = OrderStatus.Active;
 }

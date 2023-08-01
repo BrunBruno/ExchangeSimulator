@@ -23,6 +23,7 @@ public class GetAllOwnerOrdersRequestHandler : IRequestHandler<GetAllOwnerOrders
             Type = order.Type,
             CoinName = order.PlayerCoin.Name,
             CoinImageUrl = order.PlayerCoin.ImageUrl,
+            Status = order.Status
         });
 
         var pagedResult = new PagedResult<GetAllOwnerOrdersDto>(orderDtos.ToList(), orderDtos.Count(), 6, request.PageNumber);

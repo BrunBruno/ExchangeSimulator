@@ -16,6 +16,11 @@ public class PlayerCoin : Coin {
     public decimal LockedBalance { get; set; } = 0;
 
     /// <summary>
+    /// 
+    /// </summary>
+    public decimal TurnOver { get; set; } = 0;
+
+    /// <summary>
     /// Player to whom the coin belongs
     /// </summary>
     public Player Player { get; set; }

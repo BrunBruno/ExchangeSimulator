@@ -2,7 +2,6 @@
 
 using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
-using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -60,7 +59,12 @@ public class UpdateOrderRequestHandler : IRequestHandler<UpdateOrderRequest> {
                 break;
         }
 
+        if (order.Status == OrderStatus.Freeze) {
+            order.Status = OrderStatus.Active;
+        }
+
         await _orderRepository.Update(order);
+        await _playerRepository.Update(player);
     }
 }
 

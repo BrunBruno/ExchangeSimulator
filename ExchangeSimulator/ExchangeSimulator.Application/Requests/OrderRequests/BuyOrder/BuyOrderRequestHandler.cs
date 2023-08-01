@@ -53,7 +53,9 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
         order.PlayerCoin.Player.LockedBalance -= request.Quantity * order.Price;
         order.Quantity -= request.Quantity;
         order.PlayerCoin.Player.TradesQuantity++;
+        order.PlayerCoin.Player.BuyTrades++;
         order.PlayerCoin.Player.TurnOver += request.Quantity * order.Price;
+        order.PlayerCoin.TurnOver += request.Quantity;
 
         if (order.Quantity < 0 || order.PlayerCoin.LockedBalance < 0)
         {
@@ -62,10 +64,12 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
 
         player.TotalBalance += request.Quantity * order.Price;
         player.TradesQuantity++;
+        player.SellTrades++;
         player.TurnOver += request.Quantity * order.Price;
 
         var coinToUpdate = player.PlayerCoins.First(x => x.Name == order.PlayerCoin.Name);
         coinToUpdate.TotalBalance -= request.Quantity;
+        coinToUpdate.TurnOver += request.Quantity;
 
         if (coinToUpdate.TotalBalance < 0)
         {
@@ -73,6 +77,10 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
         }
 
         order.PlayerCoin.TotalBalance += request.Quantity;
+
+        if (order.Quantity == 0) {
+            order.Status = OrderStatus.Freeze;
+        }
 
         await _orderRepository.Update(order);
         await _playerRepository.Update(player);

@@ -66,12 +66,19 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             case OrderType.Buy:
                 player.LockedBalance += (request.Price * request.Quantity);
                 player.TotalBalance -= (request.Price * request.Quantity);
+
+                player.BuyCreated++;
                 break;
             case OrderType.Sell:
                 playerCoin.LockedBalance += request.Quantity;
                 playerCoin.TotalBalance -= request.Quantity;
+
+                player.SellCreated++;
                 break;
         }
+
+        player.CreatedOrders += 1;
+
 
         var newOrder = new Order
         {

@@ -27,11 +27,35 @@ public class GetMyPlayerDto
     /// Amount of trades that player made
     /// </summary>
     public int TradesQuantity { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BuyTrades { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int SellTrades { get; set; }
 
     /// <summary>
     /// Total volume
     /// </summary>
     public decimal TurnOver { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int CreatedOrders { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BuyCreated { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int SellCreated { get; set; }
 
     /// <summary>
     /// List of players coins
@@ -64,5 +88,10 @@ public class GetMyPlayerDto
         /// Image of coin
         /// </summary>
         public string? ImageUrl { get; set; }
+
+        /// <summary>
+        /// Turn over of coin
+        /// </summary>
+        public decimal TurnOver { get; set; }
     }
 }

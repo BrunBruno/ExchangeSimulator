@@ -26,9 +26,19 @@ public class Player {
     public decimal LockedBalance { get; set; } = 0;
 
     /// <summary>
-    /// Amount of trades that player made
+    /// Amount of order that player relaized as taker or maker
     /// </summary>
     public int TradesQuantity { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BuyTrades { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int SellTrades { get; set; } = 0;
 
     /// <summary>
     /// Total volumen
@@ -59,4 +69,20 @@ public class Player {
     /// List of players coins
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
-}
+
+    /// <summary>
+    /// Amount of order that player created
+    /// </summary>
+    public int CreatedOrders { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BuyCreated { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int SellCreated { get; set; } = 0;
+
+} 

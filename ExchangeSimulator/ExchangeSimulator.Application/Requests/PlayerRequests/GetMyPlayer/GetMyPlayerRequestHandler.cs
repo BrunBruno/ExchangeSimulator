@@ -29,14 +29,20 @@ public class GetMyPlayerRequestHandler : IRequestHandler<GetMyPlayerRequest,GetM
             TotalBalance = player.TotalBalance,
             LockedBalance = player.LockedBalance,
             TradesQuantity = player.TradesQuantity,
+            BuyTrades = player.BuyTrades,
+            SellTrades = player.SellTrades,
             TurnOver = player.TurnOver,
+            CreatedOrders = player.CreatedOrders,
+            BuyCreated = player.BuyCreated,
+            SellCreated = player.SellCreated,
             PlayerCoins = player.PlayerCoins.Select(coin => new GetMyPlayerDto.PlayerCoinDto
             {
                 Id = coin.Id,
                 ImageUrl = coin.ImageUrl,
                 Name = coin.Name,
                 TotalBalance = coin.TotalBalance,
-                LockedBalance = coin.LockedBalance
+                LockedBalance = coin.LockedBalance,
+                TurnOver = coin.TurnOver,
             }).ToList()
         };
     }

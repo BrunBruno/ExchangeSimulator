@@ -8,4 +8,5 @@ public class GetAllOwnerOrdersDto {
     public OrderType Type { get; set; }
     public string CoinName { get; set; }
     public string? CoinImageUrl { get; set; }
+    public OrderStatus Status { get; set; }
 }

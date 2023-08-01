@@ -9,4 +9,8 @@ public class GameHub : Hub<IGameHub>
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, $"{gameName}");
     }
+
+    public async Task LeaveGame(string gameName) {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"{gameName}");
+    }
 }
