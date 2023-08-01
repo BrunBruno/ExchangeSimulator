@@ -4,7 +4,6 @@ using ExchangeSimulator.Application.Requests.GameRequests.GetAllCurrentGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllOwnerGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetAllPreviousGames;
 using ExchangeSimulator.Application.Requests.GameRequests.GetGameDetails;
-using ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
 using ExchangeSimulator.Application.Requests.GameRequests.StartGame;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,21 +30,6 @@ public class GameController : ControllerBase
     [HttpPost]
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> CreateGame(CreateGameRequest request) 
-    {
-        await _mediator.Send(request);
-        return Ok();
-    }
-
-    /// <summary>
-    /// Joins player to game
-    /// Creates new player
-    /// Create Player coins list
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
-    [HttpPost("join-game")]
-    [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> JoinGame(JoinGameRequest request) 
     {
         await _mediator.Send(request);
         return Ok();
@@ -102,19 +86,6 @@ public class GameController : ControllerBase
     }
 
     /// <summary>
-    /// Starts the game - changes status to active.
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
-    [HttpPut("start-game")]
-    [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> StartGame(StartGameRequest request) 
-    { 
-        await _mediator.Send(request);
-        return Ok();
-    }
-
-    /// <summary>
     /// Gets game details.
     /// </summary>
     /// <returns></returns>
@@ -124,5 +95,17 @@ public class GameController : ControllerBase
     {
         var game = await _mediator.Send(request);
         return Ok(game);
+    }
+
+    /// <summary>
+    /// Starts the game - changes status to active.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut("start-game")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> StartGame(StartGameRequest request) {
+        await _mediator.Send(request);
+        return Ok();
     }
 }

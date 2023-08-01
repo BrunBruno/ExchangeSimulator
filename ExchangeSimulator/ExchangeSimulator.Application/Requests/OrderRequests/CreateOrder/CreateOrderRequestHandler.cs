@@ -53,6 +53,14 @@ public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest>
             throw new BadRequestException("Game is not active.");
         }
 
+        var playerOrdersCount = game.Orders
+            .Where(o =>  o.PlayerCoinId == request.PlayerCoinId && o.Type == request.Type)
+            .Count();
+
+        if (playerOrdersCount >= 2) {
+            throw new BadRequestException("You can have only two orders per coin.");
+        }
+
         switch (request.Type)
         {
             case OrderType.Buy:

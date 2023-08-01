@@ -6,12 +6,12 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace ExchangeSimulator.Application.Requests.GameRequests.JoinGame;
+namespace ExchangeSimulator.Application.Requests.PlayerRequests.JoinToGame;
 
 /// <summary>
 /// handler for joining to game
 /// </summary>
-public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest> 
+public class JoinToGameRequestHandler : IRequestHandler<JoinToGameRequest>
 {
     private readonly IUserContextService _userContext;
     private readonly IUserRepository _userRepository;
@@ -19,11 +19,12 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
     private readonly IPlayerRepository _playerRepository;
     private readonly IPasswordHasher<Game> _passwordHasher;
 
-    public JoinGameRequestHandler(IUserContextService userContext,
-        IUserRepository userRepository, 
+    public JoinToGameRequestHandler(IUserContextService userContext,
+        IUserRepository userRepository,
         IGameRepository gameRepository,
         IPlayerRepository playerRepository,
-        IPasswordHasher<Game> passwordHasher) {
+        IPasswordHasher<Game> passwordHasher)
+    {
 
         _userContext = userContext;
         _userRepository = userRepository;
@@ -31,11 +32,11 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
         _playerRepository = playerRepository;
         _passwordHasher = passwordHasher;
     }
-    public async Task Handle(JoinGameRequest request, CancellationToken cancellationToken) 
+    public async Task Handle(JoinToGameRequest request, CancellationToken cancellationToken)
     {
         var userId = _userContext.GetUserId()!.Value;
 
-        var user = await _userRepository.GetUserById(userId) 
+        var user = await _userRepository.GetUserById(userId)
             ?? throw new NotFoundException("User not found");
 
         var game = await _gameRepository.GetGameByName(request.GameName)
@@ -48,23 +49,26 @@ public class JoinGameRequestHandler : IRequestHandler<JoinGameRequest>
 
         var result = _passwordHasher.VerifyHashedPassword(game, game.PasswordHash, request.Password);
 
-        if (result == PasswordVerificationResult.Failed) {
+        if (result == PasswordVerificationResult.Failed)
+        {
             throw new BadRequestException("Invalid password");
         }
 
         var isPlayerInList = game.Players.Any(x => x.UserId == userId);
 
-        if (isPlayerInList) {
+        if (isPlayerInList)
+        {
             throw new BadRequestException("Player already in game.");
         }
 
         var availableSpots = game.TotalPlayers - (game.Players.Count + 1);
 
-        if (availableSpots < 0) {
+        if (availableSpots < 0)
+        {
             throw new BadRequestException("Game is full.");
         }
 
-        var player = new Player 
+        var player = new Player
         {
             Id = Guid.NewGuid(),
             Name = user.Username,

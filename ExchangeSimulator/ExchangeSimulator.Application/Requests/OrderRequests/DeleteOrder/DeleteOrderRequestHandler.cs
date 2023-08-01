@@ -33,6 +33,7 @@ public class DeleteOrderRequestHandler : IRequestHandler<DeleteOrderRequest>
         {
             throw new UnauthorizedException("You don't own this order");
         }
+
         if (request.GameName != orderToDelete.Game.Name)
         {
             throw new BadRequestException("Order does not exist in this game.");

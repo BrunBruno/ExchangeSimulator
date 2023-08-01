@@ -7,6 +7,7 @@ using ExchangeSimulator.Application.Requests.OrderRequests.DeleteOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOwnerOrders;
 using ExchangeSimulator.Application.Requests.OrderRequests.SellOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.UpdateOrder;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,9 +50,15 @@ public class OrderController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Gets all orders from game
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpGet]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllOrders([FromRoute] string gameName, GetAllOrdersModel model)
+    public async Task<IActionResult> GetAllOrders([FromRoute] string gameName, [FromQuery] GetAllOrdersModel model)
     {
         var request = new GetAllOrdersRequest()
         {
@@ -64,9 +71,15 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
 
+    /// <summary>
+    /// Gets all orders that user created
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpGet("owner-orders")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetAllOwnerOrders([FromRoute] string gameName, GetAllOwnerOrdersModel model)
+    public async Task<IActionResult> GetAllOwnerOrders([FromRoute] string gameName,[FromQuery] GetAllOwnerOrdersModel model)
     {
         var request = new GetAllOwnerOrdersRequest
         {
@@ -79,9 +92,16 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
 
+    /// <summary>
+    /// realization of buy order
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPut("{orderId}/buy")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> BuyOrder([FromRoute] string gameName, [FromRoute] Guid orderId, BuyOrderModel model)
+    public async Task<IActionResult> BuyOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] BuyOrderModel model)
     {
         var request = new BuyOrderRequest
         {
@@ -94,9 +114,16 @@ public class OrderController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// realization of sell order
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPut("{orderId}/sell")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> SellOrder([FromRoute] string gameName, [FromRoute] Guid orderId, SellOrderModel model)
+    public async Task<IActionResult> SellOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] SellOrderModel model)
     {
         var request = new SellOrderRequest
         {
@@ -109,10 +136,41 @@ public class OrderController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// updates existing order
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpPut("{orderId}")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> UpdateOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] UpdateOrderModel model) {
+        var request = new UpdateOrderRequest(){ 
+            GameName = gameName,
+            OrderId = orderId,
+            Price = model.Price,
+            Quantity = model.Quantity
+        };
+        await _mediator.Send(request);
+        await _hub.Clients.Groups(request.GameName).OrdersChanged();
+        return Ok();
+    }
+
+    /// <summary>
+    /// delete order
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
     [HttpDelete("{orderId}")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> DeleteOrder([FromRoute] DeleteOrderRequest request)
+    public async Task<IActionResult> DeleteOrder([FromRoute] string gameName, [FromRoute] Guid orderId )
     {
+        var request = new DeleteOrderRequest() { 
+            GameName = gameName,
+            OrderId = orderId
+        };
         await _mediator.Send(request);
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
         return Ok();
