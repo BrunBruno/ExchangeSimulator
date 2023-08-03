@@ -2,6 +2,7 @@
 using ExchangeSimulator.Api.Models.Order;
 using ExchangeSimulator.Application.Hubs;
 using ExchangeSimulator.Application.Requests.OrderRequests.BuyOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.ChangeOrderStatus;
 using ExchangeSimulator.Application.Requests.OrderRequests.CreateOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.DeleteOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
@@ -168,6 +169,24 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> DeleteOrder([FromRoute] string gameName, [FromRoute] Guid orderId )
     {
         var request = new DeleteOrderRequest() { 
+            GameName = gameName,
+            OrderId = orderId
+        };
+        await _mediator.Send(request);
+        await _hub.Clients.Groups(request.GameName).OrdersChanged();
+        return Ok();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    [HttpPatch("{orderId}")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> ChangeOrderStatus([FromRoute] string gameName, [FromRoute] Guid orderId) {
+        var request = new ChangeOrderStatusRequest() {
             GameName = gameName,
             OrderId = orderId
         };
