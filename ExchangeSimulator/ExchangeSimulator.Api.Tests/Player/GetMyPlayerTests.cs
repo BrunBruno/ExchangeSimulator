@@ -44,7 +44,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         };
 
         //when
-        var response = await _client.GetAsync($"api/player/my?gameName={request.GameName}");
+        var response = await _client.GetAsync($"api/game/{request.GameName}/player/my");
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -68,7 +68,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
         };
 
         //when
-        var response = await _client.GetAsync($"api/player/my?gameName={request.GameName}");
+        var response = await _client.GetAsync($"api/game/{request.GameName}/player/my");
 
         //then
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
