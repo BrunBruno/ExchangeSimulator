@@ -1,6 +1,5 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
-using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -57,7 +56,7 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
         order.PlayerCoin.Player.TurnOver += request.Quantity * order.Price;
         order.PlayerCoin.TurnOver += request.Quantity;
 
-        if (order.Quantity < 0 || order.PlayerCoin.LockedBalance < 0)
+        if (order.Quantity < 0 || order.PlayerCoin.Player.LockedBalance < 0)
         {
             throw new BadRequestException("You cannot sell that much.");
         }
