@@ -55,4 +55,21 @@ public class PlayerController : ControllerBase
 
         return Ok(result);
     }
+
+    /// <summary>
+    /// Gets all players from game
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <returns></returns>
+    [HttpGet("all")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetAllPlayer([FromRoute] string gameName) {
+        var request = new GetAllPlayerRequest {
+            GameName = gameName
+        };
+
+        var result = await _mediator.Send(request);
+
+        return Ok(result);
+    }
 }
