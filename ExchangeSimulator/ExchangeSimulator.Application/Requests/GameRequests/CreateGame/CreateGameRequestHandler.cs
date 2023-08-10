@@ -43,7 +43,6 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
         var game = new Game
         {
-            Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description,
             StartingBalance = request.StartingBalance,
@@ -56,7 +55,6 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
         game.StartingCoins = request.Coins.Select(coin => new StartingCoin
         {
-            Id = Guid.NewGuid(),
             Name = coin.Name,
             TotalBalance = coin.Quantity,
             ImageUrl = coin.ImageUrl,

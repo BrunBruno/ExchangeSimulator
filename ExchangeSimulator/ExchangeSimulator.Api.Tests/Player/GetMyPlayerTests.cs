@@ -80,7 +80,7 @@ public class GetMyPlayerTests : IClassFixture<TestWebApplicationFactory<Program>
             Id = playerId,
             TotalBalance = 1000,
             Name = "TestPlayerName",
-            TradesQuantity = 0,
+            Trades = 0,
             TurnOver = 0,
             PlayerCoins = new()
             {

@@ -10,7 +10,7 @@ public class Game {
     /// <summary>
     /// Id
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// Name of game
@@ -88,7 +88,7 @@ public class Game {
     public List<Order> Orders { get; set; }
 
     /// <summary>
-    /// 
+    /// List of transactions that was made during game 
     /// </summary>
     public List<Transaction> Transactions { get; set; }
 }

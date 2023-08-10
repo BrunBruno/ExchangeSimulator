@@ -7,11 +7,7 @@ namespace ExchangeSimulator.Domain.Entities;
 /// </summary>
 public class Order
 {
-    public Guid Id { get; set; }
-    public Guid GameId { get; set; }
-    public Game Game { get; set; }
-    public Guid PlayerCoinId { get; set; }
-    public PlayerCoin PlayerCoin { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// Price for one coin.
@@ -19,7 +15,7 @@ public class Order
     public decimal Price { get; set; }
 
     /// <summary>
-    /// Max quantity that other players can buy.
+    /// Max quantity that other players can buy/sell.
     /// </summary>
     public decimal Quantity { get; set; }
 
@@ -29,7 +25,32 @@ public class Order
     public OrderType Type { get; set; }
 
     /// <summary>
-    /// 
+    /// Status of order
     /// </summary>
     public OrderStatus Status { get; set; } = OrderStatus.Active;
+
+    /// <summary>
+    /// Date of creation
+    /// </summary>
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// Game id
+    /// </summary>
+    public Guid GameId { get; set; }
+
+    /// <summary>
+    /// Game in which order was created
+    /// </summary>
+    public Game Game { get; set; }
+
+    /// <summary>
+    /// Coin id
+    /// </summary>
+    public Guid PlayerCoinId { get; set; }
+
+    /// <summary>
+    /// Coin used in order
+    /// </summary>
+    public PlayerCoin PlayerCoin { get; set; }
 }

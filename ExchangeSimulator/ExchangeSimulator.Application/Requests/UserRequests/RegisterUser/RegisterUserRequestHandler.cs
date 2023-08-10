@@ -58,7 +58,6 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest>
 
         var code = new EmailVerificationCode()
         {
-            Id = Guid.NewGuid(),
             UserId = user.Id,
             ExpirationDate = DateTime.UtcNow.AddMinutes(15),
         };

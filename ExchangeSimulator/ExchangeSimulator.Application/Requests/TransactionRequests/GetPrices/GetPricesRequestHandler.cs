@@ -3,7 +3,7 @@ using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.TansactionRequests.GetPrices;
+namespace ExchangeSimulator.Application.Requests.TransactionRequests.GetPrices;
 
 public class GetPricesRequestHandler : IRequestHandler<GetPricesRequest, List<GetPricesDto>> {
     private readonly IGameRepository _gameRepository;

@@ -26,7 +26,7 @@ public class GetMyPlayerDto
     /// <summary>
     /// Amount of trades that player made
     /// </summary>
-    public int TradesQuantity { get; set; }
+    public int Trades { get; set; }
     /// <summary>
     /// 
     /// </summary>

@@ -1,4 +1,4 @@
-﻿using ExchangeSimulator.Application.Requests.TansactionRequests.GetPrices;
+﻿using ExchangeSimulator.Application.Requests.TransactionRequests.GetPrices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

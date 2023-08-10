@@ -10,6 +10,7 @@ namespace ExchangeSimulator.Application.Requests.PlayerRequests.JoinToGame;
 
 /// <summary>
 /// handler for joining to game
+/// creates player
 /// </summary>
 public class JoinToGameRequestHandler : IRequestHandler<JoinToGameRequest>
 {
@@ -70,7 +71,6 @@ public class JoinToGameRequestHandler : IRequestHandler<JoinToGameRequest>
 
         var player = new Player
         {
-            Id = Guid.NewGuid(),
             Name = user.Username,
             TotalBalance = game.StartingBalance,
             GameId = game.Id,
@@ -79,7 +79,6 @@ public class JoinToGameRequestHandler : IRequestHandler<JoinToGameRequest>
 
         player.PlayerCoins = game.StartingCoins.Select(coin => new PlayerCoin
         {
-            Id = Guid.NewGuid(),
             Name = coin.Name,
             TotalBalance = coin.TotalBalance,
             ImageUrl = coin.ImageUrl,

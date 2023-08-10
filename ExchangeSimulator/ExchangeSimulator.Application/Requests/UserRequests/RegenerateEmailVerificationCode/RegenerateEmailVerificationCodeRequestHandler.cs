@@ -40,7 +40,6 @@ public class RegenerateEmailVerificationCodeRequestHandler : IRequestHandler<Reg
 
         var code = new EmailVerificationCode()
         {
-            Id = Guid.NewGuid(),
             UserId = userId,
             ExpirationDate = DateTime.UtcNow.AddMinutes(15),
         };

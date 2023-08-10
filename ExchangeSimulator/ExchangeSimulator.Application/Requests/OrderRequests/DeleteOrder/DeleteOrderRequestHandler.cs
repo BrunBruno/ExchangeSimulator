@@ -49,8 +49,8 @@ public class DeleteOrderRequestHandler : IRequestHandler<DeleteOrderRequest>
         switch (orderToDelete.Type)
         {
             case OrderType.Buy:
-                orderOwner.LockedBalance -= (orderToDelete.Price * orderToDelete.Quantity);
-                orderOwner.TotalBalance += (orderToDelete.Price * orderToDelete.Quantity);
+                orderOwner.LockedBalance -= orderToDelete.Price * orderToDelete.Quantity;
+                orderOwner.TotalBalance += orderToDelete.Price * orderToDelete.Quantity;
                 break;
             case OrderType.Sell:
                 coinToUpdate.LockedBalance -= orderToDelete.Quantity;

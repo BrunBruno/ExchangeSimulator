@@ -10,7 +10,7 @@ public class User
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// Email address.
@@ -48,12 +48,12 @@ public class User
     public bool IsVerified { get; set; } = false;
 
     /// <summary>
-    /// 
-    /// </summary>
-    public List<Game> Games { get; set; }
-
-    /// <summary>
-    /// 
+    /// user review
     /// </summary>
     public int Review { get; set; } = 0;
+
+    /// <summary>
+    /// List of games that user creates
+    /// </summary>
+    public List<Game> Games { get; set; }
 }
