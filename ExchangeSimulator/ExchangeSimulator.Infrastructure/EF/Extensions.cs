@@ -25,6 +25,7 @@ public static class Extensions
         services.AddScoped<IPlayerRepository, PlayerRepository>();
         services.AddScoped<ICoinRepository, CoinRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
 
         return services;
     }

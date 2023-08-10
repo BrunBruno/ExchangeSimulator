@@ -3,7 +3,6 @@ using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Application;
 using ExchangeSimulator.Infrastructure;
 using ExchangeSimulator.Shared;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 

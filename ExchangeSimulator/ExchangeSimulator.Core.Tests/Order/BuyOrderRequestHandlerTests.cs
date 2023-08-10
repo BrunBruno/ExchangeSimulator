@@ -14,6 +14,7 @@ public class BuyOrderRequestHandlerTests
     private readonly Mock<IOrderRepository> _mockOrderRepository;
     private readonly Mock<IUserContextService> _mockUserContextService;
     private readonly Mock<IPlayerRepository> _mockPlayerRepository;
+    private readonly Mock<ITransactionRepository> _mockTransactionRepository;
 
     public BuyOrderRequestHandlerTests()
     {
@@ -67,7 +68,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -95,7 +96,7 @@ public class BuyOrderRequestHandlerTests
         _mockUserContextService.Setup(x => x.GetUserId()).Returns(userId);
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -139,7 +140,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -186,7 +187,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -230,7 +231,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -285,7 +286,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -340,7 +341,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -395,7 +396,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -453,7 +454,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then
@@ -511,7 +512,7 @@ public class BuyOrderRequestHandlerTests
         });
 
         //when
-        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object);
+        var handler = new BuyOrderRequestHandler(_mockOrderRepository.Object, _mockUserContextService.Object, _mockPlayerRepository.Object, _mockTransactionRepository.Object);
         var act = () => handler.Handle(request, CancellationToken.None);
 
         //then

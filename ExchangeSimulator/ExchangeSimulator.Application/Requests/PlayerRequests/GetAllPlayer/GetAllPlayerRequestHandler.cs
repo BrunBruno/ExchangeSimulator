@@ -1,10 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using ExchangeSimulator.Application.Pagination;
+using ExchangeSimulator.Application.Repositories;
+using ExchangeSimulator.Shared.Exceptions;
+using MediatR;
 
-namespace ExchangeSimulator.Application.Requests.PlayerRequests.GetAllPlayer {
-    internal class GetAllPlayerRequestHandler {
+namespace ExchangeSimulator.Application.Requests.PlayerRequests.GetAllPlayer;
+
+public class GetAllPlayerRequestHandler : IRequestHandler<GetAllPlayerRequest, PagedResult<GetAllPlayerDto>> {
+    private readonly IGameRepository _gameRepository;
+
+    public GetAllPlayerRequestHandler(IGameRepository gameRepository) {
+        _gameRepository = gameRepository;
+    }
+    public async Task<PagedResult<GetAllPlayerDto>> Handle(GetAllPlayerRequest request, CancellationToken cancellationToken) {
+        var game = await _gameRepository.GetGameByName(request.GameName) 
+            ?? throw new NotFoundException("Game not found.");
+
+        var players = game.Players;
+
+        var playerDtos = players.Select(player => new GetAllPlayerDto() {
+            Balance = player.TotalBalance + player.LockedBalance,
+            TurnOver = player.TurnOver,
+            TradesQuantity = player.TradesQuantity,
+            CreatedOrders = player.CreatedOrders,
+        });
+
+        var pagedResult = new PagedResult<GetAllPlayerDto>(playerDtos.ToList(), playerDtos.Count(), request.ElementsCount, 1);
+
+        return pagedResult;
     }
 }
+

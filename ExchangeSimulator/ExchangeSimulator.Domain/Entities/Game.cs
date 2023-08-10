@@ -86,4 +86,9 @@ public class Game {
     /// Coins that players can buy.
     /// </summary>
     public List<Order> Orders { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<Transaction> Transactions { get; set; }
 }

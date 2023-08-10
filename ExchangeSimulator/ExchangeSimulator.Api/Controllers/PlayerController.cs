@@ -1,4 +1,5 @@
 ﻿using ExchangeSimulator.Api.Models.Player;
+using ExchangeSimulator.Application.Requests.PlayerRequests.GetAllPlayer;
 using ExchangeSimulator.Application.Requests.PlayerRequests.GetMyPlayer;
 using ExchangeSimulator.Application.Requests.PlayerRequests.JoinToGame;
 using MediatR;
@@ -64,7 +65,7 @@ public class PlayerController : ControllerBase
     [HttpGet("all")]
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetAllPlayer([FromRoute] string gameName) {
-        var request = new GetAllPlayerRequest {
+        var request = new GetAllPlayerRequest() {
             GameName = gameName
         };
 

@@ -1,5 +1,6 @@
 ﻿using ExchangeSimulator.Application.Repositories;
 using ExchangeSimulator.Application.Services;
+using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Domain.Enums;
 using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
@@ -11,12 +12,17 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
     private readonly IOrderRepository _orderRepository;
     private readonly IUserContextService _userContextService;
     private readonly IPlayerRepository _playerRepository;
+    private readonly ITransactionRepository _transactionRepository;
 
-    public BuyOrderRequestHandler(IOrderRepository orderRepository, IUserContextService userContextService, IPlayerRepository playerRepository)
+    public BuyOrderRequestHandler(IOrderRepository orderRepository,
+        IUserContextService userContextService,
+        IPlayerRepository playerRepository,
+        ITransactionRepository transactionRepository)
     {
         _orderRepository = orderRepository;
         _userContextService = userContextService;
         _playerRepository = playerRepository;
+        _transactionRepository = transactionRepository;
     }
 
     public async Task Handle(BuyOrderRequest request, CancellationToken cancellationToken)
@@ -81,7 +87,16 @@ public class BuyOrderRequestHandler : IRequestHandler<BuyOrderRequest>
             order.Status = OrderStatus.Freeze;
         }
 
+        var transaction = new Transaction() {
+            Id = Guid.NewGuid(),
+            CoinName = order.PlayerCoin.Name,
+            Quantity = order.Quantity,
+            Price = order.Price,
+            GameId = order.GameId,
+        };
+
         await _orderRepository.Update(order);
         await _playerRepository.Update(player);
+        await _transactionRepository.CreateTransaction(transaction);
     }
 }

@@ -5,14 +5,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Exceptions\**" />
+    <EmbeddedResource Remove="Exceptions\**" />
+    <None Remove="Exceptions\**" />
+  </ItemGroup>
 	
   <ItemGroup>
     <ProjectReference Include="..\ExchangeSimulator.Domain\ExchangeSimulator.Domain.csproj" />
     <ProjectReference Include="..\ExchangeSimulator.Shared\ExchangeSimulator.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>
