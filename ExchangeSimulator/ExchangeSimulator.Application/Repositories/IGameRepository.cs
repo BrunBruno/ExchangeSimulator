@@ -51,6 +51,12 @@ public interface IGameRepository {
     Task<IEnumerable<Game>> GetOwnedGamesByUserId(Guid userId);
 
     /// <summary>
+    /// Gets all games where end date exceeded date time now.
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<Game>> GetGamesToFinish();
+
+    /// <summary>
     /// Updates games
     /// </summary>
     /// <param name="game"></param>

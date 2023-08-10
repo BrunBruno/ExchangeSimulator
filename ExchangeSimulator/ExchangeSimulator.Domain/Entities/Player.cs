@@ -85,4 +85,8 @@ public class Player {
     /// </summary>
     public int SellCreated { get; set; } = 0;
 
+    /// <summary>
+    /// Calculated using player money and player coins.
+    /// </summary>
+    public decimal Points { get; set; } = 0;
 } 

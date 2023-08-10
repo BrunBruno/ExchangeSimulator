@@ -56,6 +56,10 @@ public class DbContextConfiguration :
             .HasOne(x => x.Owner)
             .WithMany()
             .HasForeignKey(x => x.OwnerId);
+        builder
+            .HasOne(x => x.Winner)
+            .WithOne()
+            .HasForeignKey<Game>(x => x.WinnerId);
     }
 
     public void Configure(EntityTypeBuilder<Player> builder) {
