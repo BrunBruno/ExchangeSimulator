@@ -10,7 +10,7 @@ public class User
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Email address.

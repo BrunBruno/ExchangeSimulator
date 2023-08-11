@@ -8,7 +8,7 @@ public class Player {
     /// <summary>
     /// Id
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Player name (based on UserName)

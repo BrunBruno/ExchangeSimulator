@@ -8,7 +8,7 @@ public class EmailVerificationCode
     /// <summary>
     /// Code id.
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// User id.

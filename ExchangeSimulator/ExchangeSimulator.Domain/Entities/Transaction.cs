@@ -5,7 +5,7 @@ public class Transaction {
     /// <summary>
     /// Id
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Coin used in transaction

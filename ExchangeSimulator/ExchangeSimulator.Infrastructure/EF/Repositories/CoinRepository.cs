@@ -18,4 +18,9 @@ public class CoinRepository : ICoinRepository
         => await _dbContext.PlayerCoins
             .Include(x => x.Player)
             .FirstOrDefaultAsync(x => x.Id == id);
+
+    public async Task Update(PlayerCoin coin) {
+        _dbContext.PlayerCoins.Update(coin);
+        await _dbContext.SaveChangesAsync();
+    }
 }

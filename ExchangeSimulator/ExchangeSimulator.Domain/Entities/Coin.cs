@@ -9,7 +9,7 @@ public abstract class Coin {
     /// <summary>
     /// Id
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Coin name

@@ -23,9 +23,10 @@ public class TansactionController : ControllerBase {
     /// <returns></returns>
     [HttpGet("prices")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetPrices([FromRoute] string gameName) {
+    public async Task<IActionResult> GetPrices([FromRoute] string gameName, [FromQuery] string coinName) {
         var request = new GetPricesRequest() {
             GameName = gameName,
+            CoinName = coinName,
         };
 
         var result = await _mediator.Send(request);

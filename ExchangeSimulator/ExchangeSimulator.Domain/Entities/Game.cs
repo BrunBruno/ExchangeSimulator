@@ -10,7 +10,7 @@ public class Game {
     /// <summary>
     /// Id
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Name of game

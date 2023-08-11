@@ -7,7 +7,7 @@ namespace ExchangeSimulator.Domain.Entities;
 /// </summary>
 public class Order
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Price for one coin.
@@ -32,7 +32,7 @@ public class Order
     /// <summary>
     /// Date of creation
     /// </summary>
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Game id

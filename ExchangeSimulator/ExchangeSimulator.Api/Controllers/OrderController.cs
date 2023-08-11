@@ -84,9 +84,9 @@ public class OrderController : ControllerBase
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPost("{orderId}/limit-buy")]
+    [HttpPost("limit-buy")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> CreateBuyLimitOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] LimitOrderModel model) {
+    public async Task<IActionResult> CreateBuyLimitOrder([FromRoute] string gameName, [FromBody] LimitOrderModel model) {
         var request = new CreateBuyLimitOrderRequest() {
             GameName = gameName,
             PlayerCoinId = model.PlayerCoinId,
@@ -108,9 +108,9 @@ public class OrderController : ControllerBase
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPost("{orderId}/limit-sell")]
+    [HttpPost("limit-sell")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> CreateSellLimitOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] LimitOrderModel model) {
+    public async Task<IActionResult> CreateSellLimitOrder([FromRoute] string gameName, [FromBody] LimitOrderModel model) {
         var request = new CreateSellLimitOrderRequest() {
             GameName = gameName,
             PlayerCoinId = model.PlayerCoinId,
@@ -132,7 +132,7 @@ public class OrderController : ControllerBase
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPut("{orderId}/market-buy")]
+    [HttpPut("market-buy")]
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> MakeBuyMarketOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] MarketOrderModel model) {
         var request = new CreateBuyMarketOrderRequest() {
@@ -155,7 +155,7 @@ public class OrderController : ControllerBase
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPut("{orderId}/market-sell")]
+    [HttpPut("market-sell")]
     [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> MakeSellMarketOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] MarketOrderModel model) {
         var request = new CreateSellMarketOrderRequest() {
