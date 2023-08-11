@@ -83,7 +83,6 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
             }
 
             var transaction = RealizeTransaction(seller, sellerCoin, order, ref coinsQuantityToSell);
-            transaction.GameId = game.Id;
 
             game.Transactions.Add(transaction);
         }
@@ -91,8 +90,6 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
 
         // add new limit sell order
         var newOrder = new Order() {
-            Id = Guid.NewGuid(),
-            GameId = game.Id,
             PlayerCoinId = sellerCoin.Id,
             Price = request.Price,
             Quantity = coinsQuantityToSell,
@@ -105,8 +102,6 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
 
         game.Orders.Add(newOrder);
 
-        //await _coinRepository.Update(sellerCoin);
-        //await _playerRepository.Update(seller);
         await _gameRepository.Update(game);
     }
 
@@ -169,7 +164,6 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
         buyerCoin.TurnOver += quantity;
 
         var transaction = new Transaction() {
-            Id = Guid.NewGuid(),
             CoinName = sellerCoin.Name,
             Quantity = quantity,
             Price = price,

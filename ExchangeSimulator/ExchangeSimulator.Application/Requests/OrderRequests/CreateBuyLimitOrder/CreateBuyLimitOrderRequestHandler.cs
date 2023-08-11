@@ -80,18 +80,15 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
             }
 
             var transaction = RealizeTransaction(buyer, buyerCoin, order, ref coinsQuantityToBuy);
-            transaction.GameId = game.Id;
 
             game.Transactions.Add(transaction);
         }
 
         // add new limit buy order
         var newOrder = new Order() {
-            Id = Guid.NewGuid(),
-            GameId = game.Id,
             PlayerCoinId = buyerCoin.Id,
             Price = request.Price,
-            Quantity = request.Quantity,
+            Quantity = coinsQuantityToBuy,
             Type = OrderType.Buy,
         };
 
@@ -162,7 +159,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         sellerCoin.TurnOver += quantity;
 
         var transaction = new Transaction() {
-            Id = Guid.NewGuid(),
+ 
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,

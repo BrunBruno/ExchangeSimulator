@@ -80,11 +80,9 @@ public class JoinToGameRequestHandler : IRequestHandler<JoinToGameRequest>
 
         player.PlayerCoins = game.StartingCoins.Select(coin => new PlayerCoin
         {
-            Id = Guid.NewGuid(),
             Name = coin.Name,
             TotalBalance = coin.TotalBalance,
             ImageUrl = coin.ImageUrl,
-            PlayerId = player.Id
         }).ToList();
 
         await _playerRepository.CreatePlayer(player);
