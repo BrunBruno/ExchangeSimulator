@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.OrderRequests.UpdateSellLimitOrder;
 
-public class UpdateSellLimitOrderRequest : IRequest {
+public class UpdateSellLimitOrderRequest : IRequest<Guid> {
 
     public string GameName { get; set; }
     public Guid OrderId { get; set; }

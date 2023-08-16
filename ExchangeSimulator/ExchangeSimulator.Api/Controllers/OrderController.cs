@@ -11,10 +11,12 @@ using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOwnerOrders;
 using ExchangeSimulator.Application.Requests.OrderRequests.UpdateBuyLimitOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.UpdateSellLimitOrder;
+using ExchangeSimulator.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using NpgsqlTypes;
 
 namespace ExchangeSimulator.Api.Controllers;
 
@@ -77,6 +79,7 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
 
+
     /// <summary>
     /// 
     /// </summary>
@@ -94,11 +97,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity,
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(gameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>
@@ -118,11 +121,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity,
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(gameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>
@@ -141,11 +144,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity,
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(gameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>
@@ -164,11 +167,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity,
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(gameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>
@@ -188,11 +191,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>
@@ -212,11 +215,11 @@ public class OrderController : ControllerBase
             Quantity = model.Quantity
         };
 
-        await _mediator.Send(request);
+        var id = await _mediator.Send(request);
 
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
 
-        return Ok();
+        return Ok(id);
     }
 
     /// <summary>

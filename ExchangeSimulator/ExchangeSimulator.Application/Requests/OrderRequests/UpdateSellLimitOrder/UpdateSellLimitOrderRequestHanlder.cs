@@ -8,7 +8,7 @@ using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.OrderRequests.UpdateSellLimitOrder;
 
-public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimitOrderRequest> {
+public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimitOrderRequest, Guid> {
     private readonly IUserContextService _userContext;
     private readonly IGameRepository _gameRepository;
     private readonly IPlayerRepository _playerRepository;
@@ -20,7 +20,7 @@ public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimi
         _playerRepository = playerRepository;
         _orderRepository = orderRepository;
     }
-    public async Task Handle(UpdateSellLimitOrderRequest request, CancellationToken cancellationToken) {
+    public async Task<Guid> Handle(UpdateSellLimitOrderRequest request, CancellationToken cancellationToken) {
         var userId = _userContext.GetUserId()!.Value;
 
         var game = await _gameRepository.GetGameByName(request.GameName)
@@ -65,13 +65,15 @@ public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimi
             .OrderByDescending(order => order.Price)
             .ThenByDescending(order => order.CreatedAt);
 
+        Guid realizationId = Guid.NewGuid();
+
         // realize order
         foreach (var order in existingBuyOrders) {
             if (coinsQuantityToSell == 0) {
                 break;
             }
 
-            var transaction = RealizeTransaction(seller, sellerCoin, order, ref coinsQuantityToSell);
+            var transaction = RealizeTransaction(seller, sellerCoin, order, ref coinsQuantityToSell, realizationId);
             transaction.GameId = game.Id;
 
             game.Transactions.Add(transaction);
@@ -88,9 +90,11 @@ public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimi
         }
 
         await _gameRepository.Update(game);
+
+        return realizationId;
     }
 
-    private Transaction RealizeTransaction(Player seller, PlayerCoin sellerCoin, Order order, ref decimal coinsQuantityToSell) {
+    private Transaction RealizeTransaction(Player seller, PlayerCoin sellerCoin, Order order, ref decimal coinsQuantityToSell, Guid realizationId) {
         var buyer = order.PlayerCoin.Player;
         var buyerCoin = order.PlayerCoin;
 
@@ -152,6 +156,7 @@ public class UpdateSellLimitOrderRequestHanlder : IRequestHandler<UpdateSellLimi
             CoinName = sellerCoin.Name,
             Quantity = quantity,
             Price = price,
+            RealizationId = realizationId
         };
 
         return transaction;

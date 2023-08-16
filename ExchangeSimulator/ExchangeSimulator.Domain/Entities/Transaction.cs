@@ -36,5 +36,10 @@ public class Transaction {
     /// Game
     /// </summary>
     public Game Game { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Guid RealizationId { get; set; }
 }
 

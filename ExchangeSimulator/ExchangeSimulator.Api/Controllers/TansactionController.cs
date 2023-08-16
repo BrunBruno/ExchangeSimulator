@@ -1,4 +1,5 @@
 ﻿using ExchangeSimulator.Application.Requests.TransactionRequests.GetPrices;
+using ExchangeSimulator.Application.Requests.TransactionRequests.GetRealizedTransactions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,25 @@ public class TansactionController : ControllerBase {
         var result = await _mediator.Send(request);
 
         return Ok(result);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="realizationId"></param>
+    /// <returns></returns>
+    [HttpGet("realized/{realizationId}")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetRealizedTransactions([FromRoute] string gameName, [FromRoute] Guid realizationId) {
+        var request = new GetRealizedTransactionsRequest() {
+            GameName = gameName,
+            RealizationId = realizationId
+        };
+
+        var transactions = await _mediator.Send(request);
+
+        return Ok(transactions);
     }
 }
 

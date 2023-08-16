@@ -7,7 +7,7 @@ using ExchangeSimulator.Shared.Exceptions;
 using MediatR;
 
 namespace ExchangeSimulator.Application.Requests.OrderRequests.CreateBuyMarketOrder;
-public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarketOrderRequest> {
+public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarketOrderRequest, Guid> {
     private readonly IUserContextService _userContext;
     private readonly IGameRepository _gameRepository;
     private readonly IPlayerRepository _playerRepository;
@@ -20,7 +20,7 @@ public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarke
         _coinRepository = coinRepository;
     }
 
-    public async Task Handle(CreateBuyMarketOrderRequest request, CancellationToken cancellationToken) {
+    public async Task<Guid> Handle(CreateBuyMarketOrderRequest request, CancellationToken cancellationToken) {
         var userId = _userContext.GetUserId()!.Value;
 
         var game = await _gameRepository.GetGameByName(request.GameName)
@@ -54,21 +54,25 @@ public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarke
             .OrderBy(order => order.Price)
             .ThenByDescending(order => order.CreatedAt);
 
+        Guid realizationId = Guid.NewGuid();
+
         foreach (var order in existingSellOrders) {
             if (moneyQuantityToSpend == 0 || coinsQuantityToBuy == 0) {
                 break;
             }
 
-            var transaction = RealizeTransaction(buyer, buyerCoin, order, ref coinsQuantityToBuy, ref moneyQuantityToSpend);
+            var transaction = RealizeTransaction(buyer, buyerCoin, order, ref coinsQuantityToBuy, ref moneyQuantityToSpend, realizationId);
             transaction.GameId = game.Id;
 
             game.Transactions.Add(transaction);
         }
 
         await _gameRepository.Update(game);
+
+        return realizationId;
     }
 
-    private Transaction RealizeTransaction(Player buyer, PlayerCoin buyerCoin, Order order, ref decimal coinsQuantityToBuy, ref decimal moneyQuantityToSpend) {
+    private Transaction RealizeTransaction(Player buyer, PlayerCoin buyerCoin, Order order, ref decimal coinsQuantityToBuy, ref decimal moneyQuantityToSpend, Guid realizationId) {
         var seller = order.PlayerCoin.Player;
         var sellerCoin = order.PlayerCoin;
 
@@ -130,6 +134,7 @@ public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarke
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,
+            RealizationId = realizationId,
         };
 
         return transaction;
