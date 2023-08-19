@@ -171,8 +171,7 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
             CoinName = sellerCoin.Name,
             Quantity = quantity,
             Price = price,
-            RealizationId = realizationId,
-            OrderType = OrderType.Sell
+            RealizationId = realizationId
         };
 
         return transaction;

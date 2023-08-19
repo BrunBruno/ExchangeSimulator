@@ -15,18 +15,29 @@ public class GetPricesRequestHandler : IRequestHandler<GetPricesRequest, GetPric
        var game = await _gameRepository.GetGameByName(request.GameName) 
             ?? throw new NotFoundException("Game not found.");
 
-        var transaction = game.Transactions
+        var transactions = game.Transactions
             .Where(t => t.CoinName == request.CoinName)
             .OrderByDescending(t => t.MadeOn)
-            .FirstOrDefault();
+            .Take(2);
 
-        if (transaction is null) {
+        if (!transactions.Any()) {
             return null;
         }
 
-        var price = new GetPricesDto() { 
-            Price = transaction.Price,
-        };
+        var price = new GetPricesDto();
+
+        switch (transactions.Count())
+        {
+            case 1:
+                price.HasIncreased = null;
+                price.Price = transactions.First().Price;
+                break;
+            case 2:
+                var priceDifference = transactions.First().Price - transactions.Last().Price;
+                price.HasIncreased = priceDifference == 0 ? null : (priceDifference > 0);
+                price.Price = transactions.First().Price;
+                break;
+        }
 
         return price;
     }

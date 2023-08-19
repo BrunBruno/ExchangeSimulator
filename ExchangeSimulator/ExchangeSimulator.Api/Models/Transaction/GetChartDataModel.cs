@@ -1,9 +1,11 @@
-﻿using ExchangeSimulator.Domain.Enums;
+﻿using ExchangeSimulator.Application.Requests.TransactionRequests.GetChartData;
+using ExchangeSimulator.Domain.Enums;
 
 namespace ExchangeSimulator.Api.Models.Transaction;
 
 public class GetChartDataModel
 {
-    public OrderType OrderType { get; set; }
     public string CoinName { get; set; }
+
+    public PeriodOfTime PeriodOfTime { get; set; }
 }

@@ -26,7 +26,7 @@ public class TransactionController : ControllerBase {
     /// <param name="gameName"></param>
     /// <returns></returns>
     [HttpGet("prices")]
-    [Authorize(Policy = "IsVerified")]
+    //[Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetPrices([FromRoute] string gameName, [FromQuery] string coinName) {
         var request = new GetPricesRequest() {
             GameName = gameName,
@@ -56,21 +56,20 @@ public class TransactionController : ControllerBase {
     /// Gets chart data for coin.
     /// </summary>
     /// <param name="model"></param>
-    /// <param name="orderType"></param>
+    /// <param name="gameName"></param>
     /// <returns></returns>
     [HttpGet("chart-data")]
-    //[Authorize(Policy = "IsVerified")]
+   // [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetChartData([FromQuery] GetChartDataModel model, [FromRoute] string gameName)
     {
         var request = new GetChartDataRequest()
         {
             CoinName = model.CoinName,
-            OrderType = model.OrderType,
-            GameName = gameName,
+            PeriodOfTime = model.PeriodOfTime,
+            GameName = gameName
         };
         var result = await _mediator.Send(request);
 
         return Ok(result);
     }
 }
-

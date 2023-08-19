@@ -167,8 +167,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,
-            RealizationId = realizationId,
-            OrderType = OrderType.Buy
+            RealizationId = realizationId
         };
 
         return transaction;

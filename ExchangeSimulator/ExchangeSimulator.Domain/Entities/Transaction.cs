@@ -43,10 +43,4 @@ public class Transaction {
     /// 
     /// </summary>
     public Guid RealizationId { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public OrderType OrderType { get; set; }
 }
-

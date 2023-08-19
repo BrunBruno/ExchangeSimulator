@@ -151,12 +151,11 @@ public class UpdateBuyLimitOrderRequestHandler : IRequestHandler<UpdateBuyLimitO
         seller.SellTrades += 1;
         sellerCoin.TurnOver += quantity;
 
-        var transaction = new Transaction() {
+        var transaction = new Transaction {
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,
-            RealizationId = realizationId,
-            OrderType = OrderType.Buy
+            RealizationId = realizationId
         };
 
         return transaction;
