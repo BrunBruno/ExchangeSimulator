@@ -135,6 +135,7 @@ public class CreateBuyMarketOrderRequestHandler : IRequestHandler<CreateBuyMarke
             Quantity = quantity,
             Price = price,
             RealizationId = realizationId,
+            OrderType = OrderType.Buy
         };
 
         return transaction;

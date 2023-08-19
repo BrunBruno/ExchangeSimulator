@@ -60,7 +60,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         buyer.CreatedOrders += 1;
         buyer.BuyCreated += 1;
 
-        decimal coinsQuantityToBuy = request.Quantity;
+        var coinsQuantityToBuy = request.Quantity;
 
         // existing sell orders
         var existingSellOrders = game.Orders
@@ -74,7 +74,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
             .OrderBy(order => order.Price)
             .ThenByDescending(order => order.CreatedAt);
 
-        Guid realizationId = Guid.NewGuid();
+        var realizationId = Guid.NewGuid();
 
         foreach (var order in existingSellOrders) {
             if (coinsQuantityToBuy == 0) {
@@ -112,7 +112,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         decimal price = order.Price;
 
         // set quantioty
-        decimal quantity = 0;
+        decimal quantity;
 
         // order has less than player wants to - get all from order
         if (coinsQuantityToBuy >= order.Quantity) {
@@ -162,12 +162,13 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         seller.SellTrades += 1;
         sellerCoin.TurnOver += quantity;
 
-        var transaction = new Transaction() {
+        var transaction = new Transaction {
  
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,
             RealizationId = realizationId,
+            OrderType = OrderType.Buy
         };
 
         return transaction;

@@ -155,7 +155,8 @@ public class UpdateBuyLimitOrderRequestHandler : IRequestHandler<UpdateBuyLimitO
             CoinName = buyerCoin.Name,
             Quantity = quantity,
             Price = price,
-            RealizationId = realizationId
+            RealizationId = realizationId,
+            OrderType = OrderType.Buy
         };
 
         return transaction;

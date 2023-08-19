@@ -1,4 +1,6 @@
 ﻿
+using ExchangeSimulator.Domain.Enums;
+
 namespace ExchangeSimulator.Domain.Entities;
 
 public class Transaction {
@@ -41,5 +43,10 @@ public class Transaction {
     /// 
     /// </summary>
     public Guid RealizationId { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public OrderType OrderType { get; set; }
 }
 

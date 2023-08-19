@@ -172,6 +172,7 @@ public class CreateSellLimitOrderRequestHandler : IRequestHandler<CreateSellLimi
             Quantity = quantity,
             Price = price,
             RealizationId = realizationId,
+            OrderType = OrderType.Sell
         };
 
         return transaction;
