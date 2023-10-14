@@ -60,6 +60,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         buyer.CreatedOrders += 1;
         buyer.BuyCreated += 1;
 
+        var moneyQunatityToSell = request.Quantity * request.Price;
         var coinsQuantityToBuy = request.Quantity;
 
         // existing sell orders
@@ -81,10 +82,14 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
                 break;
             }
 
-            var transaction = RealizeTransaction(buyer, buyerCoin, order, ref coinsQuantityToBuy, realizationId);
+            var transaction = RealizeTransaction(buyer, buyerCoin, order, ref coinsQuantityToBuy, ref moneyQunatityToSell, realizationId);
 
             game.Transactions.Add(transaction);
         }
+
+        // return assets if bought with better price
+        buyer.TotalBalance += moneyQunatityToSell - ( coinsQuantityToBuy * request.Price);
+        buyer.LockedBalance -= moneyQunatityToSell - (coinsQuantityToBuy * request.Price);
 
         // add new limit buy order
         var newOrder = new Order() {
@@ -104,7 +109,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
         return realizationId;
     }
 
-    private Transaction RealizeTransaction(Player buyer, PlayerCoin buyerCoin, Order order, ref decimal coinsQuantityToBuy, Guid realizationId) {
+    private Transaction RealizeTransaction(Player buyer, PlayerCoin buyerCoin, Order order, ref decimal coinsQuantityToBuy, ref decimal moneyQunatityToSell, Guid realizationId) {
         var seller = order.PlayerCoin.Player;
         var sellerCoin = order.PlayerCoin;
 
@@ -130,6 +135,7 @@ public class CreateBuyLimitOrderRequestHandler : IRequestHandler<CreateBuyLimitO
 
         // update quantity
         coinsQuantityToBuy -= quantity;
+        moneyQunatityToSell -= quantity * price;
 
         // update order quantity
         order.Quantity -= quantity;

@@ -25,5 +25,6 @@ public class GetChartDataDto
         public decimal MinValue { get; set; }
         public decimal FirstValue { get; set; }
         public decimal LastValue { get; set; }
+        public bool? HasIncreased { get; set; }
     }
 }

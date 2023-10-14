@@ -1,8 +1,11 @@
 using ExchangeSimulator.Api.Authorization;
 using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Application;
+using ExchangeSimulator.Data.Seed;
 using ExchangeSimulator.Infrastructure;
 using ExchangeSimulator.Shared;
+using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
+
+
 var app = builder.Build();
+
+//var scope = app.Services.CreateScope();
+//var seeder = scope.ServiceProvider.GetRequiredService<TransactionSeeder>();
+//await seeder.Seed();
 
 
 // Configure the HTTP request pipeline.

@@ -26,7 +26,7 @@ public class TransactionController : ControllerBase {
     /// <param name="gameName"></param>
     /// <returns></returns>
     [HttpGet("prices")]
-    //[Authorize(Policy = "IsVerified")]
+    [Authorize(Policy = "IsVerified")]
     public async Task<IActionResult> GetPrices([FromRoute] string gameName, [FromQuery] string coinName) {
         var request = new GetPricesRequest() {
             GameName = gameName,
@@ -59,8 +59,8 @@ public class TransactionController : ControllerBase {
     /// <param name="gameName"></param>
     /// <returns></returns>
     [HttpGet("chart-data")]
-   // [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> GetChartData([FromQuery] GetChartDataModel model, [FromRoute] string gameName)
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> GetChartData([FromRoute] string gameName, [FromQuery] GetChartDataModel model)
     {
         var request = new GetChartDataRequest()
         {

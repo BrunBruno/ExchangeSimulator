@@ -41,6 +41,11 @@ public class GetChartDataRequestHandler : IRequestHandler<GetChartDataRequest, G
 
         var coinTransactions = game.Transactions.Where(x => x.CoinName == request.CoinName && x.MadeOn >= DateTime.UtcNow - period).OrderBy(x => x.MadeOn);
 
+     
+
+        var lastTransaction = game.Transactions.Except(coinTransactions).OrderBy(x => x.MadeOn).LastOrDefault();
+
+
         var chartData = new GetChartDataDto
         {
             CoinName = request.CoinName,
@@ -53,8 +58,9 @@ public class GetChartDataRequestHandler : IRequestHandler<GetChartDataRequest, G
             ChartBars = new()
         };
 
-        decimal firstValue = 0;
-        decimal lastValue = 0;
+        decimal lastValue = lastTransaction is not null ? lastTransaction.Price : 0;
+
+        chartData.MaxValue = chartData.MaxValue == 0 ? lastValue : chartData.MaxValue;
 
         for (var i = 1; i <= barCount; i++)
         {
@@ -66,7 +72,7 @@ public class GetChartDataRequestHandler : IRequestHandler<GetChartDataRequest, G
 
             var chartBar = new GetChartDataDto.ChartBar();
 
-            chartBar.FirstValue = lastValue;
+            chartBar.FirstValue = lastValue == 0 ? coinTransactionsInPeriod.Select(x => x.Price).FirstOrDefault() : lastValue;
 
             if (!coinTransactionsInPeriod.Any())
             {
@@ -82,8 +88,13 @@ public class GetChartDataRequestHandler : IRequestHandler<GetChartDataRequest, G
                 lastValue = chartBar.LastValue;
             }
 
+            chartBar.HasIncreased = chartBar.FirstValue < chartBar.LastValue ? true : (chartBar.FirstValue > chartBar.LastValue ? false : null);
+
+            chartBar.HasIncreased = chartBar.LastValue == 0 ? null : chartBar.HasIncreased;
+
             chartData.ChartBars.Add(chartBar);
         }
+
         return chartData;
     }
 }

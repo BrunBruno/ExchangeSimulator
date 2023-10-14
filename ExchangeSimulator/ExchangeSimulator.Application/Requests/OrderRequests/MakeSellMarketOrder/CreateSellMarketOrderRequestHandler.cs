@@ -71,6 +71,10 @@ public class CreateSellMarketOrderRequestHandler : IRequestHandler<CreateSellMar
             game.Transactions.Add(transaction);
         }
 
+        // return not used assets
+        sellerCoin.LockedBalance -= coinsQuantityToSell;
+        sellerCoin.TotalBalance += coinsQuantityToSell;
+
         // add new market sell order
 
         await _gameRepository.Update(game);
