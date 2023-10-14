@@ -18,17 +18,47 @@ public class Player {
     /// <summary>
     /// Amount of money that player has in game
     /// </summary>
-    public decimal Money { get; set; }
+    public decimal TotalBalance { get; set; }
 
     /// <summary>
-    /// Amount of trades that player made
+    /// Money that are being used for orders
     /// </summary>
-    public int TradesQuantity { get; set; } = 0;
+    public decimal LockedBalance { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of order that player relaized as taker or maker
+    /// </summary>
+    public int Trades { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int BuyTrades { get; set; } = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int SellTrades { get; set; } = 0;
 
     /// <summary>
     /// Total volumen
     /// </summary>
-    public int TurnOver { get; set; } = 0;
+    public decimal TurnOver { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of order that player created
+    /// </summary>
+    public int CreatedOrders { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of buy order that player created
+    /// </summary>
+    public int BuyCreated { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of sell order that player created
+    /// </summary>
+    public int SellCreated { get; set; } = 0;
 
     /// <summary>
     /// Game Id
@@ -54,5 +84,5 @@ public class Player {
     /// List of players coins
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
-}
 
+} 

@@ -51,9 +51,11 @@ public class StartGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         var response = await _client.PutAsync("api/game/start-game", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
+
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var startedGame = await _dbContext.Games.FirstOrDefaultAsync(x => x.Id == gameId);
+        var startedGame = await assertDbContext.Games.FirstOrDefaultAsync(x => x.Id == gameId);
         startedGame.Status.Should().Be(GameStatus.Active);
     }
 

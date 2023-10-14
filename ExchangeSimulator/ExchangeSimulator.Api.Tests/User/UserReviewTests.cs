@@ -44,8 +44,9 @@ public class UserReviewTests : IClassFixture<TestWebApplicationFactory<Program>>
         var response = await _client.PutAsync("api/user/user-review", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(Constants.UserId));
+        var user = await assertDbContext.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(Constants.UserId));
         user.Review.Should().Be(3);
     }
 

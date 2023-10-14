@@ -1,4 +1,5 @@
 ﻿using ExchangeSimulator.Application.Repositories;
+using ExchangeSimulator.Data.Seed;
 using ExchangeSimulator.Infrastructure.EF.Contexts;
 using ExchangeSimulator.Infrastructure.EF.Options;
 using ExchangeSimulator.Infrastructure.EF.Repositories;
@@ -23,6 +24,11 @@ public static class Extensions
         services.AddScoped<IEmailVerificationCodeRepository, EmailVerificationCodeRepository>();
         services.AddScoped<IGameRepository, GameRepository>();
         services.AddScoped<IPlayerRepository, PlayerRepository>();
+        services.AddScoped<ICoinRepository, CoinRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+        services.AddScoped<TransactionSeeder>();
 
         return services;
     }

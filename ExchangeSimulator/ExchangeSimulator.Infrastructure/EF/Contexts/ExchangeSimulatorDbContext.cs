@@ -20,14 +20,39 @@ public class ExchangeSimulatorDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
 
     /// <summary>
-    /// Email Verificatio Codes
+    /// Email verification codes
     /// </summary>
     public DbSet<EmailVerificationCode> EmailVerificationCodes { get; set; }
 
+    /// <summary>
+    /// Dbset for games
+    /// </summary>
     public DbSet<Game> Games { get; set; }
+
+    /// <summary>
+    /// Dbset for players
+    /// </summary>
     public DbSet<Player> Players { get; set; }
+
+    /// <summary>
+    /// Dbset for staring options of coins
+    /// </summary>
     public DbSet<StartingCoin> StartingCoins { get; set; }
+
+    /// <summary>
+    /// Dbset for players coins
+    /// </summary>
     public DbSet<PlayerCoin> PlayerCoins { get; set; }
+
+    /// <summary>
+    /// Dbset for orders
+    /// </summary>
+    public DbSet<Order> Orders { get; set; }
+
+    /// <summary>
+    /// Dbset for transactions
+    /// </summary>
+    public DbSet<Transaction> Transactions { get; set; }
 
 
     public ExchangeSimulatorDbContext (DbContextOptions<ExchangeSimulatorDbContext> options) : base(options){}
@@ -43,5 +68,7 @@ public class ExchangeSimulatorDbContext : DbContext
         modelBuilder.ApplyConfiguration<Player>(configuration);
         modelBuilder.ApplyConfiguration<StartingCoin>(configuration);
         modelBuilder.ApplyConfiguration<PlayerCoin>(configuration);
+        modelBuilder.ApplyConfiguration<Order>(configuration);
+        modelBuilder.ApplyConfiguration<Transaction>(configuration);
     }
 }

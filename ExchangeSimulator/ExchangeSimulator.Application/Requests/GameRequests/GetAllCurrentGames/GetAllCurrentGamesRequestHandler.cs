@@ -53,8 +53,8 @@ public class GetAllCurrentGamesRequestHandler : IRequestHandler<GetAllCurrentGam
             Name = game.Name,
             Description = game.Description,
             CreatedAt = game.CreatedAt,
-            AvailableSpots = game.NumberOfPlayers - game.Players.Count,
-            PlayersRatio = 100 * game.Players.Count / game.NumberOfPlayers,
+            AvailableSpots = game.TotalPlayers - game.Players.Count,
+            PlayersRatio = 100 * game.Players.Count / game.TotalPlayers,
             TimeRatio = game.StartsAt.HasValue && game.Duration.TotalMinutes > 0
             ? Math.Max(0.00, Math.Min(100.00, 100 * (DateTime.UtcNow - game.StartsAt.Value).TotalMinutes / game.Duration.TotalMinutes)) : 0.00,
             OwnerName = game.Owner.Username,

@@ -19,7 +19,7 @@ public abstract class Coin {
     /// <summary>
     /// Amount of coins
     /// </summary>
-    public decimal Quantity { get; set; }
+    public decimal TotalBalance { get; set; }
 
     /// <summary>
     /// Image of coin

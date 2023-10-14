@@ -43,7 +43,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("EmailVerificationCodes");
+                    b.ToTable("EmailVerificationCodes", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Game", b =>
@@ -65,15 +65,9 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<DateTime?>("EndsAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Money")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("NumberOfPlayers")
-                        .HasColumnType("integer");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
@@ -82,17 +76,59 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("StartingBalance")
+                        .HasColumnType("numeric");
+
                     b.Property<DateTime?>("StartsAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TotalPlayers")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
+                });
+
+            modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PlayerCoinId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlayerCoinId");
+
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>
@@ -101,21 +137,39 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("BuyCreated")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BuyTrades")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CreatedOrders")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Money")
+                    b.Property<decimal>("LockedBalance")
                         .HasColumnType("numeric");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TradesQuantity")
+                    b.Property<int>("SellCreated")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TurnOver")
+                    b.Property<int>("SellTrades")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalBalance")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Trades")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TurnOver")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -126,7 +180,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.PlayerCoin", b =>
@@ -138,6 +192,9 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
+                    b.Property<decimal>("LockedBalance")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -145,14 +202,17 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Quantity")
+                    b.Property<decimal>("TotalBalance")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TurnOver")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerCoins");
+                    b.ToTable("PlayerCoins", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Role", b =>
@@ -169,7 +229,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -200,14 +260,46 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Quantity")
+                    b.Property<decimal>("TotalBalance")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("StartingCoins");
+                    b.ToTable("StartingCoins", (string)null);
+                });
+
+            modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Transaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CoinName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("MadeOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("RealizationId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.User", b =>
@@ -244,7 +336,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GameUser", b =>
@@ -259,7 +351,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GameUser");
+                    b.ToTable("GameUser", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.EmailVerificationCode", b =>
@@ -282,6 +374,25 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("ExchangeSimulator.Domain.Entities.Game", "Game")
+                        .WithMany("Orders")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExchangeSimulator.Domain.Entities.PlayerCoin", "PlayerCoin")
+                        .WithMany()
+                        .HasForeignKey("PlayerCoinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("PlayerCoin");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>
@@ -325,6 +436,17 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Transaction", b =>
+                {
+                    b.HasOne("ExchangeSimulator.Domain.Entities.Game", "Game")
+                        .WithMany("Transactions")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.User", b =>
                 {
                     b.HasOne("ExchangeSimulator.Domain.Entities.Role", "Role")
@@ -353,9 +475,13 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Game", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("Players");
 
                     b.Navigation("StartingCoins");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>

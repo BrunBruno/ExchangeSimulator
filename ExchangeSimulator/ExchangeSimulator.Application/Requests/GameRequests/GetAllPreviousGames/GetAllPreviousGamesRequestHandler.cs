@@ -54,7 +54,7 @@ public class GetAllPreviousGamesRequestHandler : IRequestHandler<GetAllPreviousG
             Name = game.Name,
             Description = game.Description,
             CreatedAt = game.CreatedAt,
-            AvailableSpots = game.NumberOfPlayers - game.Players.Count,
+            AvailableSpots = game.TotalPlayers - game.Players.Count,
             OwnerName = game.Owner.Username
         });
 

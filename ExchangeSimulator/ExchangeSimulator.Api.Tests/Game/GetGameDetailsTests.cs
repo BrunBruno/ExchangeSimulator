@@ -69,10 +69,10 @@ public class GetGameDetailsTests : IClassFixture<TestWebApplicationFactory<Progr
             Name = "GameName",
             Description = "Description",
             Duration = TimeSpan.FromHours(20),
-            Money = 1000,
+            TotalBalance = 1000,
             CreatedAt = DateTime.UtcNow,
             Status = GameStatus.Active,
-            NumberOfPlayers = 10,
+            TotalPlayers = 10,
             AvailableSpots = 9,
             PlayerCount = 1,
             Players = new()
@@ -87,13 +87,11 @@ public class GetGameDetailsTests : IClassFixture<TestWebApplicationFactory<Progr
                 new()
                 {
                     ImageUrl = "http://image1.com",
-                    Name = "Coin1",
-                    Quantity = 10
+                    Name = "Coin1"
                 },
                 new()
                 {
                     Name = "Coin2",
-                    Quantity = 20
                 }
             }
         };

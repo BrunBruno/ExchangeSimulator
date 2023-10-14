@@ -9,3 +9,6 @@ volumes
 [Mm]igrations/
 FodyWeavers.xml
 FodyWeavers.xsd
+/ExchangeSimulator/ExchangeSimulator.Api/Properties/launchSettings.json
+/ExchangeSimulator/ExchangeSimulator.Api/Properties/launchSettings.json
+/ExchangeSimulator/ExchangeSimulator.Api/Properties/launchSettings.json

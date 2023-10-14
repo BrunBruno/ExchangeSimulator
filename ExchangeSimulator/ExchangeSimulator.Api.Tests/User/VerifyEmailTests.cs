@@ -49,9 +49,9 @@ public class VerifyEmailTests : IClassFixture<TestWebApplicationFactory<Program>
         var response = await _client.PutAsync("api/user/verify-email", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-        var user = await _dbContext.Users.FirstOrDefaultAsync();
+        var user = await assertDbContext.Users.FirstOrDefaultAsync();
         user.IsVerified.Should().BeTrue();
     }
 

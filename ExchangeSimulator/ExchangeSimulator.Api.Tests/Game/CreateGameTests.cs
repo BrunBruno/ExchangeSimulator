@@ -1,5 +1,4 @@
-﻿using ExchangeSimulator.Api.Tests.User;
-using ExchangeSimulator.Infrastructure.EF.Contexts;
+﻿using ExchangeSimulator.Infrastructure.EF.Contexts;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -43,8 +42,8 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Name = "Name",
             Description = "Description",
             Password = "Password",
-            Money = 1000,
-            NumberOfPlayers = 10,
+            StartingBalance = 1000,
+            TotalPlayers = 10,
             Duration = 120,
             Coins = new List<StartingCoinItem>()
             {
@@ -69,13 +68,15 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         var response = await _client.PostAsync("api/game", httpContent);
 
         //then
+        var assertDbContext = _factory.GetDbContextForAsserts();
+
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var createdGame = await _dbContext.Games
+        var createdGame = await assertDbContext.Games
             .Include(x => x.StartingCoins)
             .FirstOrDefaultAsync();
 
-        var createdCoins = await _dbContext.StartingCoins
+        var createdCoins = await assertDbContext.StartingCoins
             .ToListAsync();
 
         var exampleGameResponse = ReturnExampleGame(request);
@@ -112,8 +113,8 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Name = "Name",
             Description = "Description",
             Password = "Password",
-            Money = 1000,
-            NumberOfPlayers = 0,
+            StartingBalance = 1000,
+            TotalPlayers = 0,
             Coins = new List<StartingCoinItem>()
             {
                 new StartingCoinItem()
@@ -148,8 +149,8 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
             Name = request.Name,
             Description = request.Description,
             PasswordHash = "PasswordHash",
-            Money = request.Money,
-            NumberOfPlayers = request.NumberOfPlayers,
+            StartingBalance = request.StartingBalance,
+            TotalPlayers = request.TotalPlayers,
             OwnerId = Guid.Parse(Constants.UserId),
             Duration = new TimeSpan(0,120,0)
         };
@@ -158,7 +159,7 @@ public class CreateGameTests : IClassFixture<TestWebApplicationFactory<Program>>
         => request.Coins.Select(x => new StartingCoin
         {
             Name = x.Name,
-            Quantity = x.Quantity,
+            TotalBalance = x.Quantity,
             Id = Guid.NewGuid(),
             GameId = gameId
         }).ToList();

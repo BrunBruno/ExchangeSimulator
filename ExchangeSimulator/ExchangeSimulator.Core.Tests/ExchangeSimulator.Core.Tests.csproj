@@ -28,4 +28,8 @@
     <ProjectReference Include="..\ExchangeSimulator.Application\ExchangeSimulator.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Order\" />
+  </ItemGroup>
+
 </Project>

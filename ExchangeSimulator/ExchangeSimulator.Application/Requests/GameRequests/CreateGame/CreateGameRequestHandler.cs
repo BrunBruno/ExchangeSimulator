@@ -28,7 +28,7 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
     public async Task Handle(CreateGameRequest request, CancellationToken cancellationToken)
     {
-        if (request.NumberOfPlayers < 1)
+        if (request.TotalPlayers < 1)
         {
             throw new BadRequestException("Number of players must be greater or equal to 1.");
         }
@@ -46,9 +46,9 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
             Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description,
-            Money = request.Money,
+            StartingBalance = request.StartingBalance,
             Duration = new TimeSpan(0, request.Duration, 0),
-            NumberOfPlayers = request.NumberOfPlayers,
+            TotalPlayers = request.TotalPlayers,
             OwnerId = userId
         };
 
@@ -56,11 +56,9 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
         game.StartingCoins = request.Coins.Select(coin => new StartingCoin
         {
-            Id = Guid.NewGuid(),
             Name = coin.Name,
-            Quantity = coin.Quantity,
+            TotalBalance = coin.Quantity,
             ImageUrl = coin.ImageUrl,
-            GameId = game.Id
         }).ToList();
 
         await _gameRepository.CreateGame(game);

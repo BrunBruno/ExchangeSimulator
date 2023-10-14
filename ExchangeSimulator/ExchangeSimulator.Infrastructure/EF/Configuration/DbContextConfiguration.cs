@@ -15,7 +15,10 @@ public class DbContextConfiguration :
     IEntityTypeConfiguration<Game>, 
     IEntityTypeConfiguration<Player>, 
     IEntityTypeConfiguration<StartingCoin>, 
-    IEntityTypeConfiguration<PlayerCoin>{
+    IEntityTypeConfiguration<PlayerCoin>,
+    IEntityTypeConfiguration<Order>,
+    IEntityTypeConfiguration<Transaction>
+{
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
@@ -86,8 +89,30 @@ public class DbContextConfiguration :
             .HasForeignKey(x => x.PlayerId);
     }
 
-    private IEnumerable<Role> GetRoles()
+    public void Configure(EntityTypeBuilder<Order> builder)
     {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Game)
+            .WithMany(x => x.Orders)
+            .HasForeignKey(x => x.GameId);
+        builder
+            .HasOne(x => x.PlayerCoin)
+            .WithMany()
+            .HasForeignKey(x => x.PlayerCoinId);
+    }
+
+    public void Configure(EntityTypeBuilder<Transaction> builder) {
+        builder
+            .HasKey(x => x.Id);
+        builder
+            .HasOne(x => x.Game)
+            .WithMany(x => x.Transactions)
+            .HasForeignKey(x => x.GameId);
+    }
+
+    private IEnumerable<Role> GetRoles() {
 
         var roles = new List<Role>
         {
