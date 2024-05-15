@@ -28,7 +28,7 @@ public class Player {
     /// <summary>
     /// Amount of order that player relaized as taker or maker
     /// </summary>
-    public int TradesQuantity { get; set; } = 0;
+    public int Trades { get; set; } = 0;
 
     /// <summary>
     /// 
@@ -44,6 +44,26 @@ public class Player {
     /// Total volumen
     /// </summary>
     public decimal TurnOver { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of order that player created
+    /// </summary>
+    public int CreatedOrders { get; set; } = 0
+
+    /// <summary>
+    /// Amount of buy order that player created
+    /// </summary>
+    public int BuyCreated { get; set; } = 0;
+
+    /// <summary>
+    /// Amount of sell order that player created
+    /// </summary>
+    public int SellCreated { get; set; } = 0;
+  
+      /// <summary>
+    /// Calculated using player money and player coins.
+    /// </summary>
+    public decimal Points { get; set; } = 0;
 
     /// <summary>
     /// Game Id
@@ -70,23 +90,5 @@ public class Player {
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
 
-    /// <summary>
-    /// Amount of order that player created
-    /// </summary>
-    public int CreatedOrders { get; set; } = 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public int BuyCreated { get; set; } = 0;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int SellCreated { get; set; } = 0;
-
-    /// <summary>
-    /// Calculated using player money and player coins.
-    /// </summary>
-    public decimal Points { get; set; } = 0;
 } 

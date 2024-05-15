@@ -43,7 +43,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("EmailVerificationCodes");
+                    b.ToTable("EmailVerificationCodes", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Game", b =>
@@ -99,6 +99,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                         .IsUnique();
 
                     b.ToTable("Games");
+
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Order", b =>
@@ -106,6 +107,9 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
@@ -131,7 +135,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("PlayerCoinId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Player", b =>
@@ -171,7 +175,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<decimal>("TotalBalance")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("TradesQuantity")
+                    b.Property<int>("Trades")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("TurnOver")
@@ -186,7 +190,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.PlayerCoin", b =>
@@ -218,7 +222,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerCoins");
+                    b.ToTable("PlayerCoins", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Role", b =>
@@ -235,7 +239,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -273,7 +277,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("StartingCoins");
+                    b.ToTable("StartingCoins", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.Transaction", b =>
@@ -298,11 +302,14 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
+                    b.Property<Guid>("RealizationId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.User", b =>
@@ -339,7 +346,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GameUser", b =>
@@ -354,7 +361,7 @@ namespace ExchangeSimulator.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GameUser");
+                    b.ToTable("GameUser", (string)null);
                 });
 
             modelBuilder.Entity("ExchangeSimulator.Domain.Entities.EmailVerificationCode", b =>

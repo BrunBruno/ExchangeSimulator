@@ -98,7 +98,7 @@ public class Game {
     public List<Order> Orders { get; set; }
 
     /// <summary>
-    /// 
+    /// List of transactions that was made during game 
     /// </summary>
     public List<Transaction> Transactions { get; set; }
 }

@@ -19,9 +19,10 @@ public class GetAllPlayerRequestHandler : IRequestHandler<GetAllPlayerRequest, P
         var players = game.Players;
 
         var playerDtos = players.Select(player => new GetAllPlayerDto() {
+            Name = player.Name,
             Balance = player.TotalBalance + player.LockedBalance,
             TurnOver = player.TurnOver,
-            TradesQuantity = player.TradesQuantity,
+            Trades = player.Trades,
             CreatedOrders = player.CreatedOrders,
         });
 

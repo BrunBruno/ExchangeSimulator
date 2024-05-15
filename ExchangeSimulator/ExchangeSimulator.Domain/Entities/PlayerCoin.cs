@@ -16,7 +16,7 @@ public class PlayerCoin : Coin {
     public decimal LockedBalance { get; set; } = 0;
 
     /// <summary>
-    /// 
+    /// Turo over on coin
     /// </summary>
     public decimal TurnOver { get; set; } = 0;
 

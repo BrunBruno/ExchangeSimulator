@@ -1,18 +1,22 @@
 ﻿using ExchangeSimulator.Api.Hubs;
 using ExchangeSimulator.Api.Models.Order;
 using ExchangeSimulator.Application.Hubs;
-using ExchangeSimulator.Application.Requests.OrderRequests.BuyOrder;
-using ExchangeSimulator.Application.Requests.OrderRequests.ChangeOrderStatus;
-using ExchangeSimulator.Application.Requests.OrderRequests.CreateOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.CreateBuyLimitOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.CreateBuyMarketOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.CreateSellLimitOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.CreateSellMarketOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.DeleteOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.FreezeOrder;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOrders;
 using ExchangeSimulator.Application.Requests.OrderRequests.GetAllOwnerOrders;
-using ExchangeSimulator.Application.Requests.OrderRequests.SellOrder;
-using ExchangeSimulator.Application.Requests.OrderRequests.UpdateOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.UpdateBuyLimitOrder;
+using ExchangeSimulator.Application.Requests.OrderRequests.UpdateSellLimitOrder;
+using ExchangeSimulator.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using NpgsqlTypes;
 
 namespace ExchangeSimulator.Api.Controllers;
 
@@ -27,28 +31,6 @@ public class OrderController : ControllerBase
     {
         _hub = hub;
         _mediator = mediator;
-    }
-
-    /// <summary>
-    /// Creates the order.
-    /// </summary>
-    /// <returns></returns>
-    [HttpPost]
-    [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> CreateOrder([FromRoute] string gameName, [FromBody] CreateOrderModel model)
-    {
-        var request = new CreateOrderRequest()
-        {
-            GameName = gameName,
-            PlayerCoinId = model.PlayerCoinId,
-            Price = model.Price,
-            Quantity = model.Quantity,
-            Type = model.Type
-        };
-
-        await _mediator.Send(request);
-        await _hub.Clients.Groups(gameName).OrdersChanged();
-        return Ok();
     }
 
     /// <summary>
@@ -68,7 +50,9 @@ public class OrderController : ControllerBase
             GameName = gameName,
             OrderType = model.OrderType
         };
+
         var orders = await _mediator.Send(request);
+
         return Ok(orders);
     }
 
@@ -89,92 +73,153 @@ public class OrderController : ControllerBase
             PageNumber = model.PageNumber,
             PlayerId = model.PlayerId
         };
+
         var orders = await _mediator.Send(request);
+
         return Ok(orders);
     }
 
+
     /// <summary>
-    /// realization of buy order
+    /// 
     /// </summary>
     /// <param name="gameName"></param>
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPut("{orderId}/buy")]
+    [HttpPost("limit-buy")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> BuyOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] BuyOrderModel model)
-    {
-        var request = new BuyOrderRequest
-        {
+    public async Task<IActionResult> CreateBuyLimitOrder([FromRoute] string gameName, [FromBody] LimitOrderModel model) {
+        var request = new CreateBuyLimitOrderRequest() {
             GameName = gameName,
-            OrderId = orderId,
-            Quantity = model.Quantity
+            PlayerCoinId = model.PlayerCoinId,
+            Price = model.Price,
+            Quantity = model.Quantity,
         };
-        await _mediator.Send(request);
-        await _hub.Clients.Groups(request.GameName).OrdersChanged();
-        return Ok();
+
+        var id = await _mediator.Send(request);
+
+        await _hub.Clients.Groups(gameName).OrdersChanged();
+
+        return Ok(id);
     }
 
     /// <summary>
-    /// realization of sell order
+    /// 
     /// </summary>
     /// <param name="gameName"></param>
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPut("{orderId}/sell")]
+    [HttpPost("limit-sell")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> SellOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] SellOrderModel model)
-    {
-        var request = new SellOrderRequest
-        {
+    public async Task<IActionResult> CreateSellLimitOrder([FromRoute] string gameName, [FromBody] LimitOrderModel model) {
+        var request = new CreateSellLimitOrderRequest() {
             GameName = gameName,
-            OrderId = orderId,
-            Quantity = model.Quantity
+            PlayerCoinId = model.PlayerCoinId,
+            Price = model.Price,
+            Quantity = model.Quantity,
         };
-        await _mediator.Send(request);
-        await _hub.Clients.Groups(request.GameName).OrdersChanged();
-        return Ok();
+
+        var id = await _mediator.Send(request);
+
+        await _hub.Clients.Groups(gameName).OrdersChanged();
+
+        return Ok(id);
     }
 
     /// <summary>
-    /// updates existing order
+    /// 
     /// </summary>
     /// <param name="gameName"></param>
     /// <param name="orderId"></param>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPut("{orderId}")]
+    [HttpPut("market-buy")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> UpdateOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] UpdateOrderModel model) {
-        var request = new UpdateOrderRequest(){ 
+    public async Task<IActionResult> MakeBuyMarketOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] MarketOrderModel model) {
+        var request = new CreateBuyMarketOrderRequest() {
+            GameName = gameName,
+            PlayerCoinId = model.PlayerCoinId,
+            Quantity = model.Quantity,
+        };
+
+        var id = await _mediator.Send(request);
+
+        await _hub.Clients.Groups(gameName).OrdersChanged();
+
+        return Ok(id);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpPut("market-sell")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> MakeSellMarketOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] MarketOrderModel model) {
+        var request = new CreateSellMarketOrderRequest() {
+            GameName = gameName,
+            PlayerCoinId = model.PlayerCoinId,
+            Quantity = model.Quantity,
+        };
+
+        var id = await _mediator.Send(request);
+
+        await _hub.Clients.Groups(gameName).OrdersChanged();
+
+        return Ok(id);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpPut("{orderId}/limit-buy")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> UpdateBuyLimitOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] LimitOrderModel model) {
+        var request = new UpdateBuyLimitOrderRequest() {
             GameName = gameName,
             OrderId = orderId,
             Price = model.Price,
             Quantity = model.Quantity
         };
-        await _mediator.Send(request);
+
+        var id = await _mediator.Send(request);
+
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
-        return Ok();
+
+        return Ok(id);
     }
 
     /// <summary>
-    /// delete order
+    /// 
     /// </summary>
     /// <param name="gameName"></param>
     /// <param name="orderId"></param>
+    /// <param name="model"></param>
     /// <returns></returns>
-    [HttpDelete("{orderId}")]
+    [HttpPut("{orderId}/limit-sell")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> DeleteOrder([FromRoute] string gameName, [FromRoute] Guid orderId )
-    {
-        var request = new DeleteOrderRequest() { 
+    public async Task<IActionResult> UpdateSellLimitOrder([FromRoute] string gameName, [FromRoute] Guid orderId, [FromBody] LimitOrderModel model) {
+        var request = new UpdateSellLimitOrderRequest() {
             GameName = gameName,
-            OrderId = orderId
+            OrderId = orderId,
+            Price = model.Price,
+            Quantity = model.Quantity
         };
-        await _mediator.Send(request);
+
+        var id = await _mediator.Send(request);
+
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
-        return Ok();
+
+        return Ok(id);
     }
 
     /// <summary>
@@ -183,15 +228,39 @@ public class OrderController : ControllerBase
     /// <param name="gameName"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    [HttpPatch("{orderId}")]
+    [HttpPatch("{orderId}/freeze")]
     [Authorize(Policy = "IsVerified")]
-    public async Task<IActionResult> ChangeOrderStatus([FromRoute] string gameName, [FromRoute] Guid orderId) {
-        var request = new ChangeOrderStatusRequest() {
+    public async Task<IActionResult> FreezeOrder([FromRoute] string gameName, [FromRoute] Guid orderId) {
+        var request = new FreezeOrderRequest() {
             GameName = gameName,
             OrderId = orderId
         };
+
         await _mediator.Send(request);
+
         await _hub.Clients.Groups(request.GameName).OrdersChanged();
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// deletes order
+    /// </summary>
+    /// <param name="gameName"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    [HttpDelete("{orderId}")]
+    [Authorize(Policy = "IsVerified")]
+    public async Task<IActionResult> DeleteOrder([FromRoute] string gameName, [FromRoute] Guid orderId) {
+        var request = new DeleteOrderRequest() {
+            GameName = gameName,
+            OrderId = orderId
+        };
+
+        await _mediator.Send(request);
+
+        await _hub.Clients.Groups(request.GameName).OrdersChanged();
+
         return Ok();
     }
 }

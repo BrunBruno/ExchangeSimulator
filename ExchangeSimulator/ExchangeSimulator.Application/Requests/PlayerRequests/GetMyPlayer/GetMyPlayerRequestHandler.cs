@@ -28,7 +28,7 @@ public class GetMyPlayerRequestHandler : IRequestHandler<GetMyPlayerRequest,GetM
             Name = player.Name,
             TotalBalance = player.TotalBalance,
             LockedBalance = player.LockedBalance,
-            TradesQuantity = player.TradesQuantity,
+            Trades = player.Trades,
             BuyTrades = player.BuyTrades,
             SellTrades = player.SellTrades,
             TurnOver = player.TurnOver,

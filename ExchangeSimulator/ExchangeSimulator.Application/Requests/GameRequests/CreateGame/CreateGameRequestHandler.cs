@@ -56,11 +56,9 @@ public class CreateGameRequestHandler : IRequestHandler<CreateGameRequest>
 
         game.StartingCoins = request.Coins.Select(coin => new StartingCoin
         {
-            Id = Guid.NewGuid(),
             Name = coin.Name,
             TotalBalance = coin.Quantity,
             ImageUrl = coin.ImageUrl,
-            GameId = game.Id
         }).ToList();
 
         await _gameRepository.CreateGame(game);
