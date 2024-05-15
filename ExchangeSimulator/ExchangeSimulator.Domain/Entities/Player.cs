@@ -48,7 +48,7 @@ public class Player {
     /// <summary>
     /// Amount of order that player created
     /// </summary>
-    public int CreatedOrders { get; set; } = 0;
+    public int CreatedOrders { get; set; } = 0
 
     /// <summary>
     /// Amount of buy order that player created
@@ -59,6 +59,11 @@ public class Player {
     /// Amount of sell order that player created
     /// </summary>
     public int SellCreated { get; set; } = 0;
+  
+      /// <summary>
+    /// Calculated using player money and player coins.
+    /// </summary>
+    public decimal Points { get; set; } = 0;
 
     /// <summary>
     /// Game Id
@@ -84,5 +89,6 @@ public class Player {
     /// List of players coins
     /// </summary>
     public List<PlayerCoin> PlayerCoins { get; set; }
+
 
 } 

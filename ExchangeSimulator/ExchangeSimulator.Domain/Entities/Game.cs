@@ -78,6 +78,16 @@ public class Game {
     public List<Player> Players { get; set; }
 
     /// <summary>
+    /// 
+    /// </summary>
+    public Player? Winner { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Guid? WinnerId { get; set; }
+
+    /// <summary>
     /// Coins used in game
     /// </summary>
     public List<StartingCoin> StartingCoins { get; set; }

@@ -1,8 +1,10 @@
 ﻿using ExchangeSimulator.Application.Services;
+using ExchangeSimulator.Domain.Entities;
 using ExchangeSimulator.Infrastructure.EF;
 using ExchangeSimulator.Infrastructure.EF.Options;
 using ExchangeSimulator.Infrastructure.Jwt;
 using ExchangeSimulator.Infrastructure.Services;
+using ExchangeSimulator.Infrastructure.Workers;
 using ExchangeSimulator.Shared.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,8 @@ public static class Extensions
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmtpService, SmtpService>();
         services.AddScoped<IUserContextService, UserContextService>();
+        services.AddScoped<IGameFinishingWorkerService, GameFinishingWorkerService>();
+        services.AddHostedService<GameFinishingWorker>();
 
         return services;
     }
